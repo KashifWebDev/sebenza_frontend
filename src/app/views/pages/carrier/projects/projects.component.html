@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 mx-auto">
+      <div class="bg-primary">
+        <div class="card">
+          <div class="card-body">
+
+            <h6 class="card-title">Basic Form</h6>
+
+            <form class="forms-sample" [formGroup]="projectForm" (ngSubmit)="submitForm()">
+              <div class="mb-3">
+                <label for="Title" class="form-label">Title</label>
+                <input type="text" formControlName="title" class="form-control" id="Title" autocomplete="off" placeholder="Project Title">
+                <app-form-error [form]="projectForm" field="title"></app-form-error>
+              </div>
+              <div class="mb-3">
+                <label for="Client" class="form-label">Client</label>
+                <input type="email" formControlName="client" class="form-control" id="Client" placeholder="Client/Company Name">
+                <app-form-error [form]="projectForm" field="client"></app-form-error>
+              </div>
+              <div class="mb-3">
+                <label for="URL" class="form-label">Project Link</label>
+                <input type="email" formControlName="url" class="form-control" id="URL" placeholder="Company/Project Link">
+                <app-form-error [form]="projectForm" field="url"></app-form-error>
+              </div>
+              <div class="mb-3">
+                <label for="start_date" class="form-label">Start Date</label>
+                <input type="date" formControlName="start_date" class="form-control" id="start_date">
+                <app-form-error [form]="projectForm" field="start_date"></app-form-error>
+              </div>
+              <div class="mb-3">
+                <h6 class="card-title">Simple input</h6>
+
+                <tag-input formControlName="tags"
+                           theme="bootstrap"
+                           [modelAsStrings]="true"
+                           (onSelect)="onSelect($event)"
+                           (onTextChange)="onTextChange($event)"
+                           (onAdd)="onAdd($event)">
+                </tag-input>
+              </div>
+              <div class="mb-3">
+                <h6 class="card-title">Project Details</h6>
+
+                <quill-editor formControlName="about"
+                              (onSelectionChanged)="onSelectionChanged($event)"
+                              (onContentChanged)="onContentChanged($event)">
+                  {{htmlText}}
+                </quill-editor>
+              </div>
+
+              <app-loading-button [btnText]="'Save Project'" [loadingText]="'Saving Project'" [isLoading]="test"></app-loading-button>
+              <button class="btn btn-secondary " (click)="this.resetForm()">Reset</button>
+            </form>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+<div *ngIf="!this.form.get(field)?.valid && (this.form.get(field)?.dirty ||this.form.get(field)?.touched)">
+  <div [hidden]="!this.form.get(field)?.errors?.required" class="text-danger fst-italic">
+    *{{field | uppercase}} is required
+  </div>
+</div>

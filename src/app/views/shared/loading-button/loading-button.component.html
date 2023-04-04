@@ -1,0 +1,7 @@
+<button type="submit" class="btn btn-primary me-2 mr-2 mb-2 mb-md-0" *ngIf="!isLoading">
+  {{btnText}}
+</button>
+<button class="btn btn-primary me-2 mr-2 mb-2 mb-md-0" type="button" disabled *ngIf="isLoading">
+  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+  {{loadingText}}...
+</button>
