@@ -13,7 +13,6 @@ import Swal from "sweetalert2";
 export class LoginComponent implements OnInit {
 
   returnUrl: any;
-  quotePic: string = '';
   loginForm: FormGroup;
   doingLogin: boolean = false;
   loginFail: boolean = false;
@@ -31,7 +30,6 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
-    this.getPic();
   }
 
   submitLogin() {
@@ -55,22 +53,6 @@ export class LoginComponent implements OnInit {
         }
         this.doingLogin = false;
       });
-  }
-
-  getPic(){
-    const picList = [
-      "1.jpg",
-      "2.jpg",
-      "3.jpg",
-      "4.jpg",
-      "5.jpg",
-      "6.jpg",
-      "7.jpg",
-      "8.jpg",
-      "9.jpg"
-    ];
-    const random = Math.floor(Math.random() * picList.length);
-    this.quotePic = picList[random];
   }
 
 }

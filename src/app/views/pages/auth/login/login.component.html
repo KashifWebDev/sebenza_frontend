@@ -2,18 +2,17 @@
   <div class="col-md-8 col-xl-6 mx-auto">
     <div class="card">
       <div class="row">
-        <div class="col-md-4 pr-md-0">
-          <div class="auth-left-wrapper">
-<!--            <img [src]="'assets/images/motivation/'+quotePic" *ngIf="quotePic">-->
-            <img src="assets/images/bg-01.jpg" alt="">
+        <div class="col-md-4 pe-md-0">
+          <div class="auth-side-wrapper" style="background-image: url('/assets/images/bg-01.jpg')">
+
           </div>
         </div>
-        <div class="col-md-8 pl-md-0">
+        <div class="col-md-8 ps-md-0">
           <div class="auth-form-wrapper px-4 py-5">
-            <a routerLink="." class="logo logo-light d-block mb-2">
-              <img src="assets/images/logo.png" alt="Logo" class="img-fluid">
+            <a routerLink="." class="nobleui-logo logo-light  d-block mb-2 d-flex align-items-center justify-content-center">
+              <img src="assets/images/logo.png" style="height: 60px" class="img-fluid mb-2">
             </a>
-            <h5 class="text-muted font-weight-normal mb-4">Welcome back! Log in to your account.</h5>
+            <h5 class="text-muted fw-normal mb-4">Welcome back! Log in to your account.</h5>
             <form class="forms-sample" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
               <div class="form-group mb-3">
                 <label for="exampleInputEmail1">Email address</label>
@@ -39,10 +38,10 @@
                   <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                   Logging In...
                 </button>
-                <button type="button" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
+                <a routerLink="../register" class="btn btn-outline-primary btn-icon-text mb-2 mb-md-0">
                   <i class="feather icon-user-plus btn-icon-prepend"></i>
                   Create a new account
-                </button>
+                </a>
               </div>
             </form>
           </div>
