@@ -9,11 +9,13 @@ import {catchError, Observable, tap, throwError} from 'rxjs';
 import Swal from "sweetalert2";
 import {Router} from "@angular/router";
 import {AppService} from "../../app.service";
+import {AuthService} from "../../views/pages/auth/auth.service";
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router, private service: AppService) {}
+  constructor(private router: Router, private service: AppService,
+              private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
@@ -26,14 +28,17 @@ export class ErrorInterceptor implements HttpInterceptor {
       }),
       catchError(error => {
         console.log('TEST: '+error.status);
+          if(error.status == 0){
+            this.authService.loginStatusSubject.next({ success: false,
+              title: 'Backend Down',
+              text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
+            });
+          }
+
           if(error.status == 401){
-            Swal.fire({
-              title: 'Login Session Expired.',
-              text: 'Please login again to resume your session!',
-              icon: 'error'
-            }).then(() => {
-              this.service.logout();
-              this.router.navigate(['/']);
+            this.authService.loginStatusSubject.next({ success: false,
+              title: 'Backend Down',
+              text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
             });
           }
         return throwError(error);

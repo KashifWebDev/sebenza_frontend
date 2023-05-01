@@ -20,12 +20,6 @@ export class AppService {
     }
   }
 
-  login(credentials: loginRequest): Observable<loginResponse>{
-    return this.http.post<loginResponse>(environment.backendURI+'/auth/login',
-      credentials
-    );
-  }
-
   setSession(token: string){
     localStorage.setItem('token', token);
   }

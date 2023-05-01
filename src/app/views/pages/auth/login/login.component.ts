@@ -4,6 +4,7 @@ import {AppService} from "../../../../app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {loginRequest} from "../../../../dataTypes.interface";
 import Swal from "sweetalert2";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-login',
@@ -15,10 +16,12 @@ export class LoginComponent implements OnInit {
   returnUrl: any;
   loginForm: FormGroup;
   doingLogin: boolean = false;
+  formSubmitted: boolean = false;
   loginFail: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private service: AppService, private fb: FormBuilder) { }
+              private service: AppService, private fb: FormBuilder,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     if (this.service.isLoggedIn()) {
@@ -30,15 +33,37 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
+    this.authService.loginStatusSubject.subscribe(data =>{
+      console.log(data);
+      if(!data.success){
+        this.doingLogin = false;
+        Swal.fire({
+          title: data.title,
+          text: data.text,
+          icon: 'error'
+        }).then(() => {
+          // console.log("in Then");
+          // this.service.logout();
+          // this.router.navigate(['/']);
+        });
+      }
+    })
   }
 
   submitLogin() {
+    this.formSubmitted = true;
     this.doingLogin = true;
+    if(!this.loginForm.valid) {
+      console.log(this.loginForm);
+      this.doingLogin = false;
+      return;
+    }
     let credentials: loginRequest = {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value
     };
-    this.service.login(credentials).subscribe(
+    this.authService.login(credentials).subscribe(
       response => {
         if(response.status){
           this.service.setSession(response.data.token);
