@@ -18,6 +18,8 @@ export class RegisterComponent implements OnInit {
   isForm1Submitted: Boolean;
   isForm2Submitted: Boolean;
 
+  stepsTitle : string[] = ['1', '2', '3', '4', '5'];
+
 
   public accountTypes: string[] = ['Law Firm', 'Accounting', 'Construction', 'Event Management', 'Logistics', 'Project Management', 'Retailers', 'Others'];
   constructor(private router: Router,public formBuilder: FormBuilder) { }
@@ -40,9 +42,12 @@ export class RegisterComponent implements OnInit {
      * formw value validation
      */
     this.validationForm2 = this.formBuilder.group({
-      email : ['', [Validators.required, Validators.email]],
-      mobileNumber : ['', Validators.required],
-      password : ['', [Validators.required]]
+      company : ['', Validators.required],
+      type : [''],
+      country : ['', Validators.required],
+      city : ['', Validators.required],
+      address : ['', Validators.required],
+      mobile : ['', Validators.required]
     });
 
     this.isForm1Submitted = false;
@@ -73,6 +78,7 @@ export class RegisterComponent implements OnInit {
    */
   form1Submit() {
     if(this.validationForm1.valid) {
+      this.stepsTitle[0] = '✓';
       this.wizardForm.goToNextStep();
     }
     this.isForm1Submitted = true;
@@ -82,7 +88,9 @@ export class RegisterComponent implements OnInit {
    * Go to next step while form value is valid
    */
   form2Submit() {
+    console.log("test");
     if(this.validationForm2.valid) {
+      this.stepsTitle[1] = '✓';
       this.wizardForm.goToNextStep();
     }
     this.isForm2Submitted = true;

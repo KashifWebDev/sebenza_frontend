@@ -7,6 +7,7 @@ import { AuthComponent } from './auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {ArchwizardModule} from "angular-archwizard";
+import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {
@@ -32,12 +33,13 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, AuthComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        ReactiveFormsModule,
-        NgSelectModule,
-        ArchwizardModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    NgSelectModule,
+    ArchwizardModule,
+    NgbAlertModule
+  ]
 })
 export class AuthModule { }
