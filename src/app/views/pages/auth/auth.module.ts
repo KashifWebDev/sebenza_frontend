@@ -7,7 +7,8 @@ import { AuthComponent } from './auth.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgSelectModule} from "@ng-select/ng-select";
 import {ArchwizardModule} from "angular-archwizard";
-import {NgbAlertModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAlertModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {FeatherIconModule} from "../../../core/feather-icon/feather-icon.module";
 
 const routes: Routes = [
   {
@@ -39,7 +40,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgSelectModule,
     ArchwizardModule,
-    NgbAlertModule
+    NgbAlertModule,
+    NgbModule,
+    FeatherIconModule
   ]
 })
 export class AuthModule { }
