@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  backendURI: 'https://sebenza.kashifali.me/backend/api'
 };
