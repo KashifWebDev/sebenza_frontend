@@ -108,6 +108,8 @@
                              bindLabel="name"
                              bindValue="id"
                              placeholder="Type to select Account"
+                             [closeOnSelect]="true"
+                             [searchable]="true"
                              class="col-sm-9">
                   </ng-select>
               </div>
@@ -145,7 +147,7 @@
               <div class="row mb-3">
                 <label for="exampleInputMobile" class="col-sm-3 col-form-label">Mobile</label>
                 <div class="col-sm-9">
-                  <input type="number" class="form-control" id="exampleInputMobile" placeholder="Mobile number" formControlName="mobile"
+                  <input type="text" class="form-control" id="exampleInputMobile" placeholder="Mobile number" formControlName="mobile"
                          [ngClass]="{'is-invalid': isForm2Submitted && form2.mobile.errors}">
                   <div *ngIf="isForm2Submitted && form2.country.errors?.required" class="invalid-feedback">
                     Required
