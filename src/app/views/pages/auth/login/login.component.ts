@@ -1,6 +1,5 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {AppService} from "../../../../app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
@@ -19,11 +18,10 @@ export class LoginComponent implements OnInit {
   loginFail: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
-              private service: AppService, private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    if (this.service.isLoggedIn()) {
+    if (this.authService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
     // get return url from route parameters or default to '/'
@@ -62,10 +60,10 @@ export class LoginComponent implements OnInit {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value
     };
-    this.service.login(credentials).subscribe(
+    this.authService.login(credentials).subscribe(
       (response: any) => {
         if(response.status){
-          this.service.setSession(response.data.token);
+          this.authService.setSession(response.data.token);
           this.router.navigate(['/']);
         }else{
           this.loginFail = true;
