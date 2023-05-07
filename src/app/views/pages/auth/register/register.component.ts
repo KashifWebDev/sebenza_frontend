@@ -4,8 +4,8 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { WizardComponent as BaseWizardComponent } from 'angular-archwizard';
 import {confirmPasswordValidator} from "../../../../core/validators/confirm-password.validator";
 import Swal from "sweetalert2";
+import {AuthService} from "../auth.service";
 import {accountType, ApiResponse, Package} from "../../../../core/interfaces/interfaces";
-import {AppService} from "../../../../app.service";
 
 @Component({
   selector: 'app-register',
@@ -39,11 +39,11 @@ export class RegisterComponent implements OnInit {
     { id: 8, name: 'Others' }
   ];
   constructor(private router: Router,public formBuilder: FormBuilder,
-              private appService: AppService) { }
+              private authService: AuthService) { }
 
   ngOnInit(): void {
 
-    this.appService.getAccTypes().subscribe((res: ApiResponse<accountType[]>) => {
+    this.authService.getAccTypes().subscribe((res: ApiResponse<accountType[]>) => {
       this.accountTypes  = res.data!.filter( (data: accountType) => {
         return data.status == 'Active';
       }).map( (element: accountType) => {
@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
       });
     });
 
-    this.appService.getPackagesType().subscribe((res: ApiResponse<Package[]>) => {
+    this.authService.getPackagesType().subscribe((res: ApiResponse<Package[]>) => {
       this.employees  = res.data!.filter( (data: Package) => {
         return data.status == 'Active';
       }).map( (element: Package) => {
@@ -125,7 +125,7 @@ export class RegisterComponent implements OnInit {
       this.formData.append('phone', this.validationForm2.controls['mobile'].value);
       this.formData.append('user_limit_id', this.validationForm2.controls['employees'].value);
 
-      this.appService.register(this.formData).subscribe(res => {
+      this.authService.register(this.formData).subscribe(res => {
         if(res.status){
           this.signedUp = true;
         }else{
