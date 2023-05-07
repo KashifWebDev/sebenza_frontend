@@ -2,7 +2,6 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {AppService} from "../../../../app.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {loginRequest} from "../../../../dataTypes.interface";
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
 
@@ -59,12 +58,12 @@ export class LoginComponent implements OnInit {
       this.doingLogin = false;
       return;
     }
-    let credentials: loginRequest = {
+    let credentials: any = {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value
     };
-    this.authService.login(credentials).subscribe(
-      response => {
+    this.service.login(credentials).subscribe(
+      (response: any) => {
         if(response.status){
           this.service.setSession(response.data.token);
           this.router.navigate(['/']);

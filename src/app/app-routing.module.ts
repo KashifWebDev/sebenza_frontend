@@ -16,10 +16,6 @@ const routes: Routes = [
         path: 'dashboard',
         loadChildren: () => import('./views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
       },
-      {
-        path: 'carrier',
-        loadChildren: () => import('./views/pages/carrier/projects.module').then(m => m.ProjectsModule)
-      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]

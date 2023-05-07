@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {loginRequest, loginResponse, User} from "./dataTypes.interface";
 import {environment} from "../environments/environment";
 import Swal from "sweetalert2";
+import {accountType, ApiResponse, Package, signUpResponse, User} from "./core/interfaces/interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,26 @@ export class AppService {
       // this.currentUser = JSON.parse(localStorage.getItem('userData') ?? '');
       this.authToken = localStorage.getItem('token') ?? '';
     }
+  }
+
+  login(credentials: ApiResponse<any>): Observable<ApiResponse<User>>{
+    return this.http.post<ApiResponse<any>>(environment.backendURI+'/auth/login',
+      credentials
+    );
+  }
+
+  register(formBody: FormData): Observable<ApiResponse<signUpResponse>>{
+    return this.http.post<any>(environment.backendURI+'/register',
+      formBody
+    );
+  }
+
+  getAccTypes(): Observable<ApiResponse<accountType[]>>{
+    return this.http.get<any>(environment.backendURI+'/gettypes');
+  }
+
+  getPackagesType(): Observable<ApiResponse<Package[]>>{
+    return this.http.get<any>(environment.backendURI+'/getpackages');
   }
 
   setSession(token: string){
