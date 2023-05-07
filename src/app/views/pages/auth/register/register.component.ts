@@ -44,25 +44,29 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
 
     this.authService.getAccTypes().subscribe((res: ApiResponse<accountType[]>) => {
-      this.accountTypes  = res.data!.filter( (data: accountType) => {
-        return data.status == 'Active';
-      }).map( (element: accountType) => {
-        return {
-          id: element.id,
-          name: element.account_type
-        }
-      });
+      if(res.status){
+        this.accountTypes  = res.data!.filter( (data: accountType) => {
+          return data.status == 'Active';
+        }).map( (element: accountType) => {
+          return {
+            id: element.id,
+            name: element.account_type
+          }
+        });
+      }
     });
 
     this.authService.getPackagesType().subscribe((res: ApiResponse<Package[]>) => {
-      this.employees  = res.data!.filter( (data: Package) => {
-        return data.status == 'Active';
-      }).map( (element: Package) => {
-        return {
-          id: element.id,
-          account_package: element.account_package
-        }
-      });
+      if(res.status){
+        this.employees  = res.data!.filter( (data: Package) => {
+          return data.status == 'Active';
+        }).map( (element: Package) => {
+          return {
+            id: element.id,
+            account_package: element.account_package
+          }
+        });
+      }
     });
 
     this.validationForm1 = this.formBuilder.group({
