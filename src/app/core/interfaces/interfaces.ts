@@ -30,7 +30,7 @@ export interface User {
   roles: role[]
 }
 
-export interface signUpResponse {
+export interface AuthResponse {
   user: User,
   token: string
 }

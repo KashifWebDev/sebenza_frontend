@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
+import {ApiResponse, AuthResponse} from "../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-login',
@@ -56,20 +57,19 @@ export class LoginComponent implements OnInit {
       this.doingLogin = false;
       return;
     }
-    let credentials: any = {
-      email: this.loginForm.controls['email'].value,
-      password: this.loginForm.controls['password'].value
-    };
-    this.authService.login(credentials).subscribe(
-      (response: any) => {
+    this.authService.login(
+      this.loginForm.controls['email'].value,
+      this.loginForm.controls['password'].value
+    ).subscribe(
+      (response: ApiResponse<AuthResponse>) => {
         if(response.status){
-          this.authService.setSession(response.data.token);
+          this.authService.setSession(response.data?.token, response.data?.user);
           this.router.navigate(['/']);
         }else{
           this.loginFail = true;
           Swal.fire({
             title: 'Login Failed!',
-            text: response.message,
+            text: 'Login failed. Please check your email and password and try again.',
             icon: 'error'
           });
         }

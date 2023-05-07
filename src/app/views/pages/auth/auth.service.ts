@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {accountType, ApiResponse, Package, signUpResponse, User} from "../../../core/interfaces/interfaces";
+import {Injectable} from '@angular/core';
+import {accountType, ApiResponse, AuthResponse, Package, User} from "../../../core/interfaces/interfaces";
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -20,30 +20,38 @@ export class AuthService {
     }
   }
 
-  setSession(token: string){
+  setSession(token: any, user: User | undefined){
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+    // this.loginStatusSubject.next(this.getLoggedInUser());
+  }
+
+  getLoggedInUser(): User | string | null {
+    let user: User | string | null = localStorage.getItem('user');
+    return this.getToken() ?  user: null;
   }
 
   getToken(){
-    console.log(`TOKEN: ${localStorage.getItem('token')}`);
     return localStorage.getItem('token') ?? '';
   }
 
   logout(){
-    return localStorage.removeItem('token');
+    localStorage.removeItem('token')
+    localStorage.removeItem('user');
+    return true;
   }
 
   isLoggedIn(){
     return localStorage.getItem('token') !== null;
   }
 
-  login(credentials: ApiResponse<any>): Observable<ApiResponse<User>>{
-    return this.http.post<ApiResponse<any>>(environment.backendURI+'/auth/login',
-      credentials
+  login(email: string, password: string): Observable<ApiResponse<AuthResponse>>{
+    return this.http.post<ApiResponse<any>>(environment.backendURI+'/login',
+      {email, password}
     );
   }
 
-  register(formBody: FormData): Observable<ApiResponse<signUpResponse>>{
+  register(formBody: FormData): Observable<ApiResponse<AuthResponse>>{
     return this.http.post<any>(environment.backendURI+'/register',
       formBody
     );
