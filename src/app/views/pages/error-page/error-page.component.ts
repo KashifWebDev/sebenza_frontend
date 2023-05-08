@@ -19,7 +19,7 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.type = this.route.snapshot.paramMap.get('type');
     console.log(this.type);
-    
+
     this.sub = this.route.data.subscribe( param => {
       if(param.type) {
         this.type = param.type;
@@ -47,6 +47,14 @@ export class ErrorPageComponent implements OnInit, OnDestroy {
         }
         if (!this.desc) {
           this.desc = 'Oopps!! There wan an error. Please try agin later.'
+        }
+        break;
+      case '401':
+        if (!this.title) {
+          this.title = 'Unauthorized'
+        }
+        if (!this.desc) {
+          this.desc = 'Oopps!! You are not allowed to access this page. Please contact Admin!'
         }
         break;
       default:

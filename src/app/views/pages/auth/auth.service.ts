@@ -3,6 +3,7 @@ import {accountType, ApiResponse, AuthResponse, Package, User} from "../../../co
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import {UserRole} from "../../../core/roles/UserRole";
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,9 @@ export class AuthService {
 
   getPackagesType(): Observable<ApiResponse<Package[]>>{
     return this.http.get<any>(environment.backendURI+'/getpackages');
+  }
+
+  getUserRole(){
+    return UserRole.Admin;
   }
 }
