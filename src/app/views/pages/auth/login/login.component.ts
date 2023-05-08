@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       (response: ApiResponse<AuthResponse>) => {
         if(response.status){
           this.authService.setSession(response.data?.token, response.data?.user);
-          this.router.navigate(['/']);
+          this.router.navigate(['/administrator/']);
         }else{
           this.loginFail = true;
           Swal.fire({
