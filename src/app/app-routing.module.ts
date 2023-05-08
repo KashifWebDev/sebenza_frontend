@@ -8,6 +8,7 @@ import {UserRole} from "./core/roles/UserRole";
 
 
 const routes: Routes = [
+  { path: '', redirectTo: 'auth', pathMatch: 'full'},
   { path:'auth', loadChildren: () => import('./views/pages/auth/auth.module').then(m => m.AuthModule) },
   {
     path: 'administrator',

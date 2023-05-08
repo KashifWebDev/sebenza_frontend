@@ -4,6 +4,7 @@ import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {UserRole} from "../../../core/roles/UserRole";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthService {
   private authToken: string = '';
   loginStatusSubject: Subject<any> = new Subject<any>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     if(this.isLoggedIn()){
       // this.currentUser = JSON.parse(localStorage.getItem('userData') ?? '');
       this.authToken = localStorage.getItem('token') ?? '';
@@ -27,7 +28,7 @@ export class AuthService {
     // this.loginStatusSubject.next(this.getLoggedInUser());
   }
 
-  getLoggedInUser(): User | string | null {
+  getLoggedInUser(): User | string | null | any {
     let user: User | string | null = localStorage.getItem('user');
     return this.getToken() ?  user: null;
   }
@@ -67,6 +68,25 @@ export class AuthService {
   }
 
   getUserRole(){
+    console.log('test:',JSON.parse(this.getLoggedInUser()).roles[0].name);
     return UserRole.Admin;
+  }
+
+  redirectToDashboard(){
+    let path = '';
+    switch (this.getUserRole()){
+      case UserRole.Admin:
+        path = '/administrator';
+        break;
+      case UserRole.User:
+        path = '/user';
+        break;
+      default:
+        console.log("No roles were found to redirect the user to dashboard!");
+        path = '/error/500';
+    }
+    console.log(path);
+
+    this.router.navigate([path]);
   }
 }
