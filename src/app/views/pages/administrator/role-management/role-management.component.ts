@@ -28,4 +28,13 @@ export class RoleManagementComponent implements OnInit, AfterViewChecked   {
     }
   }
 
+  getPermission(permission: string){
+    return  permission.replace(/(\b[a-z](?!\b)|\G)[a-z]*\b\.?/gi, (word) => {
+      if (word.endsWith('.')) {
+        word = word.substring(0, word.length - 1) + ' > ';
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    });
+  }
+
 }

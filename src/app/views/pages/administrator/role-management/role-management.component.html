@@ -3,6 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">Roles Management</h6>
+        <a routerLink="add">AdDd Role</a>
         <div class="spinner-border" role="status" *ngIf="!userRoles">
           <span class="visually-hidden">Loading...</span>
         </div>
@@ -17,10 +18,14 @@
               </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let role of userRoles">
-                  <td>{{role.id}}</td>
+                <tr *ngFor="let role of userRoles; let i = index">
+                  <td>{{i+1}}</td>
                   <td>{{role.name}}</td>
-                  <td>{{role.permissions}}</td>
+                  <td>
+                    <span class="badge bg-primary me-1" *ngFor="let permission of role.permissions">
+                       {{getPermission(permission.name)}}
+                    </span>
+                  </td>
                   <td>
                     <button type="button" class="btn btn-icon">
                       <i class="feather icon-edit-3"></i>
