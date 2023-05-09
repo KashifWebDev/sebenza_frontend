@@ -11,7 +11,8 @@ import { CssLoaderComponent } from './css-loader/css-loader.component';
         CssLoaderComponent
     ],
     exports: [
-        LoadingButtonComponent
+        LoadingButtonComponent,
+        CssLoaderComponent
     ],
     imports: [
         CommonModule

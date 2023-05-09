@@ -9,6 +9,7 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {ArchwizardModule} from "angular-archwizard";
 import {NgbAlertModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FeatherIconModule} from "../../../core/feather-icon/feather-icon.module";
+import {SharedModule} from "../../shared/shared.module";
 
 const routes: Routes = [
   {
@@ -34,15 +35,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, AuthComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    NgSelectModule,
-    ArchwizardModule,
-    NgbAlertModule,
-    NgbModule,
-    FeatherIconModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        NgSelectModule,
+        ArchwizardModule,
+        NgbAlertModule,
+        NgbModule,
+        FeatherIconModule,
+        SharedModule
+    ]
 })
 export class AuthModule { }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
@@ -10,20 +10,22 @@ import {ApiResponse, AuthResponse} from "../../../../core/interfaces/interfaces"
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewChecked {
 
   returnUrl: any;
   loginForm: FormGroup;
   doingLogin: boolean = false;
   formSubmitted: boolean = false;
   loginFail: boolean = false;
+  showLoginForm: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+
     if (this.authService.isLoggedIn()) {
-      // this.authService.redirectToDashboard();
+      this.authService.redirectToDashboard();
     }
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -47,6 +49,12 @@ export class LoginComponent implements OnInit {
         });
       }
     })
+  }
+
+  ngAfterViewChecked() {
+    if (!this.authService.isLoggedIn()) {
+      this.showLoginForm = true;
+    }
   }
 
   submitLogin() {

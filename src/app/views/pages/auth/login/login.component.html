@@ -1,4 +1,6 @@
-<div class="row w-100 mx-0 auth-page">
+<app-css-loader *ngIf="!showLoginForm"></app-css-loader>
+
+<div class="row w-100 mx-0 auth-page"  *ngIf="showLoginForm">
   <div class="col-md-8 col-xl-6 mx-auto">
     <div class="card">
       <div class="row">
