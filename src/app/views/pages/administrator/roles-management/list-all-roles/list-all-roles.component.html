@@ -3,9 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">Roles Management</h6>
-        <div class="spinner-border" role="status" *ngIf="!userRoles">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+        <app-css-loader *ngIf="!userRoles"></app-css-loader>
         <div class="table-responsive"  *ngIf="userRoles && userRoles.length">
           <table id="dataTableExample" class="table">
             <thead>

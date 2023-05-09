@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common'
 import {ListAllRolesComponent} from "./list-all-roles/list-all-roles.component";
 import { AddNewRoleComponent } from './add-new-role/add-new-role.component';
 import {RouterModule, Routes} from "@angular/router";
+import {SharedModule} from "../../../shared/shared.module";
 
 const routes: Routes = [
   {path: '', component: ListAllRolesComponent},
@@ -16,7 +17,8 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ]
 })
 export class RolesManagementModule { }
