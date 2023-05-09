@@ -18,8 +18,8 @@ const routes: Routes = [
       {
         data: { roles: [UserRole.Admin] },
         canActivate: [RoleGuard],
-        path: 'dashboard',
-        loadChildren: () => import('./views/pages/dashboard/dashboard.module').then(m => m.DashboardModule)
+        path: '',
+        loadChildren: () => import('./views/pages/administrator/administrator.module').then(m => m.AdministratorModule)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }

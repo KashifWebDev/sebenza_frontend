@@ -12,7 +12,15 @@ export interface ApiError {
 export interface role {
   id: number,
   name: string,
-  guard_name: string
+  guard_name: string,
+  permissions: rolePermission[]
+}
+
+export interface rolePermission {
+  id: number,
+  name: string,
+  guard_name: string,
+  group_name: string
 }
 
 export interface User {
