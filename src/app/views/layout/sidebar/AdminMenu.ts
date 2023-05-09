@@ -6,10 +6,6 @@ export const AdminMenu: MenuItem[] = [
     isTitle: true
   },
   {
-    label: 'Main',
-    isTitle: true
-  },
-  {
     label: 'Dashboard',
     icon: 'home',
     link: 'dashboard'
