@@ -6,21 +6,30 @@ import {FormsModule} from "@angular/forms";
 import {FeatherIconModule} from "../../../core/feather-icon/feather-icon.module";
 import {NgbDatepickerModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgApexchartsModule} from "ng-apexcharts";
-import { UserManagementComponent } from './user-management/user-management.component';
-import { RoleManagementComponent } from './role-management/role-management.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'users-management', component: UserManagementComponent},
-  {path: 'roles-management', component: RoleManagementComponent},
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'users-management',
+    loadChildren: () => import('./users-management/users-management.module').then(m => m.UsersManagementModule)
+  },
+  {
+    path: 'roles-management',
+    loadChildren: () => import('./roles-management/roles-management.module').then(m => m.RolesManagementModule)
+  }
 ]
 
 @NgModule({
   declarations: [
-    DashboardComponent,
-    UserManagementComponent,
-    RoleManagementComponent
+    DashboardComponent
   ],
   imports: [
     CommonModule,

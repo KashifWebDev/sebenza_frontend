@@ -15,20 +15,34 @@ export const AdminMenu: MenuItem[] = [
     link: 'dashboard'
   },
   {
-    label: 'Quick Links',
+    label: 'Users & Roles',
     isTitle: true
   },
   {
-    label: 'Users & Roles',
+    label: 'Users Management',
     icon: 'users',
     subItems: [
       {
-        label: 'Users Management',
+        label: 'Users Directory',
         link: 'users-management'
       },
       {
-        label: 'Roles Management',
-        link: 'roles-management',
+        label: 'Add New User',
+        link: 'users-management/add-user',
+      }
+    ]
+  },
+  {
+    label: 'Roles Management',
+    icon: 'user-plus',
+    subItems: [
+      {
+        label: 'All Roles',
+        link: 'roles-management'
+      },
+      {
+        label: 'Add Role',
+        link: 'roles-management/add-role',
       }
     ]
   }
