@@ -22,7 +22,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/pages/administrator/administrator.module').then(m => m.AdministratorModule)
       },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      // { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
   {
