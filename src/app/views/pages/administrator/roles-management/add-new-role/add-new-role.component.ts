@@ -85,7 +85,7 @@ export class AddNewRoleComponent implements OnInit {
           this.appService.swalFire('Role created successfully!', 'success');
           this.addRoleForm.reset();
         }else{
-          this.appService.swalFire('Error Occurred while creating role!', 'error');
+          this.appService.swalFire(next.message, 'error');
         }
       },
       error => {
