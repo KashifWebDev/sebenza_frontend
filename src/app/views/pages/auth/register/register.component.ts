@@ -6,6 +6,7 @@ import {confirmPasswordValidator} from "../../../../core/validators/confirm-pass
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
 import {accountType, ApiResponse, Package} from "../../../../core/interfaces/interfaces";
+import {AppService} from "../../../../app.service";
 
 @Component({
   selector: 'app-register',
@@ -39,7 +40,7 @@ export class RegisterComponent implements OnInit {
     { id: 8, name: 'Others' }
   ];
   constructor(private router: Router,public formBuilder: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService, private appService: AppService) { }
 
   ngOnInit(): void {
 
@@ -162,20 +163,7 @@ export class RegisterComponent implements OnInit {
   }
 
   congratsAlert(){
-    // Swal.fire({
-    //   position: 'top-end',
-    //   icon: 'success',
-    //   title: 'Your work has been saved',
-    //   showConfirmButton: false,
-    //   timer: 1500
-    // })
-    Swal.fire({ toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      title: 'Signed up successfully',
-      icon: 'success'})
+    this.appService.swalFire('Signed up successfully', 'success');
   }
 
 }

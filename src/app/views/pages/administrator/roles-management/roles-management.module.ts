@@ -4,6 +4,8 @@ import {ListAllRolesComponent} from "./list-all-roles/list-all-roles.component";
 import { AddNewRoleComponent } from './add-new-role/add-new-role.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../../shared/shared.module";
+import {NgSelectModule} from "@ng-select/ng-select";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {path: '', component: ListAllRolesComponent},
@@ -18,7 +20,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    NgSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class RolesManagementModule { }
