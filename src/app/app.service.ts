@@ -10,15 +10,7 @@ export class AppService {
   }
 
   swalFire(title: string, icon: 'warning' | 'error' | 'info' | 'success' | 'question'){
-    Swal.fire({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      title: title,
-      icon: icon
-    })
+    Swal.fire({ position: 'top-end', title: title, text: '', showConfirmButton: false, timer: 1500, icon: icon})
   }
 
 }
