@@ -97,10 +97,6 @@ export class ListAllRolesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getPermission(permission: string){
-    return this.adminService.reformatPermissionText(permission);
-  }
-
   deleteRole(id: number) {
     console.log(id);
     this.modalService.open(this.deleteModal, {});

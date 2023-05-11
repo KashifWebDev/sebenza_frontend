@@ -2,33 +2,16 @@
   <div class="mx-auto col-md-6 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-
         <h6 class="card-title">Introduce New Role</h6>
-
-        <app-css-loader *ngIf="loading"></app-css-loader>
-        <form class="forms-sample" [formGroup]="addRoleForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+        <form class="forms-sample" [formGroup]="addRoleForm" (ngSubmit)="submitForm()">
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">Role Name</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
                    autocomplete="off" placeholder="Name" formControlName="roleName">
           </div>
-          <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <ng-select
-              id="exampleInputEmail1"
-              [items]="getPermissions(permissions)"
-              [multiple]=true
-              [closeOnSelect]="false"
-              [searchable]="false"
-              bindLabel="name"
-              placeholder="Select people"
-              formControlName="permissions">
-            </ng-select>
-          </div>
           <button type="submit" class="btn btn-primary me-2">Submit</button>
           <button class="btn btn-secondary">Cancel</button>
         </form>
-
       </div>
     </div>
   </div>
