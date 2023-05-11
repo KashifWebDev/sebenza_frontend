@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ApiResponse, role, rolePermission} from "../../../core/interfaces/interfaces";
+import {ApiResponse, role, rolePermission, User} from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 
@@ -18,6 +18,12 @@ export class AdministratorService {
   getAllPermissions(): Observable<ApiResponse<{permissions: rolePermission[]}>>{
     return this.http.get<ApiResponse<{ permissions: rolePermission[] }>>(
       environment.backendURI+'/admin/getpermissions'
+    );
+  }
+
+  getAllUsers(): Observable<ApiResponse<{users: User[]}>>{
+    return this.http.get<ApiResponse<{ users: User[] }>>(
+      environment.backendURI+'/admin/users'
     );
   }
 

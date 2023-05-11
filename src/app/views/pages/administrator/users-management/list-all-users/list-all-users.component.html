@@ -1,1 +1,68 @@
-<p>list-all-users works!</p>
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Users Management</h6>
+        <app-css-loader *ngIf="!users"></app-css-loader>
+        <div class="table-responsive"  *ngIf="users && users.length">
+          <table id="dataTableExample" class="table" #dataTable>
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Full Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Company</th>
+              <th>Country</th>
+              <th>City</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{user.id}}</td>
+              <td>{{user.first_name+' '+user.last_name}}</td>
+              <td>{{user.phone}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.company_name}}</td>
+              <td>{{user.country}}</td>
+              <td>{{user.city}}</td>
+              <td>
+                <span class="bg-primary me-2 px-2 py-2 text-white" *ngIf="user.roles && user.roles.length > 0 && user.roles[0].name">
+                  {{user.roles[0].name}}
+                </span>
+              </td>
+              <td>
+                <button type="button" class="btn btn-icon">
+                  <i class="feather icon-edit-3"></i>
+                </button>
+                <button type="button" class="btn btn-icon" (click)="deleteRole(user.id)">
+                  <i class="feather icon-trash-2"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <p>Modal body</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
+  </div>
+</ng-template>
+<!-- Close result -->
+<p *ngIf="basicModalCloseResult != ''" class="mt-2">{{basicModalCloseResult}}</p>
