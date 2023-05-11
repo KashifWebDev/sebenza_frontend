@@ -4,6 +4,7 @@ import { ListAllUsersComponent } from './list-all-users/list-all-users.component
 import { AddUserComponent } from './add-user/add-user.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../../shared/shared.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class UsersManagementModule { }
