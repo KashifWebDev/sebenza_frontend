@@ -5,18 +5,26 @@
         <div class="card-body">
           <h4 class="card-title">{{isEditMode ? 'Edit User' : 'User Registration'}}</h4>
           <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-            <form>
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    <input type="text" class="form-control" id="firstName" name="firstName" formControlName="first_name"
+                           [ngClass]="{'is-invalid': formProcessed && form.first_name.errors}">
+                    <div *ngIf="formProcessed && form.first_name.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    <input type="text" class="form-control" id="lastName" name="lastName" formControlName="last_name"
+                           [ngClass]="{'is-invalid': formProcessed && form.last_name.errors}">
+                    <div *ngIf="formProcessed && form.last_name.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -25,13 +33,24 @@
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                    <input type="tel" class="form-control" id="phone" name="phone" formControlName="phone"
+                           [ngClass]="{'is-invalid': formProcessed && form.phone.errors}">
+                    <div *ngIf="formProcessed && form.phone.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                           [ngClass]="{'is-invalid': formProcessed && form.email.errors}">
+                    <div *ngIf="formProcessed && form.email.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                    <div *ngIf="formProcessed && !form.email.errors?.required && form.email.errors?.email" class="invalid-feedback">
+                      Must be a valid email
+                    </div>
                   </div>
                 </div>
               </div>
@@ -40,13 +59,21 @@
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="company" class="form-label">Company</label>
-                    <input type="text" class="form-control" id="company" name="company" required>
+                    <input type="text" class="form-control" id="company" name="company" formControlName="company"
+                           [ngClass]="{'is-invalid': formProcessed && form.company.errors}">
+                    <div *ngIf="formProcessed && form.company.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="country" class="form-label">Country</label>
-                    <input type="text" class="form-control" id="country" name="country" required>
+                    <input type="text" class="form-control" id="country" name="country" formControlName="country"
+                           [ngClass]="{'is-invalid': formProcessed && form.country.errors}">
+                    <div *ngIf="formProcessed && form.country.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
               </div>
@@ -55,24 +82,35 @@
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="city" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" name="city" required>
+                    <input type="text" class="form-control" id="city" name="city" formControlName="city"
+                           [ngClass]="{'is-invalid': formProcessed && form.city.errors}">
+                    <div *ngIf="formProcessed && form.city.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+                    <textarea class="form-control" id="address" name="address" rows="3" formControlName="address"
+                              [ngClass]="{'is-invalid': formProcessed && form.address.errors}"></textarea>
+                    <div *ngIf="formProcessed && form.address.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
                   </div>
                 </div>
               </div>
 
               <div class="text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <app-loading-button
+                  [btnIcon]="isEditMode ? 'edit-3' : 'user-plus'"
+                  [btnText]="isEditMode ? 'Edt User' : 'Create New User'"
+                  [loadingText]="'Creating User...'"
+                  [isLoading]="formSubmit"></app-loading-button>
               </div>
             </form>
 
 
-            <button type="submit">{{ isEditMode ? 'Update User' : 'Register User' }}</button>
           </form>
         </div>
       </div>

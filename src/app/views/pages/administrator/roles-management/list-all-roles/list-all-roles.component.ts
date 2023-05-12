@@ -32,11 +32,9 @@ export class ListAllRolesComponent implements OnInit, AfterViewInit {
           dataTable.on('page', () => {
             // Execute your function here
             this.changeStyle();
-            console.log('PAGINATION CHAngE');
           });
 
           this.changeStyle();
-          console.log('Hey');
         }, 1000)
       }
     });
@@ -51,14 +49,12 @@ export class ListAllRolesComponent implements OnInit, AfterViewInit {
       const paginationElement = document.querySelector('.datatable-pagination');
       const selectRange = document.querySelector('.datatable-selector');
       if (paginationElement || selectRange) {
-        console.log('Magic');
         this.renderer.listen(paginationElement, 'click', () => {
           setTimeout(() => {
             this.changeStyle();
           }, 10);
         });
         this.renderer.listen(selectRange, 'click', () => {
-          console.log("SELECT");
           setTimeout(() => {
             this.changeStyle();
           }, 10);
@@ -98,7 +94,6 @@ export class ListAllRolesComponent implements OnInit, AfterViewInit {
   }
 
   deleteRole(id: number) {
-    console.log(id);
     this.modalService.open(this.deleteModal, {});
   }
 }

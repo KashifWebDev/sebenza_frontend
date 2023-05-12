@@ -15,9 +15,9 @@ export class AdministratorService {
     return this.http.get<ApiResponse<{ roles: role[] }>>(environment.backendURI+'/admin/userroles');
   }
 
-  getAllPermissions(): Observable<ApiResponse<{permissions: rolePermission[]}>>{
-    return this.http.get<ApiResponse<{ permissions: rolePermission[] }>>(
-      environment.backendURI+'/admin/getpermissions'
+  fetchUserDetail(id: number): Observable<ApiResponse<{user: User[]}>>{
+    return this.http.get<ApiResponse<{ user: User[] }>>(
+      environment.backendURI+`/user/details/${id}`
     );
   }
 
@@ -27,30 +27,23 @@ export class AdministratorService {
     );
   }
 
-  reformatPermissionText(permission: string){
-    return  permission.replace(/(\b[a-z](?!\b)|\G)[a-z]*\b\.?/gi, (word) => {
-      if (word.endsWith('.')) {
-        word = word.substring(0, word.length - 1) + ' > ';
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    });
-  }
-
-  reversePermissionText(permission: string) {
-    return  permission
-      .split(' > ')
-      .map((word) => {
-        if (word.endsWith('.')) {
-          word = word.slice(0, -1);
-        }
-        return word.charAt(0).toLowerCase() + word.slice(1);
-      })
-      .join('.');
-  }
-
   addNewRoleSubmit(formData: FormData): Observable<ApiResponse<{ role: role }>>{
     return this.http.post<ApiResponse<{role: role}>>(
       environment.backendURI+'/admin/userroles',
+      formData
+    );
+  }
+
+  addNewUserSubmit(formData: FormData): Observable<ApiResponse<{ user: User }>>{
+    return this.http.post<ApiResponse<{user: User}>>(
+      environment.backendURI+'/admin/users',
+      formData
+    );
+  }
+
+  editUserSubmit(formData: FormData): Observable<ApiResponse<{ user: User }>>{
+    return this.http.post<ApiResponse<{user: User}>>(
+      environment.backendURI+'/admin/users/update',
       formData
     );
   }

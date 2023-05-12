@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
 import {AdministratorService} from "../../administrator.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DataTable} from "simple-datatables";
@@ -9,7 +9,7 @@ import {role, User} from "../../../../../core/interfaces/interfaces";
   templateUrl: './list-all-users.component.html',
   styleUrls: ['./list-all-users.component.scss']
 })
-export class ListAllUsersComponent implements OnInit {
+export class ListAllUsersComponent implements OnInit, AfterViewInit {
 
   @ViewChild('dataTable') dataTable!: ElementRef;
   basicModalCloseResult: string = '';
@@ -32,14 +32,16 @@ export class ListAllUsersComponent implements OnInit {
           dataTable.on('page', () => {
             // Execute your function here
             this.changeStyle();
-            console.log('PAGINATION CHAngE');
           });
 
           this.changeStyle();
-          console.log('Hey');
         }, 1000)
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.listenToPaginationClick();
   }
 
   listenToPaginationClick() {
@@ -47,14 +49,12 @@ export class ListAllUsersComponent implements OnInit {
       const paginationElement = document.querySelector('.datatable-pagination');
       const selectRange = document.querySelector('.datatable-selector');
       if (paginationElement || selectRange) {
-        console.log('Magic');
         this.renderer.listen(paginationElement, 'click', () => {
           setTimeout(() => {
             this.changeStyle();
           }, 10);
         });
         this.renderer.listen(selectRange, 'click', () => {
-          console.log("SELECT");
           setTimeout(() => {
             this.changeStyle();
           }, 10);
@@ -93,12 +93,7 @@ export class ListAllUsersComponent implements OnInit {
     });
   }
 
-  getPermission(permission: string){
-    return this.adminService.reformatPermissionText(permission);
-  }
-
   deleteRole(id: number) {
-    console.log(id);
     this.modalService.open(this.deleteModal, {});
   }
 }
