@@ -47,4 +47,10 @@ export class AdministratorService {
       formData
     );
   }
+
+  deleteUserSubmit(id: number): Observable<ApiResponse<{ user: User }>>{
+    return this.http.delete<ApiResponse<{user: User}>>(
+      environment.backendURI+`/admin/users/${id}`
+    );
+  }
 }

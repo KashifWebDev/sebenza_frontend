@@ -14,6 +14,7 @@ import { HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HTTPReqInterceptor} from "./core/interceptors/httpreq.interceptor";
 import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
+import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -25,10 +26,12 @@ import {ErrorInterceptor} from "./core/interceptors/error.interceptor";
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     AuthGuard,
+    NgbActiveModal,
     {
       provide: HIGHLIGHT_OPTIONS, // https://www.npmjs.com/package/ngx-highlightjs
       useValue: {

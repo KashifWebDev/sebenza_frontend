@@ -1,99 +1,63 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, TemplateRef, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AdministratorService} from "../../administrator.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {DataTable} from "simple-datatables";
-import {role, User} from "../../../../../core/interfaces/interfaces";
+
+import {User} from "../../../../../core/interfaces/interfaces";
+import { ColumnMode } from '@swimlane/ngx-datatable';
+import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {AppService} from "../../../../../app.service";
 
 @Component({
   selector: 'app-list-all-users',
   templateUrl: './list-all-users.component.html',
   styleUrls: ['./list-all-users.component.scss']
 })
-export class ListAllUsersComponent implements OnInit, AfterViewInit {
+export class ListAllUsersComponent implements OnInit {
 
-  @ViewChild('dataTable') dataTable!: ElementRef;
-  basicModalCloseResult: string = '';
-  users: User[] | undefined;
-  @ViewChild('basicModal', { static: true }) deleteModal: TemplateRef<any>;
+  users: User[];
+  userDelete: User;
+  @ViewChild('basicModal', { static: true }) deleteModal: TemplateRef<any> | NgbModalRef;
+  ColumnMode = ColumnMode;
+  deleteLoading: boolean = false;
 
   constructor(private adminService: AdministratorService, private modalService: NgbModal,
-              private renderer: Renderer2) { }
+              private appService: AppService,private activeModal: NgbActiveModal) { }
 
 
   ngOnInit(): void {
-
     this.adminService.getAllUsers().subscribe(response => {
-      if (response.status) {
-        this.users = response.data?.users;
-        setTimeout(() => {
-          const dataTable = new DataTable("#dataTableExample");
-          // Access the pagination element
-
-          dataTable.on('page', () => {
-            // Execute your function here
-            this.changeStyle();
-          });
-
-          this.changeStyle();
-        }, 1000)
+      if (response.status && response.data) {
+        this.users = response.data.users;
       }
     });
   }
 
-  ngAfterViewInit() {
-    this.listenToPaginationClick();
-  }
-
-  listenToPaginationClick() {
+  deleteRole(user: User) {
+    this.userDelete = user;
+    console.log(user);
+    this.modalService.open(this.deleteModal, {}).result.then((result) => {
+      if(result == 'cancel') this.deleteLoading = false;
+    }).catch((res) => {});
     setTimeout(() => {
-      const paginationElement = document.querySelector('.datatable-pagination');
-      const selectRange = document.querySelector('.datatable-selector');
-      if (paginationElement || selectRange) {
-        this.renderer.listen(paginationElement, 'click', () => {
-          setTimeout(() => {
-            this.changeStyle();
-          }, 10);
-        });
-        this.renderer.listen(selectRange, 'click', () => {
-          setTimeout(() => {
-            this.changeStyle();
-          }, 10);
-        });
+      this.activeModal.close();
+      console.log("clsoed");
+    }, 1000);
+  }
+
+  confirmDelete(){
+    this.deleteLoading = true;
+    this.adminService.deleteUserSubmit(this.userDelete.id).subscribe(
+      data => {
+        if(data.status){
+          this.deleteLoading = false;
+          this.appService.swalFire('User Deleted Successfully', 'success');
+          // this.modalService.
+        }
       }
-    }, 2000);
+    );
   }
 
-  changeStyle() {
-    const searchBar = document.querySelectorAll('.datatable-input') as NodeListOf<HTMLElement>;
-    searchBar.forEach((element: HTMLElement) => {
-      this.renderer.setStyle(element, 'background-color', '#0c1427');
-      this.renderer.setStyle(element, 'color', '#d0d6e1');
-      this.renderer.setStyle(element, 'line-height', '1.5');
-      this.renderer.setStyle(element, 'border', '1px solid #172340');
-    });
-
-    const elements = document.querySelectorAll('.datatable-selector') as NodeListOf<HTMLElement>;
-    elements.forEach((element: HTMLElement) => {
-      this.renderer.setStyle(element, 'background-color', '#0c1427');
-      this.renderer.setStyle(element, 'color', '#d0d6e1');
-    });
-
-    const active = document.querySelectorAll('li.datatable-pagination-list-item > a') as NodeListOf<HTMLElement>;
-    const active_a = document.querySelectorAll('li.datatable-pagination-list-item.datatable-active > a') as NodeListOf<HTMLElement>;
-
-    active.forEach((element: HTMLElement) => {
-      this.renderer.setStyle(element, 'color', '#515acc');
-      this.renderer.setStyle(element, 'background-color', '#18284e');
-      this.renderer.setStyle(element, 'border-color', '#18284e');
-    });
-    active_a.forEach((element: HTMLElement) => {
-      this.renderer.setStyle(element, 'color', '#fff');
-      this.renderer.setStyle(element, 'background-color', '#6571ff');
-      this.renderer.setStyle(element, 'border-color', '#6571ff');
-    });
+  getUserRole(user: User){
+    return user.roles[0].name;
   }
 
-  deleteRole(id: number) {
-    this.modalService.open(this.deleteModal, {});
-  }
 }

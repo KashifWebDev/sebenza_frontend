@@ -5,6 +5,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../../shared/shared.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 
 const routes: Routes = [
@@ -17,11 +18,12 @@ const routes: Routes = [
     ListAllUsersComponent,
     AddUserComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        ReactiveFormsModule,
+        NgxDatatableModule
+    ]
 })
 export class UsersManagementModule { }
