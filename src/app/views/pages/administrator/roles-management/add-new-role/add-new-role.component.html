@@ -9,7 +9,12 @@
             <input type="text" class="form-control" id="exampleInputUsername1"
                    autocomplete="off" placeholder="Name" formControlName="roleName">
           </div>
-          <button type="submit" class="btn btn-primary me-2">Submit</button>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Save Role'"
+            [loadingText]="'Saving...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
           <button class="btn btn-secondary">Cancel</button>
         </form>
       </div>

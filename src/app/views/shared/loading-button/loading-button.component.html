@@ -1,4 +1,5 @@
-<button type="submit" class="btn btn-primary me-2 mr-2 mb-2 mb-md-0" *ngIf="!isLoading">
+<button type="submit" class="btn btn-primary me-2 mr-2 mb-2 mb-md-0" *ngIf="!isLoading" [ngClass]="{'test': getBtnClass()}">
+  <i *ngIf="btnIcon" class="feather icon-{{btnIcon}} btn-icon-prepend" ></i>
   {{btnText}}
 </button>
 <button class="btn btn-primary me-2 mr-2 mb-2 mb-md-0" type="button" disabled *ngIf="isLoading">
