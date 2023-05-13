@@ -65,7 +65,7 @@ export class ListAllRolesComponent implements OnInit {
     this.adminService.deleteRoleSubmit(this.deleteUserRole.id).subscribe(
       data => {
         if(data.status){
-          this.appService.swalFire('User Deleted Successfully', 'success');
+          this.appService.swalFire('Role Deleted Successfully', 'success');
           this.modalReference.close();
         }else{
           this.appService.swalFire(data.message, 'error');

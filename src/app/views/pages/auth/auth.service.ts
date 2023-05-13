@@ -59,11 +59,11 @@ export class AuthService {
     );
   }
 
-  getAccTypes(): Observable<ApiResponse<accountType[]>>{
+  getAccTypes(): Observable<ApiResponse<{accounttypes: accountType[]}>>{
     return this.http.get<any>(environment.backendURI+'/gettypes');
   }
 
-  getPackagesType(): Observable<ApiResponse<Package[]>>{
+  getPackagesType(): Observable<ApiResponse<{accountpackages: Package[]}>>{
     return this.http.get<any>(environment.backendURI+'/getpackages');
   }
 

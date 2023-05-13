@@ -37,15 +37,22 @@
 
 <ng-template #basicModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <p>Modal body</p>
+    <p>Are you sure to delete this role?</p>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="modal.close('by: save button')">Save changes</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
+      <i class="feather icon-tag btn-icon-prepend me-1"></i>
+      Delete Role
+    </button>
+    <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Deleting Role..
+    </button>
   </div>
 </ng-template>
 <!-- Close result -->

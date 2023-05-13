@@ -44,11 +44,12 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authService.getAccTypes().subscribe((res: ApiResponse<accountType[]>) => {
-      if(res.status){
-        this.accountTypes  = res.data!.filter( (data: accountType) => {
+    this.authService.getAccTypes().subscribe((res: ApiResponse<{ accounttypes: accountType[]}>) => {
+      if(res.status && res.data?.accounttypes.length){
+        this.accountTypes  = res.data.accounttypes.filter( (data) => {
           return data.status == 'Active';
-        }).map( (element: accountType) => {
+        }).
+        map( (element: accountType) => {
           return {
             id: element.id,
             name: element.account_type
@@ -57,16 +58,18 @@ export class RegisterComponent implements OnInit {
       }
     });
 
-    this.authService.getPackagesType().subscribe((res: ApiResponse<Package[]>) => {
-      if(res.status){
-        this.employees  = res.data!.filter( (data: Package) => {
+    this.authService.getPackagesType().subscribe((res: ApiResponse<{accountpackages: Package[]}>) => {
+      if(res.status && res.data?.accountpackages){
+        this.employees  = res.data.accountpackages.filter( (data: Package) => {
           return data.status == 'Active';
         }).map( (element: Package) => {
+          console.log(element);
           return {
             id: element.id,
             account_package: element.account_package
           }
         });
+        console.log(this.employees);
       }
     });
 
