@@ -24,7 +24,7 @@ export class ListAllUsersComponent implements OnInit {
 
 
   constructor(private adminService: AdministratorService, private modalService: NgbModal,
-              private appService: AppService,private activeModal: NgbActiveModal) { }
+              private appService: AppService) { }
 
 
   ngOnInit(): void {
@@ -58,9 +58,6 @@ export class ListAllUsersComponent implements OnInit {
     this.userDelete = user;
     console.log(user);
     this.modalReference = this.modalService.open(this.deleteModal, {});
-    // this.modalReference = this.modalService.open(this.deleteModal, {}).result.then((result) => {
-    //   if(result == 'cancel') this.deleteLoading = false;
-    // }).catch((res) => {});
   }
 
   confirmDelete(){

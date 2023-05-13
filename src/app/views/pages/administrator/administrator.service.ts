@@ -53,4 +53,10 @@ export class AdministratorService {
       environment.backendURI+`/admin/users/${id}`
     );
   }
+
+  deleteRoleSubmit(id: number): Observable<ApiResponse<{ role: role }>>{
+    return this.http.delete<ApiResponse<{role: role}>>(
+      environment.backendURI+`/admin/userroles/${id}`
+    );
+  }
 }

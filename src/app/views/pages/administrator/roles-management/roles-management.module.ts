@@ -5,7 +5,8 @@ import { AddNewRoleComponent } from './add-new-role/add-new-role.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../../shared/shared.module";
 import {NgSelectModule} from "@ng-select/ng-select";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 const routes: Routes = [
   {path: '', component: ListAllRolesComponent},
@@ -22,7 +23,9 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     NgSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxDatatableModule,
+    FormsModule
   ]
 })
 export class RolesManagementModule { }
