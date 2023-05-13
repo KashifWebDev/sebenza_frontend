@@ -2,7 +2,7 @@
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Roles Management</h6>
+        <h6 class="card-title">Users Management</h6>
         <app-css-loader *ngIf="!users.length"></app-css-loader>
         <div class="table-responsive" *ngIf="users && users.length">
 
@@ -17,7 +17,13 @@
             rowHeight="auto"
           >
             <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
-            <ngx-datatable-column name="Full Name" prop="first_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Full Name">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span>
+                  {{ row.first_name+' '+row.last_name }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column name="Phone"></ngx-datatable-column>
             <ngx-datatable-column name="Email"></ngx-datatable-column>
             <ngx-datatable-column name="Company"></ngx-datatable-column>

@@ -28,10 +28,12 @@ export class AuthService {
     // this.loginStatusSubject.next(this.getLoggedInUser());
   }
 
-  getLoggedInUser(): User | string | null | any {
-    let user: User | string | null = localStorage.getItem('user');
-    return this.getToken() ?  user: null;
+  getLoggedInUser(): User | null {
+    let user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
+
+
 
   getToken(){
     return localStorage.getItem('token') ?? '';
@@ -68,7 +70,6 @@ export class AuthService {
   }
 
   getUserRole(){
-    console.log('test:',JSON.parse(this.getLoggedInUser()).roles[0].name);
     return UserRole.Admin;
   }
 

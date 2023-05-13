@@ -41,9 +41,9 @@ export class AdministratorService {
     );
   }
 
-  editUserSubmit(formData: FormData): Observable<ApiResponse<{ user: User }>>{
-    return this.http.put<ApiResponse<{user: User}>>(
-      environment.backendURI+'/admin/users/update',
+  editUserSubmit(formData: FormData, id: number): Observable<ApiResponse<{ user: User }>>{
+    return this.http.post<ApiResponse<{user: User}>>(
+      environment.backendURI+'/admin/user/update/'+id,
       formData
     );
   }

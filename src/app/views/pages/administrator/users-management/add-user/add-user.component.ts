@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {role, User} from "../../../../../core/interfaces/interfaces";
 import {AdministratorService} from "../../administrator.service";
 import {AppService} from "../../../../../app.service";
@@ -27,6 +27,7 @@ export class AddUserComponent implements OnInit {
     private route: ActivatedRoute,
     private adminService: AdministratorService,
     private appService: AppService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -94,6 +95,7 @@ export class AddUserComponent implements OnInit {
       address: user.address,
       role: user.roles[0].name,
     });
+    this.userForm.get('email')?.disable();
   }
 
   onSubmit() {
@@ -116,10 +118,11 @@ export class AddUserComponent implements OnInit {
     this.formData.append('roles', this.userForm.controls['role'].value);
 
     if (this.isEditMode) {
-      this.adminService.editUserSubmit(this.formData).subscribe(
+      this.adminService.editUserSubmit(this.formData, this.userId).subscribe(
         (data) => {
           if(data.status){
             this.appService.swalFire('User was updated successfully', 'success');
+            this.router.navigate(['/administrator/users-management'], );
             this.formSubmit = false;
             this.userForm.reset();
           }else{

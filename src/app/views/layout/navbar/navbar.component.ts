@@ -11,7 +11,7 @@ import {AuthService} from "../../pages/auth/auth.service";
 })
 export class NavbarComponent implements OnInit {
 
-  user: User;
+  user: User | any;
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.getLoggedInUser();
+    // this.user = this.authService.getLoggedInUser();
   }
 
   /**
