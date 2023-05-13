@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {User} from "../../../../../core/interfaces/interfaces";
+import {role, User} from "../../../../../core/interfaces/interfaces";
 import {AdministratorService} from "../../administrator.service";
 import {AppService} from "../../../../../app.service";
 
@@ -18,6 +18,9 @@ export class AddUserComponent implements OnInit {
   formSubmit: boolean = false;
   formProcessed: boolean = false;
   formData: FormData = new FormData();
+  loading: boolean = false;
+  roles: role[];
+  editUserRole: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,14 +30,34 @@ export class AddUserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.adminService.getAllRoles().subscribe(
+      res => {
+        if(res.status && res.data?.roles){
+          this.roles = res.data.roles;
+        }
+      }
+    )
+
     this.route.queryParams.subscribe(params => {
       this.userId = +params['edit'];
       this.isEditMode = !!this.userId;
       this.initializeForm();
       if (this.isEditMode) {
+        this.loading = true;
         // Fetch user details by userId or use the provided user data
-        const user = this.adminService.fetchUserDetail(this.userId);
-        this.populateForm(user);
+        const user = this.adminService.fetchUserDetail(this.userId).subscribe(
+          (res) => {
+            if(res.status && res.data?.user){
+              this.loading = false;
+              this.populateForm(res.data.user);
+            }else{
+              this.appService.swalFire(res.message, 'error');
+            }
+          },
+          (error) => {
+            this.appService.swalFire('An error was occurred while fetching user details!', 'error');
+          }
+        );
       }
     });
   }
@@ -54,20 +77,22 @@ export class AddUserComponent implements OnInit {
       country: ['', Validators.required],
       city: ['', Validators.required],
       address: ['', Validators.required],
+      role: ['', Validators.required],
     });
   }
 
-  populateForm(user: User | any) {
-    // Populate the form fields with existing user data
+  populateForm(user: User) {
+    this.editUserRole = user.roles[0].name;
     this.userForm.patchValue({
       first_name: user.first_name,
       last_name: user.last_name,
       phone: user.phone,
       email: user.email,
-      company: user.company,
+      company: user.company_name,
       country: user.country,
       city: user.city,
       address: user.address,
+      role: user.roles[0].name,
     });
   }
 
@@ -79,6 +104,7 @@ export class AddUserComponent implements OnInit {
       return;
     }
 
+    this.formData.append('user_id', this.userId.toString());
     this.formData.append('first_name', this.userForm.controls['first_name'].value);
     this.formData.append('last_name', this.userForm.controls['last_name'].value);
     this.formData.append('phone', this.userForm.controls['phone'].value);
@@ -87,6 +113,7 @@ export class AddUserComponent implements OnInit {
     this.formData.append('country', this.userForm.controls['country'].value);
     this.formData.append('city', this.userForm.controls['city'].value);
     this.formData.append('address', this.userForm.controls['address'].value);
+    this.formData.append('roles', this.userForm.controls['role'].value);
 
     if (this.isEditMode) {
       this.adminService.editUserSubmit(this.formData).subscribe(
@@ -96,10 +123,12 @@ export class AddUserComponent implements OnInit {
             this.formSubmit = false;
             this.userForm.reset();
           }else{
+            this.formSubmit = false;
             this.appService.swalFire(data.message, 'error');
           }
         },
         (error) => {
+          this.formSubmit = false;
           this.appService.swalFire('An error was occurred while updating user', 'error');
         }
       );

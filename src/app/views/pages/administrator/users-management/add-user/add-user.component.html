@@ -1,6 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12 grid-margin stretch-card">
+    <app-css-loader *ngIf="isEditMode && loading"></app-css-loader>
+    <div class="col-md-12 grid-margin stretch-card" *ngIf="!loading">
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">{{isEditMode ? 'Edit User' : 'User Registration'}}</h4>
@@ -80,12 +81,28 @@
 
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="mb-3">
-                    <label for="city" class="form-label">City</label>
-                    <input type="text" class="form-control" id="city" name="city" formControlName="city"
-                           [ngClass]="{'is-invalid': formProcessed && form.city.errors}">
-                    <div *ngIf="formProcessed && form.city.errors?.required" class="invalid-feedback">
-                      Required
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city" formControlName="city"
+                               [ngClass]="{'is-invalid': formProcessed && form.city.errors}">
+                        <div *ngIf="formProcessed && form.city.errors?.required" class="invalid-feedback">
+                          Required
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="role" class="form-label">User Role</label>
+                        <select class="form-select" id="role" formControlName="role"
+                                [ngClass]="{'is-invalid': formProcessed && form.role.errors}">
+                          <option *ngFor="let role of roles" [value]="role.name" [selected]="">{{role.name}}</option>
+                        </select>
+                        <div *ngIf="formProcessed && form.role.errors?.required" class="invalid-feedback">
+                          Required
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -105,7 +122,7 @@
                 <app-loading-button
                   [btnIcon]="isEditMode ? 'edit-3' : 'user-plus'"
                   [btnText]="isEditMode ? 'Edt User' : 'Create New User'"
-                  [loadingText]="'Creating User...'"
+                  [loadingText]="isEditMode ? 'Updating user...' : 'Creating User...'"
                   [isLoading]="formSubmit"></app-loading-button>
               </div>
             </form>

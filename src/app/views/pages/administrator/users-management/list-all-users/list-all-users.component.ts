@@ -13,11 +13,15 @@ import {AppService} from "../../../../../app.service";
 })
 export class ListAllUsersComponent implements OnInit {
 
-  users: User[];
+  users: User[] = [];
   userDelete: User;
   @ViewChild('basicModal', { static: true }) deleteModal: TemplateRef<any> | NgbModalRef;
   ColumnMode = ColumnMode;
   deleteLoading: boolean = false;
+  modalReference: NgbModalRef;
+  filteredData: User[] = [...this.users];
+  searchText = '';
+
 
   constructor(private adminService: AdministratorService, private modalService: NgbModal,
               private appService: AppService,private activeModal: NgbActiveModal) { }
@@ -27,20 +31,36 @@ export class ListAllUsersComponent implements OnInit {
     this.adminService.getAllUsers().subscribe(response => {
       if (response.status && response.data) {
         this.users = response.data.users;
+        this.filterData();
       }
     });
+  }
+
+  filterData() {
+    if (this.searchText.trim() !== '') {
+      const searchTerms = this.searchText.toLowerCase().split(' ');
+
+      this.filteredData = this.users.filter(item => {
+        const itemValues = Object.values(item).map(value => {
+          if (value !== null && value !== undefined) {
+            return value.toString().toLowerCase();
+          }
+          return '';
+        });
+        return searchTerms.every(term => itemValues.some(value => value.includes(term)));
+      });
+    } else {
+      this.filteredData = [...this.users];
+    }
   }
 
   deleteRole(user: User) {
     this.userDelete = user;
     console.log(user);
-    this.modalService.open(this.deleteModal, {}).result.then((result) => {
-      if(result == 'cancel') this.deleteLoading = false;
-    }).catch((res) => {});
-    setTimeout(() => {
-      this.activeModal.close();
-      console.log("clsoed");
-    }, 1000);
+    this.modalReference = this.modalService.open(this.deleteModal, {});
+    // this.modalReference = this.modalService.open(this.deleteModal, {}).result.then((result) => {
+    //   if(result == 'cancel') this.deleteLoading = false;
+    // }).catch((res) => {});
   }
 
   confirmDelete(){
@@ -48,10 +68,18 @@ export class ListAllUsersComponent implements OnInit {
     this.adminService.deleteUserSubmit(this.userDelete.id).subscribe(
       data => {
         if(data.status){
-          this.deleteLoading = false;
           this.appService.swalFire('User Deleted Successfully', 'success');
-          // this.modalService.
+          this.modalReference.close();
+        }else{
+          this.appService.swalFire(data.message, 'error');
         }
+        this.deleteLoading = false;
+        this.users = this.users.filter((user: User) => user.id != this.userDelete.id);
+        this.filterData();
+      },
+      (error) => {
+        this.deleteLoading = false;
+        this.appService.swalFire('An error occurred while deleting user', 'error');
       }
     );
   }
