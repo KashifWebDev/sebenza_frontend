@@ -41,5 +41,19 @@ export const AdminMenu: MenuItem[] = [
         link: 'roles-management/add-role',
       }
     ]
+  },
+  {
+    label: 'Users Packages',
+    icon: 'package',
+    subItems: [
+      {
+        label: 'All Packages',
+        link: 'user-packages'
+      },
+      {
+        label: 'Add Package',
+        link: 'user-packages/add-package',
+      }
+    ]
   }
   ];

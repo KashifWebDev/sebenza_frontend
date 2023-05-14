@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ApiResponse, role, rolePermission, User} from "../../../core/interfaces/interfaces";
+import {ApiResponse, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 
@@ -21,6 +21,18 @@ export class AdministratorService {
     );
   }
 
+  fetchPkgDetail(id: number): Observable<ApiResponse<{package: Package}>>{
+    return this.http.get<ApiResponse<{ package: Package }>>(
+      environment.backendURI+`/${id}`
+    );
+  }
+
+  getAllPkgs(): Observable<ApiResponse<{accountpackages: Package[]}>>{
+    return this.http.get<ApiResponse<{ accountpackages: Package[]}>>(
+      environment.backendURI+`/admin/accountpackages`
+    );
+  }
+
   getAllUsers(): Observable<ApiResponse<{users: User[]}>>{
     return this.http.get<ApiResponse<{ users: User[] }>>(
       environment.backendURI+'/admin/users'
@@ -32,7 +44,13 @@ export class AdministratorService {
       environment.backendURI+'/admin/userroles',
       formData
     );
+  }
 
+  addNewPkgSubmit(formData: FormData): Observable<ApiResponse<{ accountpackage: Package }>>{
+    return this.http.post<ApiResponse<{accountpackage: Package}>>(
+      environment.backendURI+'/admin/accountpackages',
+      formData
+    );
   }
 
   editRoleSubmit(formData: FormData, id: number): Observable<ApiResponse<{ role: role }>>{
@@ -65,6 +83,12 @@ export class AdministratorService {
   deleteRoleSubmit(id: number): Observable<ApiResponse<{ role: role }>>{
     return this.http.delete<ApiResponse<{role: role}>>(
       environment.backendURI+`/admin/userroles/${id}`
+    );
+  }
+
+  deletePkgSubmit(id: number): Observable<ApiResponse<{ accountpackage: Package }>>{
+    return this.http.delete<ApiResponse<{accountpackage: Package}>>(
+      environment.backendURI+`/admin/accountpackages/${id}`
     );
   }
 }

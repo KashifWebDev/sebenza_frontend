@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Introduce New Role</h6>
+        <form class="forms-sample" [formGroup]="addPkgForm" (ngSubmit)="submitForm()">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">Package Name</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Starter Package" formControlName="pkgName"
+                   [ngClass]="{'is-invalid': formProcessed && form.pkgName.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.pkgName.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername2" class="form-label">Maximum Users</label>
+            <input type="number" class="form-control" id="exampleInputUsername2"
+                   autocomplete="off" placeholder="Maximum number of users allowed" formControlName="maxUsers"
+                   [ngClass]="{'is-invalid': formProcessed && form.maxUsers.errors && formProcessed }">
+            <div *ngIf="formProcessed && form.maxUsers.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername3" class="form-label">Status</label>
+            <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                    [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value="Active">Active</option>
+              <option value="Disable">Disable</option>
+            </select>
+            <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="isEditMode ? 'Update Role' : 'Save Package'"
+            [loadingText]="isEditMode ? 'Updating...' : 'Saving...'"
+            [btnIcon]="isEditMode ? 'edit' : 'check-square'">
+          </app-loading-button>
+          <button class="btn btn-secondary">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
