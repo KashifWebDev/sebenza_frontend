@@ -25,24 +25,28 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
       }),
       catchError(error => {
-        if(error.error.message == 'Unauthenticated.'){
+        if(error.error.message == 'Unauthenticated.' || error.status == 401){
           this.appService.swalFire('Please login again to continue session!', 'warning', 3000);
+          this.authService.loginStatusSubject.next({ success: false,
+                title: 'Login Expired',
+                text: 'Please login again to continue session!'
+              });
           this.authService.logout();
           this.router.navigate(['/']);
         }
-          if(error.status == 0){
-            this.authService.loginStatusSubject.next({ success: false,
-              title: 'Backend Down',
-              text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
-            });
-          }
-
-          if(error.status == 401){
-            this.authService.loginStatusSubject.next({ success: false,
-              title: 'Backend Down',
-              text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
-            });
-          }
+          // if(error.status == 0){
+          //   this.authService.loginStatusSubject.next({ success: false,
+          //     title: 'Backend Down',
+          //     text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
+          //   });
+          // }
+          //
+          // if(error.status == 401){
+          //   this.authService.loginStatusSubject.next({ success: false,
+          //     title: 'Backend Down',
+          //     text: 'Our apologies, the system is currently undergoing maintenance. Please try again later.'
+          //   });
+          // }
         return throwError(error);
       })
     )
