@@ -27,7 +27,6 @@ export class ListAllRolesComponent implements OnInit {
   constructor(private adminService: AdministratorService, private modalService: NgbModal,
               private appService: AppService) { }
 
-
   ngOnInit(): void {
     this.adminService.getAllRoles().subscribe(response => {
       if (response.status && response.data?.roles) {

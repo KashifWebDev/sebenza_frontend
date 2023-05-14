@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">Roles Management</h6>
-        <app-css-loader *ngIf="!userRoles"></app-css-loader>
+        <app-css-loader *ngIf="!userRoles.length"></app-css-loader>
         <div class="table-responsive"  *ngIf="userRoles && userRoles.length">
           <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
 
@@ -19,7 +19,7 @@
             <ngx-datatable-column name="Role Name" prop="name"></ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['add-user']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                <a [routerLink]="['add-role']" [queryParams]="{'edit': row.id, 'name': row.name}" class="btn btn-icon">
                   <i class="feather icon-edit-3 text-primary"></i>
                 </a>
                 <button type="button" class="btn btn-icon" (click)="deleteRole(row)">

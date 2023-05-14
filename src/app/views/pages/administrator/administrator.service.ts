@@ -32,6 +32,14 @@ export class AdministratorService {
       environment.backendURI+'/admin/userroles',
       formData
     );
+
+  }
+
+  editRoleSubmit(formData: FormData, id: number): Observable<ApiResponse<{ role: role }>>{
+    return this.http.post<ApiResponse<{role: role}>>(
+      environment.backendURI+`/admin/userrole/update/${id}`,
+      formData
+    );
   }
 
   addNewUserSubmit(formData: FormData): Observable<ApiResponse<{ user: User }>>{
