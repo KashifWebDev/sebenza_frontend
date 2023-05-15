@@ -2,9 +2,9 @@
   <div class="col-md-12 stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">All Packages</h6>
-        <app-css-loader *ngIf="!packages.length"></app-css-loader>
-        <div class="table-responsive"  *ngIf="packages && packages.length">
+        <h6 class="card-title">Roles Management</h6>
+        <app-css-loader *ngIf="!accTypes.length"></app-css-loader>
+        <div class="table-responsive"  *ngIf="accTypes && accTypes.length">
           <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
 
           <ngx-datatable
@@ -16,8 +16,7 @@
             rowHeight="auto"
           >
             <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
-            <ngx-datatable-column name="Package Name" prop="account_package"></ngx-datatable-column>
-            <ngx-datatable-column name="Maximum Users" prop="max_user"></ngx-datatable-column>
+            <ngx-datatable-column name="Account Type" prop="account_type"></ngx-datatable-column>
             <ngx-datatable-column name="Status">
               <ng-template ngx-datatable-cell-template let-row="row">
                 <span class="custom-cell fs-6 px-2 py-1 rounded"
@@ -28,10 +27,10 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['add-package']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                <a [routerLink]="['add-account']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
                   <i class="feather icon-edit-3 text-primary"></i>
                 </a>
-                <button type="button" class="btn btn-icon" (click)="deletePkg(row)">
+                <button type="button" class="btn btn-icon" (click)="delAccType(row)">
                   <i class="feather icon-trash-2 text-danger"></i>
                 </button>
               </ng-template>
@@ -50,17 +49,17 @@
     <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <p>Are you sure to delete this package?</p>
+    <p>Are you sure to delete this account type?</p>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
     <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
       <i class="feather icon-trash-2 btn-icon-prepend me-1"></i>
-      Delete package
+      Delete Account Type
     </button>
     <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Deleting package..
+      Deleting Account Type..
     </button>
   </div>
 </ng-template>

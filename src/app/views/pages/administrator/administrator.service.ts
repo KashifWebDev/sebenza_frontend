@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ApiResponse, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
+import {accountType, ApiResponse, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
+import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class AdministratorService {
   fetchRoleDetail(id: number): Observable<ApiResponse<{role: role}>>{
     return this.http.get<ApiResponse<{ role: role }>>(
       environment.backendURI+`/admin/userroles/${id}/edit`
+    );
+  }
+
+  fetchAccTypeDetail(id: number): Observable<ApiResponse<{accounttype: accountType}>>{
+    return this.http.get<ApiResponse<{ accounttype: accountType }>>(
+      environment.backendURI+`/admin/accounttypes/${id}/edit`
     );
   }
 
@@ -52,6 +59,13 @@ export class AdministratorService {
     );
   }
 
+  addNewAccTypeSubmit(formData: FormData): Observable<ApiResponse<{ accounttype: accountType }>>{
+    return this.http.post<ApiResponse<{accounttype: accountType}>>(
+      environment.backendURI+'/admin/accounttypes',
+      formData
+    );
+  }
+
   addNewPkgSubmit(formData: FormData): Observable<ApiResponse<{ accountpackage: Package }>>{
     return this.http.post<ApiResponse<{accountpackage: Package}>>(
       environment.backendURI+'/admin/accountpackages',
@@ -62,6 +76,14 @@ export class AdministratorService {
   editRoleSubmit(formData: FormData, id: number): Observable<ApiResponse<{ role: role }>>{
     return this.http.post<ApiResponse<{role: role}>>(
       environment.backendURI+`/admin/userrole/update/${id}`,
+      formData
+    );
+  }
+
+
+  editAccTypeSubmit(formData: FormData, id: number): Observable<ApiResponse<{ accounttype: accountType }>>{
+    return this.http.post<ApiResponse<{accounttype: accountType}>>(
+      environment.backendURI+`/admin/accounttype/update`,
       formData
     );
   }
@@ -99,9 +121,19 @@ export class AdministratorService {
     );
   }
 
+  deleteAccTypeSubmit(id: number): Observable<ApiResponse<{ accounttype: accountType }>>{
+    return this.http.delete<ApiResponse<{accounttype: accountType}>>(
+      environment.backendURI+`/admin/accounttypes/${id}`
+    );
+  }
+
   deletePkgSubmit(id: number): Observable<ApiResponse<{ accountpackage: Package }>>{
     return this.http.delete<ApiResponse<{accountpackage: Package}>>(
       environment.backendURI+`/admin/accountpackages/${id}`
     );
+  }
+
+  getAccTypes(): Observable<ApiResponse<{accounttypes: accountType[]}>>{
+    return this.http.get<any>(environment.backendURI+'/admin/accounttypes');
   }
 }

@@ -28,6 +28,10 @@ const routes: Routes = [
   {
     path: 'user-packages',
     loadChildren: () => import('./user-packages/user-packages.module').then(m => m.UserPackagesModule)
+  },
+  {
+    path: 'account-types',
+    loadChildren: () => import('./account-types/account-types.module').then(m => m.AccountTypesModule)
   }
 ]
 

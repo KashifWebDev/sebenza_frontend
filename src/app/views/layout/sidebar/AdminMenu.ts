@@ -55,5 +55,19 @@ export const AdminMenu: MenuItem[] = [
         link: 'user-packages/add-package',
       }
     ]
+  },
+  {
+    label: 'Account Types',
+    icon: 'shield',
+    subItems: [
+      {
+        label: 'All Types',
+        link: 'account-types'
+      },
+      {
+        label: 'Add Account Type',
+        link: 'account-types/add-account',
+      }
+    ]
   }
   ];
