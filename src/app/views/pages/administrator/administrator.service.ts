@@ -27,9 +27,9 @@ export class AdministratorService {
     );
   }
 
-  fetchPkgDetail(id: number): Observable<ApiResponse<{package: Package}>>{
-    return this.http.get<ApiResponse<{ package: Package }>>(
-      environment.backendURI+`/${id}`
+  fetchPkgDetail(id: number): Observable<ApiResponse<{accountpackage: Package}>>{
+    return this.http.get<ApiResponse<{ accountpackage: Package }>>(
+      environment.backendURI+`/admin/accountpackages/${id}/edit`
     );
   }
 
@@ -62,6 +62,13 @@ export class AdministratorService {
   editRoleSubmit(formData: FormData, id: number): Observable<ApiResponse<{ role: role }>>{
     return this.http.post<ApiResponse<{role: role}>>(
       environment.backendURI+`/admin/userrole/update/${id}`,
+      formData
+    );
+  }
+
+  editPkgSubmit(formData: FormData, id: number): Observable<ApiResponse<{ accountpackage: Package }>>{
+    return this.http.post<ApiResponse<{accountpackage: Package}>>(
+      environment.backendURI+`/admin/accountpackage/update`,
       formData
     );
   }

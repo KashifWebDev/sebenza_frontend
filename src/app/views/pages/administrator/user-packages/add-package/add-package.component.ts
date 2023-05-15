@@ -40,9 +40,10 @@ export class AddPackageComponent implements OnInit {
         // Fetch user details by userId or use the provided user data
         const user = this.adminService.fetchPkgDetail(this.pkgId).subscribe(
           (res) => {
-            if(res.status && res.data?.package){
+            if(res.status && res.data?.accountpackage){
+              this.editPkg = res.data.accountpackage;
               this.loading = false;
-              this.populateForm(res.data.package);
+              this.populateForm(this.editPkg);
             }else{
               this.appService.swalFire(res.message, 'error');
             }
@@ -69,6 +70,7 @@ export class AddPackageComponent implements OnInit {
   }
 
   populateForm(pkg: Package) {
+    console.log(pkg);
     this.addPkgForm.patchValue({
       pkgName: pkg.account_package,
       maxUsers: pkg.max_user,
@@ -90,15 +92,16 @@ export class AddPackageComponent implements OnInit {
     formData.append(`account_package`, this.addPkgForm.value['pkgName']);
     formData.append(`max_user`, this.addPkgForm.value['maxUsers']);
     formData.append(`status`, this.addPkgForm.value['status']);
+    formData.append(`account_package_id`, this.editPkg.id.toString());
 
     if(this.isEditMode){
-      this.adminService.editRoleSubmit(formData, this.editPkg.id).subscribe(
+      this.adminService.editPkgSubmit(formData, this.editPkg.id).subscribe(
         next => {
           if(next.status){
             this.appService.swalFire('Role updated successfully!', 'success');
             this.formSubmit = false;
             this.addPkgForm.reset();
-            this.router.navigate(['/administrator/roles-management']);
+            this.router.navigate(['/administrator/user-packages']);
           }else{
             this.appService.swalFire(next.message, 'error');
           }
