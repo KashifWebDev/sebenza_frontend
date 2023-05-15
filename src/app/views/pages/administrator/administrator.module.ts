@@ -10,11 +10,11 @@ import {NgApexchartsModule} from "ng-apexcharts";
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
-    path: 'dashboard',
+    path: 'home',
     component: DashboardComponent
   },
   {

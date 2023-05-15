@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {accountType, ApiResponse, AuthResponse, Package, User} from "../../../core/interfaces/interfaces";
+import {accountType, adminUser, ApiResponse, AuthResponse, Package, User} from "../../../core/interfaces/interfaces";
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -11,29 +11,34 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  public currentUser: User | any = null;
+  public currentUser: User | adminUser;
+  public userType: UserRole;
+  $currentUser: Subject<User | adminUser> = new Subject<User | adminUser>();
   private authToken: string = '';
-  loginStatusSubject: Subject<any> = new Subject<any>();
+  errSubject: Subject<any> = new Subject<any>();
 
   constructor(private http: HttpClient, private router: Router) {
     if(this.isLoggedIn()){
-      // this.currentUser = JSON.parse(localStorage.getItem('userData') ?? '');
+      // this.currentUser =JSON.parse(localStorage.getItem('userData')) | [];
       this.authToken = localStorage.getItem('token') ?? '';
+      const userData = localStorage.getItem('userData');
+      if (userData !== null) {
+        this.currentUser = JSON.parse(userData);
+      }
     }
   }
 
-  setSession(token: any, user: User | undefined){
+  setSession(token: any, user: User | adminUser){
+    this.currentUser = user;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
-    // this.loginStatusSubject.next(this.getLoggedInUser());
+    this.$currentUser.next(this.currentUser);
   }
 
   getLoggedInUser(): User | null {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
-
-
 
   getToken(){
     return localStorage.getItem('token') ?? '';
@@ -49,13 +54,20 @@ export class AuthService {
     return localStorage.getItem('token') !== null;
   }
 
-  login(email: string, password: string): Observable<ApiResponse<AuthResponse>>{
-    return this.http.post<ApiResponse<any>>(environment.backendURI+'/login',
-      {email, password}
-    );
+  login(email: string, password: string, userType: UserRole): Observable<ApiResponse<{ token: string, user: User | adminUser }>>{
+    if(userType == 'user'){
+      return this.http.post<ApiResponse<any>>(environment.backendURI+'/login',
+        {email, password}
+      );
+    }
+    else{
+      return this.http.post<ApiResponse<any>>(environment.backendURI+'/admin/login',
+        {email, password}
+      );
+    }
   }
 
-  register(formBody: FormData): Observable<ApiResponse<AuthResponse>>{
+  register(formBody: FormData): Observable<ApiResponse<{token: string, user: User}>>{
     return this.http.post<any>(environment.backendURI+'/register',
       formBody
     );
@@ -70,11 +82,12 @@ export class AuthService {
   }
 
   getUserRole(){
-    return UserRole.Admin;
+    return this.userType;
   }
 
   redirectToDashboard(){
     let path = '';
+    console.log("USerROLE: ",this.getUserRole())
     switch (this.getUserRole()){
       case UserRole.Admin:
         path = '/administrator';
@@ -83,7 +96,7 @@ export class AuthService {
         path = '/user';
         break;
       default:
-        console.log("No roles were found to redirect the user to dashboard!");
+        console.error("No roles were found to redirect the user to dashboard!");
         path = '/error/500';
     }
     console.log(path);

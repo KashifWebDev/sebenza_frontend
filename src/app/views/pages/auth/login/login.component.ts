@@ -1,9 +1,10 @@
 import {AfterViewChecked, Component, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
 import {ApiResponse, AuthResponse} from "../../../../core/interfaces/interfaces";
+import {UserRole} from "../../../../core/roles/UserRole";
 
 @Component({
   selector: 'app-login',
@@ -18,23 +19,31 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   formSubmitted: boolean = false;
   loginFail: boolean = false;
   showLoginForm: boolean = false;
+  loginUserType: UserRole;
 
   constructor(private router: Router, private route: ActivatedRoute,
               private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
-
+    switch (this.router.url) {
+      case '/auth/superAdmin':
+        this.loginUserType = UserRole.Admin;
+        break;
+      case '/auth/login':
+        this.loginUserType = UserRole.User;
+        break;
+    }
     if (this.authService.isLoggedIn()) {
       this.authService.redirectToDashboard();
     }
-    // get return url from route parameters or default to '/'
+
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
 
-    this.authService.loginStatusSubject.subscribe(data =>{
+    this.authService.errSubject.subscribe(data =>{
       console.log(data);
       if(!data.success){
         this.doingLogin = false;
@@ -53,7 +62,9 @@ export class LoginComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (!this.authService.isLoggedIn()) {
-      this.showLoginForm = true;
+      setTimeout(() => {
+        this.showLoginForm = true;
+      });
     }
   }
 
@@ -67,12 +78,15 @@ export class LoginComponent implements OnInit, AfterViewChecked {
     }
     this.authService.login(
       this.loginForm.controls['email'].value,
-      this.loginForm.controls['password'].value
+      this.loginForm.controls['password'].value,
+      this.loginUserType
     ).subscribe(
-      (response: ApiResponse<AuthResponse>) => {
-        if(response.status){
-          this.authService.setSession(response.data?.token, response.data?.user);
-          this.router.navigate(['/administrator/']);
+      (response) => {
+        console.log(response);
+        if(response.status && response.data?.user){
+          this.authService.userType = this.loginUserType;
+          this.authService.setSession(response.data.token, response.data.user);
+          this.authService.redirectToDashboard()
         }else{
           this.loginFail = true;
           Swal.fire({
@@ -85,4 +99,8 @@ export class LoginComponent implements OnInit, AfterViewChecked {
       });
   }
 
+  getLoginText(): string{
+    if (this.loginUserType == UserRole.Admin) return " Super Admin";
+    return '';
+  }
 }

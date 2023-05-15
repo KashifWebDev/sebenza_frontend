@@ -38,6 +38,17 @@ export interface User {
   roles: role[]
 }
 
+export interface adminUser {
+  id: number,
+  first_name: string,
+  last_name: string,
+  email: string,
+  phone: string,
+  email_verified_at: string,
+  status: string,
+  roles: role[]
+}
+
 export interface AuthResponse {
   user: User,
   token: string

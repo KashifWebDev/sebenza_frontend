@@ -15,13 +15,27 @@ const routes: Routes = [
     component: BaseComponent,
     canActivate: [AuthGuard],
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         data: { roles: [UserRole.Admin] },
         canActivate: [RoleGuard],
-        path: '',
+        path: 'dashboard',
         loadChildren: () => import('./views/pages/administrator/administrator.module').then(m => m.AdministratorModule)
       },
+    ]
+  },
+  {
+    path: 'user',
+    component: BaseComponent,
+    canActivate: [AuthGuard],
+    children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        data: { roles: [UserRole.User] },
+        canActivate: [RoleGuard],
+        path: 'dashboard',
+        loadChildren: () => import('./views/pages/user/user.module').then(m => m.UserModule)
+      },
     ]
   },
   {
@@ -41,7 +55,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top', useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(error => {
         if(error.error.message == 'Unauthenticated.' || error.status == 401){
           this.appService.swalFire('Please login again to continue session!', 'warning', 3000);
-          this.authService.loginStatusSubject.next({ success: false,
+          this.authService.errSubject.next({ success: false,
                 title: 'Login Expired',
                 text: 'Please login again to continue session!'
               });

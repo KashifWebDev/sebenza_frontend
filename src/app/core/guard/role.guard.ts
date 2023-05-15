@@ -19,6 +19,7 @@ export class RoleGuard implements CanActivate {
     if (roles.includes(currentUserRole)) {
       return true;
     }
+    console.error("Role Guard Error! Allowed: ",roles," Provided: ",currentUserRole);
     this.router.navigate(['/error/401']);
     return false;
   }

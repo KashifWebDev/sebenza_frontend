@@ -26,6 +26,10 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
+        path: 'superAdmin',
+        component: LoginComponent
+      },
+      {
         path: 'register',
         component: RegisterComponent
       }

@@ -5,6 +5,7 @@ import MetisMenu from 'metismenujs';
 
 import {MENU} from './menu';
 import {AdminMenu} from './AdminMenu';
+import {UserMenu} from './UserMenu';
 import {MenuItem} from './menu.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
@@ -46,6 +47,9 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     if(this.authService.getUserRole() === UserRole.Admin) {
       this.menuItems = AdminMenu;
+    }
+    if(this.authService.getUserRole() === UserRole.User) {
+      this.menuItems = UserMenu;
     }
     // this.menuItems = MENU;
 
