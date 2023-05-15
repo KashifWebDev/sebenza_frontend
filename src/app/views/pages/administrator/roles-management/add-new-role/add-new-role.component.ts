@@ -14,7 +14,7 @@ export class AddNewRoleComponent implements OnInit {
   addRoleForm: FormGroup;
   loadingBtn: boolean = false;
 
-  editRole: {name: string, id: number};
+  editRole: role;
   isEditMode: boolean = false;
   roleId: number;
   formSubmit: boolean = false;
@@ -38,8 +38,21 @@ export class AddNewRoleComponent implements OnInit {
       this.isEditMode = !!this.roleId;
       this.initializeForm();
       if (this.isEditMode) {
-        this.editRole = {name: params['name'], id: this.roleId};
-        this.populateForm(this.editRole.name);
+        this.loading = true;
+        const user = this.adminService.fetchRoleDetail(this.roleId).subscribe(
+          (res) => {
+            if(res.status && res.data?.role){
+              this.editRole = res.data.role;
+              this.loading = false;
+              this.populateForm(this.editRole);
+            }else{
+              this.appService.swalFire(res.message, 'error');
+            }
+          },
+          (error) => {
+            this.appService.swalFire('An error was occurred while fetching user details!', 'error');
+          }
+        );
       }
     });
   }
@@ -51,9 +64,9 @@ export class AddNewRoleComponent implements OnInit {
     });
   }
 
-  populateForm(name: string) {
+  populateForm(role: role) {
     this.addRoleForm.patchValue({
-      roleName: name,
+      roleName: role.name,
     });
   }
 
@@ -69,7 +82,6 @@ export class AddNewRoleComponent implements OnInit {
 
     const formData = new FormData();
     formData.append(`roleName`, this.addRoleForm.value['roleName']);
-
     if(this.isEditMode){
       this.adminService.editRoleSubmit(formData, this.editRole.id).subscribe(
         next => {

@@ -21,6 +21,12 @@ export class AdministratorService {
     );
   }
 
+  fetchRoleDetail(id: number): Observable<ApiResponse<{role: role}>>{
+    return this.http.get<ApiResponse<{ role: role }>>(
+      environment.backendURI+`/admin/userroles/${id}/edit`
+    );
+  }
+
   fetchPkgDetail(id: number): Observable<ApiResponse<{package: Package}>>{
     return this.http.get<ApiResponse<{ package: Package }>>(
       environment.backendURI+`/${id}`

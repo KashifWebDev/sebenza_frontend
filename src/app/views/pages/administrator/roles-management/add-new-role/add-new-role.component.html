@@ -2,8 +2,9 @@
   <div class="mx-auto col-md-6 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Introduce New Role</h6>
-        <form class="forms-sample" [formGroup]="addRoleForm" (ngSubmit)="submitForm()">
+        <h6 class="card-title">{{isEditMode ? 'Edit Role Details' : 'Introduce New Role'}}</h6>
+        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addRoleForm" (ngSubmit)="submitForm()" *ngIf="!loading">
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">Role Name</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
@@ -11,9 +12,9 @@
           </div>
           <app-loading-button
             [isLoading]="loadingBtn"
-            [btnText]="'Save Role'"
-            [loadingText]="'Saving...'"
-            [btnIcon]="'check-square'">
+            [btnText]="isEditMode ? 'Update Role' : 'Save Role'"
+            [loadingText]="isEditMode ? 'Updating...' : 'Saving...'"
+            [btnIcon]="isEditMode ? 'edit' : 'check-square'">
           </app-loading-button>
           <button class="btn btn-secondary">Cancel</button>
         </form>
