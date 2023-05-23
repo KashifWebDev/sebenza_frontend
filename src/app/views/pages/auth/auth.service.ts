@@ -19,6 +19,17 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {
     if(this.isLoggedIn()){
+      const storedUserType = localStorage.getItem('userType');
+      let userType: UserRole;
+      if (storedUserType && Object.values(UserRole).includes(storedUserType as UserRole)) {
+        userType = storedUserType as UserRole;
+      } else {
+        this.logout();
+        userType = UserRole.User; // Default value if userType is not found or invalid
+      }
+
+      this.userType = userType;
+
       // this.currentUser =JSON.parse(localStorage.getItem('userData')) | [];
       this.authToken = localStorage.getItem('token') ?? '';
       const userData = localStorage.getItem('userData');
@@ -32,6 +43,7 @@ export class AuthService {
     this.currentUser = user;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('userType', this.userType);
     this.$currentUser.next(this.currentUser);
   }
 
@@ -47,6 +59,7 @@ export class AuthService {
   logout(){
     localStorage.removeItem('token')
     localStorage.removeItem('user');
+    localStorage.removeItem('userType');
     return true;
   }
 
@@ -87,7 +100,6 @@ export class AuthService {
 
   redirectToDashboard(){
     let path = '';
-    console.log("USerROLE: ",this.getUserRole())
     switch (this.getUserRole()){
       case UserRole.Admin:
         path = '/administrator';

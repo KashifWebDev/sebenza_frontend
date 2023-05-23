@@ -8,7 +8,7 @@ export const AdminMenu: MenuItem[] = [
   {
     label: 'Dashboard',
     icon: 'home',
-    link: 'dashboard'
+    link: 'home'
   },
   {
     label: 'Users & Roles',

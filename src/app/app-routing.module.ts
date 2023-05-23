@@ -15,11 +15,11 @@ const routes: Routes = [
     component: BaseComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: '', pathMatch: 'full' },
       {
         data: { roles: [UserRole.Admin] },
         canActivate: [RoleGuard],
-        path: 'dashboard',
+        path: '',
         loadChildren: () => import('./views/pages/administrator/administrator.module').then(m => m.AdministratorModule)
       },
     ]
