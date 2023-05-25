@@ -6,20 +6,40 @@
         <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
         <form class="forms-sample" [formGroup]="addNewsForm" (ngSubmit)="submitForm()" *ngIf="!loading">
           <div class="mb-3">
-            <label for="exampleInputUsername1" class="form-label">Account Type</label>
+            <label for="exampleInputUsername1" class="form-label">Title</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
-                   autocomplete="off" placeholder="Name" formControlName="name">
+                   autocomplete="off" placeholder="Name" formControlName="title"
+                   [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername11" class="form-label">Description</label>
+            <quill-editor formControlName="description"
+                          id="exampleInputUsername11"
+                          [modules]="quillConfig"
+                          (onSelectionChanged)="onSelectionChanged($event)"
+                          (onContentChanged)="onContentChanged($event)">
+            </quill-editor>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername3" class="form-label">Status</label>
             <select class="form-select" id="exampleInputUsername3" formControlName="status"
                     [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value selected>Select Status</option>
               <option value="Active" [selected]="form.status.value == 'Active'">Active</option>
               <option value="Disable" [selected]="form.status.value == 'Disable'">Disable</option>
             </select>
             <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
               Required
             </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername4" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
+            <input type="file" class="form-control" id="exampleInputUsername4"
+                   autocomplete="off" placeholder="Name" formControlName="uploadImg" (change)="handleFileInput($event)">
+            <img *ngIf="editNews" [src]="editNews.postImage" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
           </div>
           <app-loading-button
             [isLoading]="loadingBtn"

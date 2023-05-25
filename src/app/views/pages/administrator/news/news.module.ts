@@ -6,25 +6,30 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../../shared/shared.module";
+import {QuillModule} from "ngx-quill";
+import { SingleNewsComponent } from './single-news/single-news.component';
 
 const routes: Routes = [
   {path: '', component: ListAllNewsComponent},
   {path: 'add-news', component: AddNewsComponent},
+  {path: ':id', component: SingleNewsComponent},
 ]
 
 
 @NgModule({
   declarations: [
     AddNewsComponent,
-    ListAllNewsComponent
+    ListAllNewsComponent,
+    SingleNewsComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    NgxDatatableModule,
-    FormsModule,
-    SharedModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        NgxDatatableModule,
+        FormsModule,
+        SharedModule,
+        ReactiveFormsModule,
+        QuillModule
+    ]
 })
 export class NewsModule { }

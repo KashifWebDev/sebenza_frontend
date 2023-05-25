@@ -61,7 +61,7 @@ export class ListAllNewsComponent implements OnInit {
 
   confirmDelete(){
     this.deleteLoading = true;
-    this.adminService.deleteUserSubmit(this.newsDelete.id).subscribe(
+    this.adminService.deleteNewsSubmit(this.newsDelete.id).subscribe(
       data => {
         if(data.status){
           this.appService.swalFire('News Deleted Successfully', 'success');

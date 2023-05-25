@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="loading"></app-css-loader>
+        <ng-container *ngIf="!loading">
+          <h6 class="card-title">{{news.title}}</h6>
+          <div [innerHTML]="news.description" class="body"></div>
+          <hr>
+          <a [href]="news.postImage" target="_blank" class="btn btn-primary btn-icon-text">
+            <i class="feather icon-download-cloud btn-icon-prepend"></i>
+            Download Attachment
+          </a>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

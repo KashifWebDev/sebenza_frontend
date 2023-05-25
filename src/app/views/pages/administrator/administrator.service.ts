@@ -151,8 +151,14 @@ export class AdministratorService {
 
   addNewsSubmit(formData: FormData): Observable<ApiResponse<{ accounttype: accountType }>>{
     return this.http.post<ApiResponse<{accounttype: accountType}>>(
-      environment.backendURI+'/admin/accounttypes',
+      environment.backendURI+'/admin/newsupdates',
       formData
+    );
+  }
+
+  deleteNewsSubmit(id: number): Observable<ApiResponse<{ news: News }>>{
+    return this.http.delete<ApiResponse<{news: News}>>(
+      environment.backendURI+`/admin/newsupdates/${id}`
     );
   }
 }

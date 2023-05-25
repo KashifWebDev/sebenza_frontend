@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {accountType, News} from "../../../../../core/interfaces/interfaces";
+import {News} from "../../../../../core/interfaces/interfaces";
 import {AdministratorService} from "../../administrator.service";
 import {AppService} from "../../../../../app.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ContentChange, SelectionChange} from "ngx-quill";
 
 @Component({
   selector: 'app-add-news',
@@ -11,6 +12,57 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./add-news.component.scss']
 })
 export class AddNewsComponent implements OnInit {
+  quillConfig = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+        //  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        //  [{ 'direction': 'rtl' }],                         // text direction
+
+        //  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'align': [] }],
+
+        //  ['clean'],                                         // remove formatting button
+
+        //  ['link'],
+        ['link', 'image', 'video']
+      ],
+    },
+  }
+  onSelectionChanged = (event: SelectionChange) => {
+    if(event.oldRange == null) {
+      this.onFocus();
+    }
+    if(event.range == null) {
+      this.onBlur();
+    }
+  }
+
+  onContentChanged = (event: ContentChange) => {
+    // console.log(event.html);
+  }
+
+  onFocus = () => {
+    console.log("On Focus");
+  }
+  onBlur = () => {
+    console.log("Blurred");
+  }
+  fileToUpload: File;
+
+
+
+
+
+
+
+
   addNewsForm: FormGroup;
   loadingBtn: boolean = false;
 
@@ -61,7 +113,7 @@ export class AddNewsComponent implements OnInit {
     // Initialize the form with empty fields
     this.addNewsForm = this.formBuilder.group({
       title: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['<p>Announcement Body...</p>', Validators.required],
       status: ['', Validators.required],
       uploadImg: ['']
     });
@@ -86,6 +138,7 @@ export class AddNewsComponent implements OnInit {
     this.formSubmit = true;
     if (this.addNewsForm.invalid) {
       this.formSubmit = false;
+      this.loadingBtn = false;
       return;
     }
 
@@ -93,7 +146,8 @@ export class AddNewsComponent implements OnInit {
     formData.append(`title`, this.addNewsForm.value['title']);
     formData.append(`description`, this.addNewsForm.value['description']);
     formData.append(`status`, this.addNewsForm.value['status']);
-    formData.append(`uploadImg`, this.addNewsForm.value['uploadImg']);
+    formData.append(`postImage`, this.addNewsForm.value['uploadImg']);
+    if(this.fileToUpload) formData.append('postImage', this.fileToUpload);
     if(this.isEditMode){
       this.adminService.editAccTypeSubmit(formData, this.editNews.id).subscribe(
         next => {
@@ -113,10 +167,10 @@ export class AddNewsComponent implements OnInit {
         }
       );
     }else{
-      this.adminService.addNewAccTypeSubmit(formData).subscribe(
+      this.adminService.addNewsSubmit(formData).subscribe(
         next => {
           if(next.status){
-            this.appService.swalFire('Account Type created successfully!', 'success');
+            this.appService.swalFire('News created successfully!', 'success');
             this.addNewsForm.reset();
           }else{
             this.appService.swalFire(next.message, 'error');
@@ -125,12 +179,19 @@ export class AddNewsComponent implements OnInit {
         },
         error => {
           this.loadingBtn = false;
-          this.appService.swalFire('Error Occurred while creating account type!', 'error');
+          this.appService.swalFire('Error Occurred while creating News!', 'error');
         }
       );
     }
-
-
-
   }
+
+  handleFileInput(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      this.addNewsForm.patchValue({ uploadImg: file });
+    }
+  }
+
+
 }

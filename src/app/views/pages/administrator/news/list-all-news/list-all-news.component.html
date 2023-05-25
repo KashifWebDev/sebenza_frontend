@@ -19,10 +19,11 @@
             <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
             <ngx-datatable-column name="Title">
               <ng-template ngx-datatable-cell-template let-row="row">
-                <div class="d-flex align-items-center">
-                  <img [src]="row.postImage" alt="" class="newsImg me-2">
-                  {{ row.title }}
-                </div>
+                <a [routerLink]=[row.id]>
+                  <div class="d-flex align-items-center">
+                    {{ row.title }}
+                  </div>
+                </a>
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column name="Views">
@@ -35,7 +36,7 @@
             <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['add-user']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                <a [routerLink]="['add-news']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
                   <i class="feather icon-edit-3 text-primary"></i>
                 </a>
                 <button type="button" class="btn btn-icon" (click)="deleteRole(row)">
@@ -64,7 +65,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
     <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
-      <i class="feather icon-user-x btn-icon-prepend me-1"></i>
+      <i class="feather icon-bell-off btn-icon-prepend me-1"></i>
       Delete User
     </button>
     <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
