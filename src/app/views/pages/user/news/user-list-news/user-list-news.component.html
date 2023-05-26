@@ -37,12 +37,10 @@
             <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['add-news']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
-                  <i class="feather icon-edit-3 text-primary"></i>
+                <a [routerLink]="['../', row.id]" class="btn btn-outline-primary">
+                  <i class="feather icon-link"></i>
+                  Visit
                 </a>
-                <button type="button" class="btn btn-icon" (click)="deleteRole(row)">
-                  <i class="feather icon-trash-2 text-danger"></i>
-                </button>
               </ng-template>
             </ngx-datatable-column>
           </ngx-datatable>
@@ -51,27 +49,3 @@
     </div>
   </div>
 </div>
-
-
-<ng-template #basicModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Confirm User Deletion</h5>
-    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close" [disabled]="deleteLoading"></button>
-  </div>
-  <div class="modal-body">
-    <p>
-      Are you sure you want to delete this news?
-    </p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
-    <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
-      <i class="feather icon-bell-off btn-icon-prepend me-1"></i>
-      Delete News
-    </button>
-    <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Deleting News..
-    </button>
-  </div>
-</ng-template>

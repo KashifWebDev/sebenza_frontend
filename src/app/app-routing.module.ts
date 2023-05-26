@@ -29,11 +29,11 @@ const routes: Routes = [
     component: BaseComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: '', pathMatch: 'full' },
       {
         data: { roles: [UserRole.superUser, UserRole.User] },
         canActivate: [RoleGuard],
-        path: 'dashboard',
+        path: '',
         loadChildren: () => import('./views/pages/user/user.module').then(m => m.UserModule)
       },
     ]

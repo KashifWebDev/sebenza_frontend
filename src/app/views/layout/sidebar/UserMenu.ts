@@ -8,6 +8,15 @@ export const UserMenu: MenuItem[] = [
   {
     label: 'Dashboard',
     icon: 'home',
-    link: 'dashboard'
+    link: 'home'
+  },
+  {
+    label: 'News & Updates',
+    isTitle: true
+  },
+  {
+    label: 'Announcements',
+    icon: 'bell',
+    link: 'news/all-news'
   }
   ];

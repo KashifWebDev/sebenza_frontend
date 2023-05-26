@@ -5,15 +5,9 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import {DashboardComponent} from "../administrator/dashboard/dashboard.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    component: DashboardComponent
-  },
+  {path: '',redirectTo: 'home',pathMatch: 'full'},
+  {path: 'home',component: DashboardComponent},
+  {path: 'news',loadChildren: () => import('./news/userNews.module').then(m => m.UserNewsModule)}
 ]
 
 @NgModule({
