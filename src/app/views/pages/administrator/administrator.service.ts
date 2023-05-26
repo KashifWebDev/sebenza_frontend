@@ -161,4 +161,11 @@ export class AdministratorService {
       environment.backendURI+`/admin/newsupdates/${id}`
     );
   }
+
+  editNewsSubmit(formData: FormData, id: number): Observable<ApiResponse<{ news: News }>>{
+    return this.http.post<ApiResponse<{news: News}>>(
+      environment.backendURI+'/admin/newsupdate/update/'+id,
+      formData
+    );
+  }
 }

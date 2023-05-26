@@ -39,7 +39,7 @@
             <label for="exampleInputUsername4" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
             <input type="file" class="form-control" id="exampleInputUsername4"
                    autocomplete="off" placeholder="Name" formControlName="uploadImg" (change)="handleFileInput($event)">
-            <img *ngIf="editNews" [src]="editNews.postImage" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+            <img *ngIf="editNews && editNews.postImage" [src]="editNews.postImage" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
           </div>
           <app-loading-button
             [isLoading]="loadingBtn"

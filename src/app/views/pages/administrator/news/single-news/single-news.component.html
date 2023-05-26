@@ -6,8 +6,8 @@
         <ng-container *ngIf="!loading">
           <h6 class="card-title">{{news.title}}</h6>
           <div [innerHTML]="news.description" class="body"></div>
-          <hr>
-          <a [href]="news.postImage" target="_blank" class="btn btn-primary btn-icon-text">
+          <hr *ngIf="news.postImage">
+          <a [href]="news.postImage" target="_blank" class="btn btn-primary btn-icon-text" *ngIf="news.postImage">
             <i class="feather icon-download-cloud btn-icon-prepend"></i>
             Download Attachment
           </a>

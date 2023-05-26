@@ -149,13 +149,13 @@ export class AddNewsComponent implements OnInit {
     formData.append(`postImage`, this.addNewsForm.value['uploadImg']);
     if(this.fileToUpload) formData.append('postImage', this.fileToUpload);
     if(this.isEditMode){
-      this.adminService.editAccTypeSubmit(formData, this.editNews.id).subscribe(
+      this.adminService.editNewsSubmit(formData, this.editNews.id).subscribe(
         next => {
           if(next.status){
-            this.appService.swalFire('Account Type updated successfully!', 'success');
+            this.appService.swalFire('News updated successfully!', 'success');
             this.formSubmit = false;
             this.addNewsForm.reset();
-            this.router.navigate(['/administrator/account-types']);
+            this.router.navigate(['/administrator/news']);
           }else{
             this.appService.swalFire(next.message, 'error');
           }
@@ -172,6 +172,7 @@ export class AddNewsComponent implements OnInit {
           if(next.status){
             this.appService.swalFire('News created successfully!', 'success');
             this.addNewsForm.reset();
+            this.router.navigate(['/administrator/news']);
           }else{
             this.appService.swalFire(next.message, 'error');
           }

@@ -66,11 +66,11 @@
     <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
     <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
       <i class="feather icon-bell-off btn-icon-prepend me-1"></i>
-      Delete User
+      Delete News
     </button>
     <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-      Deleting User..
+      Deleting News..
     </button>
   </div>
 </ng-template>
