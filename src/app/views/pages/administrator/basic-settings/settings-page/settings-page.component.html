@@ -37,7 +37,7 @@
             <input type="text" class="form-control" id="exampleInputUsername4"
                    autocomplete="off" placeholder="Company Address" formControlName="address"
                    [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm).address.errors}">
-            <div *ngIf="formProcessed && form(SEOSettingsForm).address.errors?.required" class="invalid-feedback">
+            <div *ngIf="formProcessed && form(basicSettingsForm).address.errors?.required" class="invalid-feedback">
               Required
             </div>
           </div>
@@ -102,11 +102,7 @@
           <div class="row mb-3" *ngFor="let fc of form3">
             <label for="s1" class="col-sm-3 col-form-label">{{fc.label}}</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="s1" [placeholder]="fc.label" [formControlName]="fc.fcn"
-                     [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm)[fc.fcn].errors}">
-              <div *ngIf="formProcessed && form(socialForm)[fc.fcn].errors?.required" class="invalid-feedback">
-                Required
-              </div>
+              <input type="text" class="form-control" id="s1" [placeholder]="fc.label" [formControlName]="fc.fcn">
             </div>
           </div>
           <app-loading-button
@@ -129,16 +125,17 @@
             <label for="p1" class="form-label">Facebook Pixel</label>
             <input type="text" class="form-control" id="p1"
                    autocomplete="off" placeholder="App Name" formControlName="fb"
-                   [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).fb.errors}">
-            <div *ngIf="formProcessed && form(SEOSettingsForm).fb.errors?.required" class="invalid-feedback">
+                   [ngClass]="{'is-invalid': formProcessed && form(pixelForm).fb.errors}">
+            <div *ngIf="formProcessed && form(pixelForm).fb.errors?.required" class="invalid-feedback">
               Required
             </div>
           </div>
           <div class="mb-3">
             <label for="p2" class="form-label">Google Analytics</label>
-            <textarea class="form-control" id="p2" rows="3" formControlName="google"
-                      [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).google.errors}"></textarea>
-            <div *ngIf="formProcessed && form(SEOSettingsForm).google.errors?.required" class="invalid-feedback">
+            <input type="text" class="form-control" id="p2"
+                   autocomplete="off" placeholder="Google Analytics" formControlName="google"
+                   [ngClass]="{'is-invalid': formProcessed && form(pixelForm).google.errors}">
+            <div *ngIf="formProcessed && form(pixelForm).google.errors?.required" class="invalid-feedback">
               Required
             </div>
           </div>

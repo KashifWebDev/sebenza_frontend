@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AdministratorService} from "../../administrator.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../../../../../app.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {basicSettings, role} from "../../../../../core/interfaces/interfaces";
@@ -76,15 +76,15 @@ export class SettingsPageComponent implements OnInit {
       keywords: ['', Validators.required]
     });
     this.socialForm = this.formBuilder.group({
-      facebook: ['', Validators.required],
-      instagram: ['', Validators.required],
-      tiktok: ['', Validators.required],
-      pinterest: ['', Validators.required],
-      twitter: ['', Validators.required],
-      google: ['', Validators.required],
-      rss: ['', Validators.required],
-      linkedin: ['', Validators.required],
-      youtube: ['', Validators.required],
+      facebook: [''],
+      instagram: [''],
+      tiktok: [''],
+      pinterest: [''],
+      twitter: [''],
+      google: [''],
+      rss: [''],
+      linkedin: [''],
+      youtube: [''],
     });
     this.pixelForm = this.formBuilder.group({
       fb: ['', Validators.required],
@@ -95,7 +95,6 @@ export class SettingsPageComponent implements OnInit {
   }
 
   populateForm(settings: basicSettings) {
-    console.log(settings);
     this.basicSettingsForm.patchValue({
       title: settings.title,
       email: settings.email,
@@ -154,6 +153,10 @@ export class SettingsPageComponent implements OnInit {
       );
     }
     if(id==2){
+      if (this.SEOSettingsForm.invalid) {
+        this.formSubmit = false;
+        return;
+      }
       this.loadingBtn2 = true;
       formData.append(`site_name`, this.SEOSettingsForm.value['name']);
       formData.append(`meta_description`, this.SEOSettingsForm.value['desc']);
@@ -174,6 +177,10 @@ export class SettingsPageComponent implements OnInit {
       );
     }
     if(id==3){
+      if (this.socialForm.invalid) {
+        this.formSubmit = false;
+        return;
+      }
       this.loadingBtn3 = true;
       this.form3.forEach(item => {
         formData.append(item.fcn, this.socialForm.value[item.fcn]);
@@ -194,14 +201,17 @@ export class SettingsPageComponent implements OnInit {
       );
     }
     if(id==4){
+      if (this.pixelForm.invalid) {
+        this.formSubmit = false;
+        return;
+      }
       this.loadingBtn2 = true;
-      formData.append(`site_name`, this.SEOSettingsForm.value['name']);
-      formData.append(`meta_description`, this.SEOSettingsForm.value['desc']);
-      formData.append(`meta_keyword`, this.SEOSettingsForm.value['keywords']);
-      this.adminService.editSetting2Submit(formData).subscribe(
+      formData.append(`facebook_pixel`, this.pixelForm.value['fb']);
+      formData.append(`google_analytics`, this.pixelForm.value['google']);
+      this.adminService.editSetting4Submit(formData).subscribe(
         next => {
           if(next.status){
-            this.appService.swalFire('Meta Settings updated Successfully!!', 'success');
+            this.appService.swalFire('Pixel Analytics Settings updated Successfully!!', 'success');
           }else{
             this.appService.swalFire(next.message, 'error');
           }
@@ -220,4 +230,8 @@ export class SettingsPageComponent implements OnInit {
   form(form: FormGroup) {
     return form.controls;
   }
+  form3Get(control: AbstractControl | any) {
+    return control.errors;
+  }
+
 }

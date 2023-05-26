@@ -202,4 +202,11 @@ export class AdministratorService {
       formData
     );
   }
+
+  editSetting4Submit(formData: FormData): Observable<ApiResponse<{ basicinfo: basicSettings }>>{
+    return this.http.post<ApiResponse<{basicinfo: basicSettings}>>(
+      environment.backendURI+`/admin/pixel/analytics`,
+      formData
+    );
+  }
 }
