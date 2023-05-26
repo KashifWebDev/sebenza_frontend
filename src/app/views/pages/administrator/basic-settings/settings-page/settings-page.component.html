@@ -1,0 +1,72 @@
+<app-css-loader *ngIf="loading"></app-css-loader>
+<div class="row" *ngIf="!loading">
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Basic Info</h6>
+        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
+        <form class="forms-sample" [formGroup]="basicSettingsForm" (ngSubmit)="submitForm()">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">App Name</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="App Name" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername2" class="form-label">Contact Email</label>
+            <input type="text" class="form-control" id="exampleInputUsername2"
+                   autocomplete="off" placeholder="Official Email" formControlName="email">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername3" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" id="exampleInputUsername3"
+                   autocomplete="off" placeholder="Contact Number" formControlName="phone">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername4" class="form-label">Company Address</label>
+            <input type="text" class="form-control" id="exampleInputUsername4"
+                   autocomplete="off" placeholder="Company Address" formControlName="address">
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Update Settings'"
+            [loadingText]="'Updating...'"
+            [btnIcon]="'edit'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">SEO Metadata Info</h6>
+        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
+        <form class="forms-sample" [formGroup]="basicSettingsForm" (ngSubmit)="submitForm()">
+          <div class="mb-3">
+            <label for="exampleInputUsername5" class="form-label">Site Name</label>
+            <input type="text" class="form-control" id="exampleInputUsername5"
+                   autocomplete="off" placeholder="App Name" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername6" class="form-label">Meta Description</label>
+            <input type="text" class="form-control" id="exampleInputUsername6"
+                   autocomplete="off" placeholder="Meta Description" formControlName="desc">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername7" class="form-label">Meta Keywords</label>
+            <input type="text" class="form-control" id="exampleInputUsername7"
+                   autocomplete="off" placeholder="Meta Keywords" formControlName="keywords">
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Update Settings'"
+            [loadingText]="'Updating...'"
+            [btnIcon]="'edit'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

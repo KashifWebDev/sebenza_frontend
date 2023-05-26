@@ -70,7 +70,6 @@ export const AdminMenu: MenuItem[] = [
       }
     ]
   },
-
   {
     label: 'News and Updates',
     isTitle: true
@@ -88,5 +87,14 @@ export const AdminMenu: MenuItem[] = [
         link: 'news/add-news',
       }
     ]
+  },
+  {
+    label: 'App Settings',
+    isTitle: true
+  },
+  {
+    label: 'Basic Settings',
+    icon: 'settings',
+    link: 'app-settings'
   },
   ];

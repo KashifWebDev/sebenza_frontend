@@ -83,3 +83,28 @@ export interface News {
   created_at?: string,
   updated_at?: string
 }
+
+export interface basicSettings {
+  id: number,
+  contact: string,
+  email: string,
+  logo: string,
+  address: string,
+  title: string,
+  site_name: string,
+  meta_description: string,
+  meta_keyword: string,
+  facebook_pixel: string,
+  google_analytics: string,
+  facebook: string,
+  instagram: string,
+  tiktok: string,
+  pinterest: string,
+  twitter: string,
+  google: string,
+  rss: string,
+  linkedin: string,
+  youtube: string,
+  created_at: string,
+  updated_at: string
+}

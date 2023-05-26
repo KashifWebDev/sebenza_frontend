@@ -36,6 +36,10 @@ const routes: Routes = [
   {
     path: 'news',
     loadChildren: () => import('./news/news.module').then(m => m.NewsModule)
+  },
+  {
+    path: 'app-settings',
+    loadChildren: () => import('./basic-settings/basic-settings.module').then(m => m.BasicSettingsModule)
   }
 ]
 

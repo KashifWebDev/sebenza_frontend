@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {accountType, ApiResponse, News, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
+import {
+  accountType,
+  ApiResponse,
+  basicSettings,
+  News,
+  Package,
+  role,
+  rolePermission,
+  User
+} from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../auth/auth.service";
@@ -167,5 +176,9 @@ export class AdministratorService {
       environment.backendURI+'/admin/newsupdate/update/'+id,
       formData
     );
+  }
+
+  getBasicSettings(): Observable<ApiResponse<{basicinfo: basicSettings}>>{
+    return this.http.get<ApiResponse<{ basicinfo: basicSettings }>>(environment.backendURI+'/admin/basicinfos');
   }
 }
