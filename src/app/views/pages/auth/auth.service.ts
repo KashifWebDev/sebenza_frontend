@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {accountType, adminUser, ApiResponse, AuthResponse, Package, User} from "../../../core/interfaces/interfaces";
+import {accountType, adminUser, ApiResponse, Package, User} from "../../../core/interfaces/interfaces";
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -60,6 +60,8 @@ export class AuthService {
     localStorage.removeItem('token')
     localStorage.removeItem('user');
     localStorage.removeItem('userType');
+    var path = '';
+    if(this.userType == UserRole.superAdmin) path = '';
     return true;
   }
 
@@ -101,10 +103,11 @@ export class AuthService {
   redirectToDashboard(){
     let path = '';
     switch (this.getUserRole()){
-      case UserRole.Admin:
+      case UserRole.superAdmin:
         path = '/administrator';
         break;
       case UserRole.User:
+      case UserRole.superUser:
         path = '/user';
         break;
       default:

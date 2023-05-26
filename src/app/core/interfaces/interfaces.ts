@@ -1,3 +1,5 @@
+import {UserRole} from "../roles/UserRole";
+
 export interface ApiResponse<T> {
   status: boolean;
   message?: string;
@@ -11,7 +13,7 @@ export interface ApiError {
 
 export interface role {
   id: number,
-  name: string,
+  name: UserRole,
   guard_name: string,
   permissions: rolePermission[]
 }

@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import Swal from "sweetalert2";
 import {AuthService} from "../auth.service";
-import {ApiResponse, AuthResponse} from "../../../../core/interfaces/interfaces";
 import {UserRole} from "../../../../core/roles/UserRole";
 
 @Component({
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     switch (this.router.url) {
       case '/auth/superAdmin':
-        this.loginUserType = UserRole.Admin;
+        this.loginUserType = UserRole.superUser;
         break;
       case '/auth/login':
         this.loginUserType = UserRole.User;
@@ -84,7 +83,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
       (response) => {
         console.log(response);
         if(response.status && response.data?.user){
-          this.authService.userType = this.loginUserType;
+          this.authService.userType = response.data.user.roles[0].name;
           this.authService.setSession(response.data.token, response.data.user);
           this.authService.redirectToDashboard()
         }else{
@@ -100,7 +99,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   }
 
   getLoginText(): string{
-    if (this.loginUserType == UserRole.Admin) return " Super Admin";
+    if (this.loginUserType == UserRole.superUser) return " Super Admin";
     return '';
   }
 }

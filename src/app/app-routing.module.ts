@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '', pathMatch: 'full' },
       {
-        data: { roles: [UserRole.Admin] },
+        data: { roles: [UserRole.superAdmin] },
         canActivate: [RoleGuard],
         path: '',
         loadChildren: () => import('./views/pages/administrator/administrator.module').then(m => m.AdministratorModule)
@@ -31,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        data: { roles: [UserRole.User] },
+        data: { roles: [UserRole.superUser, UserRole.User] },
         canActivate: [RoleGuard],
         path: 'dashboard',
         loadChildren: () => import('./views/pages/user/user.module').then(m => m.UserModule)
