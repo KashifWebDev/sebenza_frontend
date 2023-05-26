@@ -69,5 +69,24 @@ export const AdminMenu: MenuItem[] = [
         link: 'account-types/add-account',
       }
     ]
-  }
+  },
+
+  {
+    label: 'News and Updates',
+    isTitle: true
+  },
+  {
+    label: 'Announcements',
+    icon: 'bell',
+    subItems: [
+      {
+        label: 'All Announcements',
+        link: 'news'
+      },
+      {
+        label: 'Add a news',
+        link: 'news/add-news',
+      }
+    ]
+  },
   ];

@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">News & Announcements</h6>
+        <app-css-loader *ngIf="!news.length"></app-css-loader>
+        <div class="table-responsive" *ngIf="news && news.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Title">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <a [routerLink]=[row.id]>
+                  <div class="d-flex align-items-center">
+                    {{ row.title }}
+                  </div>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Views">
+              <ng-template ngx-datatable-cell-template>
+                <span>
+                  3
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a [routerLink]="['add-news']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                  <i class="feather icon-edit-3 text-primary"></i>
+                </a>
+                <button type="button" class="btn btn-icon" (click)="deleteRole(row)">
+                  <i class="feather icon-trash-2 text-danger"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm User Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close" [disabled]="deleteLoading"></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to delete this news?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()" *ngIf="!deleteLoading">
+      <i class="feather icon-bell-off btn-icon-prepend me-1"></i>
+      Delete News
+    </button>
+    <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Deleting News..
+    </button>
+  </div>
+</ng-template>

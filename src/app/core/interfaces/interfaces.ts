@@ -70,3 +70,16 @@ export interface Package {
   created_at?: string,
   updated_at?: string
 }
+
+export interface News {
+  id: number,
+  title: string,
+  slug: string,
+  description: string,
+  seen: boolean,
+  postImage: string,
+  status: string,
+  total_view: number,
+  created_at?: string,
+  updated_at?: string
+}

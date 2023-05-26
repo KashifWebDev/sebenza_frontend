@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {accountType, ApiResponse, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
+import {accountType, ApiResponse, News, Package, role, rolePermission, User} from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {AuthService} from "../auth/auth.service";
@@ -135,5 +135,37 @@ export class AdministratorService {
 
   getAccTypes(): Observable<ApiResponse<{accounttypes: accountType[]}>>{
     return this.http.get<any>(environment.backendURI+'/admin/accounttypes');
+  }
+
+  getAllNews(): Observable<ApiResponse<{news: News[]}>>{
+    return this.http.get<ApiResponse<{ news: News[]}>>(
+      environment.backendURI+`/admin/newsupdates`
+    );
+  }
+
+  getNewsByID(id: number): Observable<ApiResponse<{news: News}>>{
+    return this.http.get<ApiResponse<{ news: News }>>(
+      environment.backendURI+`/admin/newsupdates/${id}/edit`
+    );
+  }
+
+  addNewsSubmit(formData: FormData): Observable<ApiResponse<{ accounttype: accountType }>>{
+    return this.http.post<ApiResponse<{accounttype: accountType}>>(
+      environment.backendURI+'/admin/newsupdates',
+      formData
+    );
+  }
+
+  deleteNewsSubmit(id: number): Observable<ApiResponse<{ news: News }>>{
+    return this.http.delete<ApiResponse<{news: News}>>(
+      environment.backendURI+`/admin/newsupdates/${id}`
+    );
+  }
+
+  editNewsSubmit(formData: FormData, id: number): Observable<ApiResponse<{ news: News }>>{
+    return this.http.post<ApiResponse<{news: News}>>(
+      environment.backendURI+'/admin/newsupdate/update/'+id,
+      formData
+    );
   }
 }
