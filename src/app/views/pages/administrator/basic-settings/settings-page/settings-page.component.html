@@ -4,30 +4,45 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">Basic Info</h6>
-        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
-        <form class="forms-sample" [formGroup]="basicSettingsForm" (ngSubmit)="submitForm()">
+        <form class="forms-sample" [formGroup]="basicSettingsForm" (ngSubmit)="submitForm(1)">
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">App Name</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
-                   autocomplete="off" placeholder="App Name" formControlName="name">
+                   autocomplete="off" placeholder="App Name" formControlName="title"
+                   [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm).title.errors}">
+            <div *ngIf="formProcessed && form(basicSettingsForm).title.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername2" class="form-label">Contact Email</label>
             <input type="text" class="form-control" id="exampleInputUsername2"
-                   autocomplete="off" placeholder="Official Email" formControlName="email">
+                   autocomplete="off" placeholder="Official Email" formControlName="email"
+                   [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm).email.errors}">
+            <div *ngIf="formProcessed && form(basicSettingsForm).email.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername3" class="form-label">Contact Number</label>
             <input type="text" class="form-control" id="exampleInputUsername3"
-                   autocomplete="off" placeholder="Contact Number" formControlName="phone">
+                   autocomplete="off" placeholder="Contact Number" formControlName="phone"
+                   [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm).phone.errors}">
+            <div *ngIf="formProcessed && form(basicSettingsForm).phone.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername4" class="form-label">Company Address</label>
             <input type="text" class="form-control" id="exampleInputUsername4"
-                   autocomplete="off" placeholder="Company Address" formControlName="address">
+                   autocomplete="off" placeholder="Company Address" formControlName="address"
+                   [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm).address.errors}">
+            <div *ngIf="formProcessed && form(SEOSettingsForm).address.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <app-loading-button
-            [isLoading]="loadingBtn"
+            [isLoading]="loadingBtn1"
             [btnText]="'Update Settings'"
             [loadingText]="'Updating...'"
             [btnIcon]="'edit'">
@@ -41,25 +56,94 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">SEO Metadata Info</h6>
-        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
-        <form class="forms-sample" [formGroup]="basicSettingsForm" (ngSubmit)="submitForm()">
+        <form class="forms-sample" [formGroup]="SEOSettingsForm" (ngSubmit)="submitForm(2)">
           <div class="mb-3">
             <label for="exampleInputUsername5" class="form-label">Site Name</label>
             <input type="text" class="form-control" id="exampleInputUsername5"
-                   autocomplete="off" placeholder="App Name" formControlName="name">
+                   autocomplete="off" placeholder="App Name" formControlName="name"
+                   [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).name.errors}">
+            <div *ngIf="formProcessed && form(SEOSettingsForm).name.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername6" class="form-label">Meta Description</label>
-            <input type="text" class="form-control" id="exampleInputUsername6"
-                   autocomplete="off" placeholder="Meta Description" formControlName="desc">
+            <textarea class="form-control" id="exampleInputUsername6" rows="3" formControlName="desc"
+                      [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).desc.errors}"></textarea>
+            <div *ngIf="formProcessed && form(SEOSettingsForm).desc.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername7" class="form-label">Meta Keywords</label>
             <input type="text" class="form-control" id="exampleInputUsername7"
-                   autocomplete="off" placeholder="Meta Keywords" formControlName="keywords">
+                   autocomplete="off" placeholder="Meta Keywords" formControlName="keywords"
+            [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).keywords.errors}">
+            <div *ngIf="formProcessed && form(SEOSettingsForm).keywords.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <app-loading-button
-            [isLoading]="loadingBtn"
+            [isLoading]="loadingBtn2"
+            [btnText]="'Update Settings'"
+            [loadingText]="'Updating...'"
+            [btnIcon]="'edit'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Social Settings</h6>
+        <form class="forms-sample" [formGroup]="socialForm" (ngSubmit)="submitForm(3)">
+          <div class="row mb-3" *ngFor="let fc of form3">
+            <label for="s1" class="col-sm-3 col-form-label">{{fc.label}}</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="s1" [placeholder]="fc.label" [formControlName]="fc.fcn"
+                     [ngClass]="{'is-invalid': formProcessed && form(basicSettingsForm)[fc.fcn].errors}">
+              <div *ngIf="formProcessed && form(socialForm)[fc.fcn].errors?.required" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn3"
+            [btnText]="'Update Settings'"
+            [loadingText]="'Updating...'"
+            [btnIcon]="'edit'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Pixel Analytics</h6>
+        <form class="forms-sample" [formGroup]="pixelForm" (ngSubmit)="submitForm(4)">
+          <div class="mb-3">
+            <label for="p1" class="form-label">Facebook Pixel</label>
+            <input type="text" class="form-control" id="p1"
+                   autocomplete="off" placeholder="App Name" formControlName="fb"
+                   [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).fb.errors}">
+            <div *ngIf="formProcessed && form(SEOSettingsForm).fb.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="p2" class="form-label">Google Analytics</label>
+            <textarea class="form-control" id="p2" rows="3" formControlName="google"
+                      [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).google.errors}"></textarea>
+            <div *ngIf="formProcessed && form(SEOSettingsForm).google.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn4"
             [btnText]="'Update Settings'"
             [loadingText]="'Updating...'"
             [btnIcon]="'edit'">

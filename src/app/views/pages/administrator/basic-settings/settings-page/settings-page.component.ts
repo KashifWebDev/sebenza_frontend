@@ -13,13 +13,30 @@ import {basicSettings, role} from "../../../../../core/interfaces/interfaces";
 export class SettingsPageComponent implements OnInit {
   basicSettingsForm: FormGroup;
   SEOSettingsForm: FormGroup;
-  loadingBtn: boolean = false;
+  socialForm: FormGroup;
+  pixelForm: FormGroup;
+  loadingBtn1: boolean = false;
+  loadingBtn2: boolean = false;
+  loadingBtn3: boolean = false;
+  loadingBtn4: boolean = false;
+  formSubmit: boolean = false;
 
   settings: basicSettings;
   isEditMode: boolean = false;
-  formSubmit: boolean = false;
   formProcessed: boolean = false;
   loading: boolean = false;
+
+  form3 = [
+    {label: 'Facebook', fcn: 'facebook'},
+    {label: 'Instagram', fcn: 'instagram'},
+    {label: 'Tiktok', fcn: 'tiktok'},
+    {label: 'Pinterest', fcn: 'pinterest'},
+    {label: 'Twitter', fcn: 'twitter'},
+    {label: 'Google', fcn: 'google'},
+    {label: 'RSS', fcn: 'rss'},
+    {label: 'LinkedIn', fcn: 'linkedin'},
+    {label: 'YouTube', fcn: 'youtube'},
+  ];
 
   constructor(private adminService: AdministratorService,
               private appService: AppService,
@@ -30,7 +47,7 @@ export class SettingsPageComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.loading = true;
-    const user = this.adminService.getBasicSettings().subscribe(
+    this.adminService.getBasicSettings().subscribe(
       (res) => {
         if(res.status && res.data?.basicinfo){
           this.settings = res.data.basicinfo;
@@ -48,7 +65,7 @@ export class SettingsPageComponent implements OnInit {
 
   initializeForm() {
     this.basicSettingsForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      title: ['', Validators.required],
       email: ['', Validators.required],
       phone: ['', Validators.required],
       address: ['', Validators.required]
@@ -58,50 +75,149 @@ export class SettingsPageComponent implements OnInit {
       desc: ['', Validators.required],
       keywords: ['', Validators.required]
     });
+    this.socialForm = this.formBuilder.group({
+      facebook: ['', Validators.required],
+      instagram: ['', Validators.required],
+      tiktok: ['', Validators.required],
+      pinterest: ['', Validators.required],
+      twitter: ['', Validators.required],
+      google: ['', Validators.required],
+      rss: ['', Validators.required],
+      linkedin: ['', Validators.required],
+      youtube: ['', Validators.required],
+    });
+    this.pixelForm = this.formBuilder.group({
+      fb: ['', Validators.required],
+      google: ['', Validators.required]
+    });
 
     this.SEOSettingsForm.controls['name'].disable();
   }
 
   populateForm(settings: basicSettings) {
+    console.log(settings);
     this.basicSettingsForm.patchValue({
-      name: settings.site_name,
+      title: settings.title,
       email: settings.email,
       phone: settings.contact,
       address: settings.address,
     });
     this.SEOSettingsForm.patchValue({
-      name: settings.site_name,
+      name: settings.title,
       desc: settings.meta_description,
       keywords: settings.meta_keyword
     });
+    this.socialForm.patchValue({
+      facebook: settings.facebook,
+      instagram: settings.instagram,
+      tiktok: settings.tiktok,
+      pinterest: settings.pinterest,
+      twitter: settings.twitter,
+      google: settings.google,
+      rss: settings.rss,
+      linkedin: settings.linkedin,
+      youtube: settings.youtube
+    });
+    this.pixelForm.patchValue({
+      fb: settings.facebook_pixel,
+      google: settings.google_analytics
+    });
+
   }
 
-  submitForm(){
-    this.loadingBtn = true;
-
+  submitForm(id: number){
     this.formProcessed = true;
-    this.formSubmit = true;
-    if (this.basicSettingsForm.invalid) {
-      this.formSubmit = false;
-      return;
-    }
-
     const formData = new FormData();
-    formData.append(`roleName`, this.basicSettingsForm.value['roleName']);
-      this.adminService.addNewRoleSubmit(formData).subscribe(
+    if(id==1){
+      if (this.basicSettingsForm.invalid) {
+        this.formSubmit = false;
+        return;
+      }
+      this.loadingBtn1 = true;
+      formData.append(`title`, this.basicSettingsForm.value['title']);
+      formData.append(`email`, this.basicSettingsForm.value['email']);
+      formData.append(`contact`, this.basicSettingsForm.value['phone']);
+      formData.append(`address`, this.basicSettingsForm.value['address']);
+      this.adminService.editSetting1Submit(formData).subscribe(
         next => {
           if(next.status){
-            this.appService.swalFire('Role created successfully!', 'success');
-            this.basicSettingsForm.reset();
+            this.appService.swalFire('Basic Settings updated Successfully!!', 'success');
           }else{
             this.appService.swalFire(next.message, 'error');
           }
-          this.loadingBtn = false;
+          this.loadingBtn1 = false;
         },
         error => {
-          this.loadingBtn = false;
-          this.appService.swalFire('Error Occurred while creating role!', 'error');
+          this.loadingBtn1 = false;
+          this.appService.swalFire('Error Occurred while updating settings!', 'error');
         }
       );
+    }
+    if(id==2){
+      this.loadingBtn2 = true;
+      formData.append(`site_name`, this.SEOSettingsForm.value['name']);
+      formData.append(`meta_description`, this.SEOSettingsForm.value['desc']);
+      formData.append(`meta_keyword`, this.SEOSettingsForm.value['keywords']);
+      this.adminService.editSetting2Submit(formData).subscribe(
+        next => {
+          if(next.status){
+            this.appService.swalFire('Meta Settings updated Successfully!!', 'success');
+          }else{
+            this.appService.swalFire(next.message, 'error');
+          }
+          this.loadingBtn2 = false;
+        },
+        error => {
+          this.loadingBtn2 = false;
+          this.appService.swalFire('Error Occurred while updating settings!', 'error');
+        }
+      );
+    }
+    if(id==3){
+      this.loadingBtn3 = true;
+      this.form3.forEach(item => {
+        formData.append(item.fcn, this.socialForm.value[item.fcn]);
+      })
+      this.adminService.editSetting3Submit(formData).subscribe(
+        next => {
+          if(next.status){
+            this.appService.swalFire('Social Links updated Successfully!!', 'success');
+          }else{
+            this.appService.swalFire(next.message, 'error');
+          }
+          this.loadingBtn3 = false;
+        },
+        error => {
+          this.loadingBtn3 = false;
+          this.appService.swalFire('Error Occurred while updating settings!', 'error');
+        }
+      );
+    }
+    if(id==4){
+      this.loadingBtn2 = true;
+      formData.append(`site_name`, this.SEOSettingsForm.value['name']);
+      formData.append(`meta_description`, this.SEOSettingsForm.value['desc']);
+      formData.append(`meta_keyword`, this.SEOSettingsForm.value['keywords']);
+      this.adminService.editSetting2Submit(formData).subscribe(
+        next => {
+          if(next.status){
+            this.appService.swalFire('Meta Settings updated Successfully!!', 'success');
+          }else{
+            this.appService.swalFire(next.message, 'error');
+          }
+          this.loadingBtn2 = false;
+        },
+        error => {
+          this.loadingBtn2 = false;
+          this.appService.swalFire('Error Occurred while updating settings!', 'error');
+        }
+      );
+    }
+  }
+
+
+
+  form(form: FormGroup) {
+    return form.controls;
   }
 }

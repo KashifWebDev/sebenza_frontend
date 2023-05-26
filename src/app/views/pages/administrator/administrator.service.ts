@@ -181,4 +181,25 @@ export class AdministratorService {
   getBasicSettings(): Observable<ApiResponse<{basicinfo: basicSettings}>>{
     return this.http.get<ApiResponse<{ basicinfo: basicSettings }>>(environment.backendURI+'/admin/basicinfos');
   }
+
+  editSetting1Submit(formData: FormData): Observable<ApiResponse<{ basicinfo: basicSettings }>>{
+    return this.http.post<ApiResponse<{basicinfo: basicSettings}>>(
+      environment.backendURI+`/admin/basicinfo/update`,
+      formData
+    );
+  }
+
+  editSetting2Submit(formData: FormData): Observable<ApiResponse<{ basicinfo: basicSettings }>>{
+    return this.http.post<ApiResponse<{basicinfo: basicSettings}>>(
+      environment.backendURI+`/admin/seo/meta`,
+      formData
+    );
+  }
+
+  editSetting3Submit(formData: FormData): Observable<ApiResponse<{ basicinfo: basicSettings }>>{
+    return this.http.post<ApiResponse<{basicinfo: basicSettings}>>(
+      environment.backendURI+`/admin/social/links`,
+      formData
+    );
+  }
 }
