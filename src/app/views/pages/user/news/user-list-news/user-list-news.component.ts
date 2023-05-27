@@ -1,8 +1,8 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {News} from "../../../../../core/interfaces/interfaces";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {AdministratorService} from "../../../administrator/administrator.service";
+import {Component, OnInit} from '@angular/core';
+import {adminUser, News, User} from "../../../../../core/interfaces/interfaces";
 import { ColumnMode } from '@swimlane/ngx-datatable';
+import {AuthService} from "../../../auth/auth.service";
+import {UserService} from "../../user.service";
 
 @Component({
   selector: 'app-user-list-news',
@@ -17,13 +17,15 @@ export class UserListNewsComponent implements OnInit {
   deleteLoading: boolean = false;
   filteredData: News[] = [...this.news];
   searchText = '';
+  user: User | adminUser;
 
 
-  constructor(private adminService: AdministratorService, private modalService: NgbModal) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
 
 
   ngOnInit(): void {
-    this.adminService.getAllNews().subscribe(response => {
+    this.user = this.authService.currentUser;
+    this.userService.getAllNewsByUserId(this.user.id).subscribe(response => {
       if (response.status && response.data) {
         this.news = response.data.news;
         this.filterData();

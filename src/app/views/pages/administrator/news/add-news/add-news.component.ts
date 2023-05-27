@@ -71,7 +71,6 @@ export class AddNewsComponent implements OnInit {
   newsID: number;
   formSubmit: boolean = false;
   formProcessed: boolean = false;
-  formData: FormData = new FormData();
   loading: boolean = false;
 
   constructor(private adminService: AdministratorService,

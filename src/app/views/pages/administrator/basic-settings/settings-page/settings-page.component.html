@@ -1,4 +1,5 @@
 <app-css-loader *ngIf="loading"></app-css-loader>
+
 <div class="row" *ngIf="!loading">
   <div class="col-md-6 grid-margin stretch-card">
     <div class="card">
@@ -78,7 +79,7 @@
             <label for="exampleInputUsername7" class="form-label">Meta Keywords</label>
             <input type="text" class="form-control" id="exampleInputUsername7"
                    autocomplete="off" placeholder="Meta Keywords" formControlName="keywords"
-            [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).keywords.errors}">
+                   [ngClass]="{'is-invalid': formProcessed && form(SEOSettingsForm).keywords.errors}">
             <div *ngIf="formProcessed && form(SEOSettingsForm).keywords.errors?.required" class="invalid-feedback">
               Required
             </div>

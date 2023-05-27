@@ -78,10 +78,10 @@ export class CreateNewAccountTypeComponent implements OnInit {
 
   submitForm(){
     this.loadingBtn = true;
-
     this.formProcessed = true;
     this.formSubmit = true;
     if (this.addAccTypeForm.invalid) {
+      this.loadingBtn = false;
       this.formSubmit = false;
       return;
     }
@@ -113,6 +113,8 @@ export class CreateNewAccountTypeComponent implements OnInit {
         next => {
           if(next.status){
             this.appService.swalFire('Account Type created successfully!', 'success');
+            this.formProcessed = false;
+            this.formSubmit = false;
             this.addAccTypeForm.reset();
           }else{
             this.appService.swalFire(next.message, 'error');

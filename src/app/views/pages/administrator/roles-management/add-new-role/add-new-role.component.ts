@@ -72,10 +72,10 @@ export class AddNewRoleComponent implements OnInit {
 
   submitForm(){
     this.loadingBtn = true;
-
     this.formProcessed = true;
     this.formSubmit = true;
     if (this.addRoleForm.invalid) {
+      this.loadingBtn = false;
       this.formSubmit = false;
       return;
     }
@@ -105,6 +105,8 @@ export class AddNewRoleComponent implements OnInit {
         next => {
           if(next.status){
             this.appService.swalFire('Role created successfully!', 'success');
+            this.formProcessed = false;
+            this.formSubmit = false;
             this.addRoleForm.reset();
           }else{
             this.appService.swalFire(next.message, 'error');
@@ -120,6 +122,10 @@ export class AddNewRoleComponent implements OnInit {
 
 
 
+  }
+
+  get form() {
+    return this.addRoleForm.controls;
   }
 
 }

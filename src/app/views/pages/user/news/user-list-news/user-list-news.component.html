@@ -19,7 +19,7 @@
             <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
             <ngx-datatable-column name="Title">
               <ng-template ngx-datatable-cell-template let-row="row">
-                <a [routerLink]=[row.id]>
+                <a [routerLink]="['../', row.slug]">
                   <div class="d-flex align-items-center">
                     {{ row.title }}
                   </div>
@@ -37,7 +37,7 @@
             <ngx-datatable-column name="Status" prop="status"></ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['../', row.id]" class="btn btn-outline-primary">
+                <a [routerLink]="['../', row.slug]" class="btn btn-outline-primary">
                   <i class="feather icon-link"></i>
                   Visit
                 </a>

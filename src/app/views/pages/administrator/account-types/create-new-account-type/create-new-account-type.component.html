@@ -8,12 +8,17 @@
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">Account Type</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
-                   autocomplete="off" placeholder="Name" formControlName="name">
+                   autocomplete="off" placeholder="Name" formControlName="name"
+                   [ngClass]="{'is-invalid': formProcessed && form.name.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.name.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputUsername3" class="form-label">Status</label>
             <select class="form-select" id="exampleInputUsername3" formControlName="status"
                     [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value selected>Select Status</option>
               <option value="Active" [selected]="form.status.value == 'Active'">Active</option>
               <option value="Disable" [selected]="form.status.value == 'Disable'">Disable</option>
             </select>

@@ -32,8 +32,8 @@ export class AuthService {
 
       // this.currentUser =JSON.parse(localStorage.getItem('userData')) | [];
       this.authToken = localStorage.getItem('token') ?? '';
-      const userData = localStorage.getItem('userData');
-      if (userData !== null) {
+      const userData = localStorage.getItem('user');
+      if (userData) {
         this.currentUser = JSON.parse(userData);
       }
     }

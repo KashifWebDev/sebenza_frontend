@@ -27,6 +27,7 @@
             <label for="exampleInputUsername3" class="form-label">Status</label>
             <select class="form-select" id="exampleInputUsername3" formControlName="status"
                     [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value selected>Select Status</option>
               <option value="Active" [selected]="form.status.value == 'Active'">Active</option>
               <option value="Disable" [selected]="form.status.value == 'Disable'">Disable</option>
             </select>
@@ -42,6 +43,7 @@
           </app-loading-button>
           <a routerLink="../" class="btn btn-secondary">Cancel</a>
         </form>
+        {{editPkg}}
       </div>
     </div>
   </div>

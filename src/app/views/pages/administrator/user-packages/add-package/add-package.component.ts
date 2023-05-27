@@ -84,6 +84,7 @@ export class AddPackageComponent implements OnInit {
     this.formProcessed = true;
     this.formSubmit = true;
     if (this.addPkgForm.invalid) {
+      this.loadingBtn = false;
       this.formSubmit = false;
       return;
     }
@@ -92,9 +93,9 @@ export class AddPackageComponent implements OnInit {
     formData.append(`account_package`, this.addPkgForm.value['pkgName']);
     formData.append(`max_user`, this.addPkgForm.value['maxUsers']);
     formData.append(`status`, this.addPkgForm.value['status']);
-    formData.append(`account_package_id`, this.editPkg.id.toString());
 
     if(this.isEditMode){
+      formData.append(`account_package_id`, this.editPkg.id.toString());
       this.adminService.editPkgSubmit(formData, this.editPkg.id).subscribe(
         next => {
           if(next.status){

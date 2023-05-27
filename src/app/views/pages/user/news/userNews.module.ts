@@ -10,7 +10,7 @@ import { UserSingleNewsComponent } from './user-single-news/user-single-news.com
 const routes: Routes = [
   {path: '', redirectTo: 'all-news', pathMatch: 'full'},
   {path: 'all-news', component: UserListNewsComponent},
-  {path: ':id', component: UserSingleNewsComponent},
+  {path: ':slug', component: UserSingleNewsComponent},
 ]
 
 @NgModule({

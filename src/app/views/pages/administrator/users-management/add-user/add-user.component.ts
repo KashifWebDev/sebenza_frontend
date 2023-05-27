@@ -139,8 +139,10 @@ export class AddUserComponent implements OnInit {
       this.adminService.addNewUserSubmit(this.formData).subscribe(
         (data) => {
           if(data.status){
-            this.userForm.reset();
             this.appService.swalFire('User was added successfully', 'success');
+            this.formProcessed = false;
+            this.formSubmit = false;
+            this.userForm.reset();
           }else{
             this.appService.swalFire(data.message, 'error');
           }

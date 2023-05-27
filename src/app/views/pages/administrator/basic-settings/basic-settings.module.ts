@@ -13,11 +13,11 @@ const routes: Routes = [
   declarations: [
     SettingsPageComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        ReactiveFormsModule,
+        SharedModule,
+    ]
 })
 export class BasicSettingsModule { }

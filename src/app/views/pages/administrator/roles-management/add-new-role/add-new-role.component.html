@@ -8,7 +8,11 @@
           <div class="mb-3">
             <label for="exampleInputUsername1" class="form-label">Role Name</label>
             <input type="text" class="form-control" id="exampleInputUsername1"
-                   autocomplete="off" placeholder="Name" formControlName="roleName">
+                   autocomplete="off" placeholder="Name" formControlName="roleName"
+                   [ngClass]="{'is-invalid': formProcessed && form.roleName.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.roleName.errors?.required" class="invalid-feedback">
+              Required
+            </div>
           </div>
           <app-loading-button
             [isLoading]="loadingBtn"
