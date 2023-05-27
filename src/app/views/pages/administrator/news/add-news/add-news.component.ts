@@ -145,7 +145,6 @@ export class AddNewsComponent implements OnInit {
     formData.append(`title`, this.addNewsForm.value['title']);
     formData.append(`description`, this.addNewsForm.value['description']);
     formData.append(`status`, this.addNewsForm.value['status']);
-    formData.append(`postImage`, this.addNewsForm.value['uploadImg']);
     if(this.fileToUpload) formData.append('postImage', this.fileToUpload);
     if(this.isEditMode){
       this.adminService.editNewsSubmit(formData, this.editNews.id).subscribe(
@@ -188,8 +187,7 @@ export class AddNewsComponent implements OnInit {
   handleFileInput(event: Event) {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      this.addNewsForm.patchValue({ uploadImg: file });
+      this.fileToUpload = fileInput.files[0];
     }
   }
 
