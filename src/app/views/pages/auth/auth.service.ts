@@ -57,11 +57,18 @@ export class AuthService {
   }
 
   logout(){
+    var path = '/logout'
+    if(this.userType == UserRole.superAdmin) path = '/admin/logout';
+    const formData = new FormData();
+    formData.append('token', this.getToken());
+    this.http.post<ApiResponse<any>>(
+      environment.backendURI+path,
+      formData
+    ).subscribe(data => {
+    });
     localStorage.removeItem('token')
     localStorage.removeItem('user');
     localStorage.removeItem('userType');
-    var path = '';
-    if(this.userType == UserRole.superAdmin) path = '';
     return true;
   }
 
@@ -70,13 +77,13 @@ export class AuthService {
   }
 
   login(email: string, password: string, userType: UserRole): Observable<ApiResponse<{ token: string, user: User | adminUser }>>{
-    if(userType == 'user'){
-      return this.http.post<ApiResponse<any>>(environment.backendURI+'/login',
+    if(userType == UserRole.superAdmin){
+      return this.http.post<ApiResponse<any>>(environment.backendURI+'/admin/login',
         {email, password}
       );
     }
     else{
-      return this.http.post<ApiResponse<any>>(environment.backendURI+'/admin/login',
+      return this.http.post<ApiResponse<any>>(environment.backendURI+'/login',
         {email, password}
       );
     }
@@ -114,8 +121,6 @@ export class AuthService {
         console.error("No roles were found to redirect the user to dashboard!");
         path = '/error/500';
     }
-    console.log(path);
-
     this.router.navigate([path]);
   }
 }

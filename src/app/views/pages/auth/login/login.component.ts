@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
     switch (this.router.url) {
       case '/auth/superAdmin':
-        this.loginUserType = UserRole.superUser;
+        this.loginUserType = UserRole.superAdmin;
         break;
       case '/auth/login':
         this.loginUserType = UserRole.User;
@@ -81,12 +81,12 @@ export class LoginComponent implements OnInit, AfterViewChecked {
       this.loginUserType
     ).subscribe(
       (response) => {
-        console.log(response);
         if(response.status && response.data?.user){
           this.authService.userType = response.data.user.roles[0].name;
           this.authService.setSession(response.data.token, response.data.user);
           this.authService.redirectToDashboard()
         }else{
+          this.doingLogin = false;
           this.loginFail = true;
           Swal.fire({
             title: 'Login Failed!',
@@ -94,7 +94,6 @@ export class LoginComponent implements OnInit, AfterViewChecked {
             icon: 'error'
           });
         }
-        this.doingLogin = false;
       });
   }
 
