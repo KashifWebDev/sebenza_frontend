@@ -138,6 +138,8 @@ export class RegisterComponent implements OnInit {
           this.signedUp = true;
           setTimeout(() => {
             if(res.data){
+              console.log(res);
+              this.authService.userType = res.data.user.roles[0].name;
               this.authService.setSession(res.data.token, res.data.user);
               this.router.navigate(['/']);
             }
