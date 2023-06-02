@@ -8,7 +8,7 @@ import {
   Package,
   role,
   rolePermission,
-  User
+  User, WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
@@ -206,6 +206,30 @@ export class AdministratorService {
   editSetting4Submit(formData: FormData): Observable<ApiResponse<{ basicinfo: basicSettings }>>{
     return this.http.post<ApiResponse<{basicinfo: basicSettings}>>(
       environment.backendURI+`/admin/pixel/analytics`,
+      formData
+    );
+  }
+
+  getWhatsappNumbers(): Observable<ApiResponse<{whatsapp: WhatsApp[]}>>{
+    return this.http.get<any>(environment.backendURI+'/admin/whatsapps');
+  }
+
+  getWhatsappById(id: number): Observable<ApiResponse<{whatsapp: WhatsApp}>>{
+    return this.http.get<ApiResponse<{whatsapp: WhatsApp}>>(
+      environment.backendURI+`/admin/whatsapps/${id}/edit`
+    );
+  }
+
+  addNewWhatsappSubmit(formData: FormData): Observable<ApiResponse<{whatsapp: WhatsApp }>>{
+    return this.http.post<ApiResponse<{whatsapp: WhatsApp}>>(
+      environment.backendURI+'/admin/whatsapps',
+      formData
+    );
+  }
+
+  editWhatsappSubmit(formData: FormData, id: number): Observable<ApiResponse<{whatsapp: WhatsApp }>>{
+    return this.http.post<ApiResponse<{whatsapp: WhatsApp}>>(
+      environment.backendURI+`/admin/whatsapp/update/${id}`,
       formData
     );
   }

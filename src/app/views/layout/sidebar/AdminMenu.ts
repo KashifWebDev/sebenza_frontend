@@ -97,4 +97,22 @@ export const AdminMenu: MenuItem[] = [
     icon: 'settings',
     link: 'app-settings'
   },
+  {
+    label: 'Help & Support',
+    isTitle: true
+  },
+  {
+    label: 'Whatsapp',
+    icon: 'message-circle',
+    subItems: [
+      {
+        label: 'All Numbers',
+        link: 'support/whatsapp'
+      },
+      {
+        label: 'Add New Whatsapp',
+        link: 'support/whatsapp/add'
+      }
+    ]
+  },
   ];

@@ -40,6 +40,10 @@ const routes: Routes = [
   {
     path: 'app-settings',
     loadChildren: () => import('./basic-settings/basic-settings.module').then(m => m.BasicSettingsModule)
+  },
+  {
+    path: 'support',
+    loadChildren: () => import('./support/support.module').then(m => m.SupportModule)
   }
 ]
 

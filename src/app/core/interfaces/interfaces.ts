@@ -110,3 +110,12 @@ export interface basicSettings {
   created_at: string,
   updated_at: string
 }
+
+export interface WhatsApp {
+  id: number,
+  user_name: string,
+  whatsapp_number: string,
+  status: string,
+  created_at: string,
+  updated_at: string
+}
