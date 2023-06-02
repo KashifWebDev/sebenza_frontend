@@ -155,13 +155,10 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <label class="col-sm-3 col-form-label">Number of users</label>
+                <label class="col-sm-3 col-form-label" for="numOfUsers">Number of users</label>
                 <div class="col-sm-9">
-                  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic">
-                    <label ngbButtonLabel class="btn-outline-primary" *ngFor="let label of employees">
-                      <input ngbButton type="radio" formControlName="employees" class="btn-check" [value]="label.id"> {{label.account_package}}
-                    </label>
-                  </div>
+                  <input type="number" class="form-control" id="numOfUsers" placeholder="Maximum users" formControlName="employees"
+                         [ngClass]="{'is-invalid': isForm2Submitted && form2.employees.errors}">
                   <div *ngIf="isForm2Submitted && form2.employees.errors?.required" class="invalid-feedback" style="display: block">
                     Select company size
                   </div>

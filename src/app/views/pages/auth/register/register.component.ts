@@ -24,7 +24,6 @@ export class RegisterComponent implements OnInit {
   isForm2Submitted: Boolean;
 
   stepsTitle : string[] = ['1', '2', '3'];
-  employees : Package[];
   signedUp: boolean = false;
   formData: any = new FormData();
 
@@ -55,21 +54,6 @@ export class RegisterComponent implements OnInit {
             name: element.account_type
           }
         });
-      }
-    });
-
-    this.authService.getPackagesType().subscribe((res: ApiResponse<{accountpackages: Package[]}>) => {
-      if(res.status && res.data?.accountpackages){
-        this.employees  = res.data.accountpackages.filter( (data: Package) => {
-          return data.status == 'Active';
-        }).map( (element: Package) => {
-          console.log(element);
-          return {
-            id: element.id,
-            account_package: element.account_package
-          }
-        });
-        console.log(this.employees);
       }
     });
 

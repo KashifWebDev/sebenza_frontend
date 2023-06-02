@@ -42,20 +42,20 @@ export const AdminMenu: MenuItem[] = [
       }
     ]
   },
-  {
-    label: 'Users Packages',
-    icon: 'package',
-    subItems: [
-      {
-        label: 'All Packages',
-        link: 'user-packages'
-      },
-      {
-        label: 'Add Package',
-        link: 'user-packages/add-package',
-      }
-    ]
-  },
+  // {
+  //   label: 'Users Packages',
+  //   icon: 'package',
+  //   subItems: [
+  //     {
+  //       label: 'All Packages',
+  //       link: 'user-packages'
+  //     },
+  //     {
+  //       label: 'Add Package',
+  //       link: 'user-packages/add-package',
+  //     }
+  //   ]
+  // },
   {
     label: 'Account Types',
     icon: 'shield',
