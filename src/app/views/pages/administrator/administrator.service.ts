@@ -6,7 +6,7 @@ import {
   basicSettings,
   News,
   Package,
-  role,
+  role, Ticket,
   User, WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
@@ -86,7 +86,6 @@ export class AdministratorService {
       formData
     );
   }
-
 
   editAccTypeSubmit(formData: FormData, id: number): Observable<ApiResponse<{ accounttype: accountType }>>{
     return this.http.post<ApiResponse<{accounttype: accountType}>>(
@@ -236,5 +235,13 @@ export class AdministratorService {
     return this.http.delete<ApiResponse<{whatsapp: WhatsApp}>>(
       environment.backendURI+`/admin/whatsapps/${id}`
     );
+  }
+
+  getAllTickets(): Observable<ApiResponse<{supporttickets: Ticket[]}>>{
+    return this.http.get<any>(environment.backendURI+'/admin/supporttickets');
+  }
+
+  getTicketsById(id: number): Observable<ApiResponse<{supporttickets: Ticket[]}>>{
+    return this.http.get<any>(environment.backendURI+`admin/supportticket/edit/${id}`);
   }
 }

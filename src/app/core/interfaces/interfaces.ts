@@ -119,3 +119,19 @@ export interface WhatsApp {
   created_at: string,
   updated_at: string
 }
+
+export interface Ticket {
+  id: number,
+  from_id: number,
+  name: string,
+  email: string,
+  subject: string,
+  department: string,
+  priority: string,
+  message: string,
+  attachment: string,
+  status: string,
+  solved_By: number,
+  created_at: string,
+  updated_at: string
+}

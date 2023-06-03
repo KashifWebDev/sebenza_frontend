@@ -102,6 +102,11 @@ export const AdminMenu: MenuItem[] = [
     isTitle: true
   },
   {
+    label: 'Tickets System',
+    icon: 'mail',
+    link: 'support/tickets'
+  },
+  {
     label: 'Whatsapp',
     icon: 'message-circle',
     subItems: [

@@ -6,8 +6,11 @@ import { AddWhatsappComponent } from './add-whatsapp/add-whatsapp.component';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../../shared/shared.module";
+import {AllTicketsComponent} from "./all-tickets/all-tickets.component";
 
 const routes: Routes = [
+  {path: '', redirectTo: 'tickets', pathMatch: 'full'},
+  {path: 'tickets', component: AllTicketsComponent},
   {path: 'whatsapp', component: WhatsappComponent},
   {path: 'whatsapp/add', component: AddWhatsappComponent},
 ]
@@ -15,7 +18,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     WhatsappComponent,
-    AddWhatsappComponent
+    AddWhatsappComponent,
+    AllTicketsComponent
   ],
   imports: [
     RouterModule.forChild(routes),
