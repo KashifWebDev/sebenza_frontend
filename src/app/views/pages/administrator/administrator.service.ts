@@ -7,12 +7,10 @@ import {
   News,
   Package,
   role,
-  rolePermission,
   User, WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
-import {AuthService} from "../auth/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -231,6 +229,12 @@ export class AdministratorService {
     return this.http.post<ApiResponse<{whatsapp: WhatsApp}>>(
       environment.backendURI+`/admin/whatsapp/update/${id}`,
       formData
+    );
+  }
+
+  deleteWhatsappSubmit(id: number): Observable<ApiResponse<{ whatsapp: WhatsApp }>>{
+    return this.http.delete<ApiResponse<{whatsapp: WhatsApp}>>(
+      environment.backendURI+`/admin/whatsapps/${id}`
     );
   }
 }

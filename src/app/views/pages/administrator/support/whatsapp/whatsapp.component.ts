@@ -60,10 +60,10 @@ export class WhatsappComponent implements OnInit {
 
   confirmDelete(){
     this.deleteLoading = true;
-    this.adminService.deleteAccTypeSubmit(this.delWhatsApp.id).subscribe(
+    this.adminService.deleteWhatsappSubmit(this.delWhatsApp.id).subscribe(
       data => {
         if(data.status){
-          this.appService.swalFire('Account Type Deleted Successfully', 'success');
+          this.appService.swalFire('Whatsapp Deleted Successfully', 'success');
           this.modalReference.close();
         }else{
           this.appService.swalFire(data.message, 'error');
@@ -74,7 +74,7 @@ export class WhatsappComponent implements OnInit {
       },
       (error) => {
         this.deleteLoading = false;
-        this.appService.swalFire('An error occurred while deleting user', 'error');
+        this.appService.swalFire('An error occurred while deleting whatsapp', 'error');
       }
     );
   }

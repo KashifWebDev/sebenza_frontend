@@ -23,6 +23,18 @@
               Required
             </div>
           </div>
+          <div class="mb-3" *ngIf="isEditMode">
+            <label for="exampleInputUsername3" class="form-label">Status</label>
+            <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                    [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value selected>Select Status</option>
+              <option value="Active" [selected]="form.status.value == 'Active'">Active</option>
+              <option value="Disable" [selected]="form.status.value == 'Disable'">Disable</option>
+            </select>
+            <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
           <app-loading-button
             [isLoading]="loadingBtn"
             [btnText]="isEditMode ? 'Update Whatsapp' : 'Save Whatsapp'"

@@ -60,14 +60,16 @@ export class AddWhatsappComponent implements OnInit {
     // Initialize the form with empty fields
     this.addWhatsAppForm = this.formBuilder.group({
       user_name: ['', Validators.required],
-      whatsapp_number: ['', Validators.required]
+      whatsapp_number: ['', Validators.required],
+      status: ['']
     });
   }
 
   populateForm(wa: WhatsApp) {
     this.addWhatsAppForm.patchValue({
       user_name: wa.user_name,
-      whatsapp_number: wa.whatsapp_number
+      whatsapp_number: wa.whatsapp_number,
+      status: wa.status,
     });
   }
 
@@ -89,7 +91,7 @@ export class AddWhatsappComponent implements OnInit {
     formData.append(`user_name`, this.addWhatsAppForm.value['user_name']);
     formData.append(`whatsapp_number`, this.addWhatsAppForm.value['whatsapp_number']);
     if(this.isEditMode){
-      formData.append(`account_type_id`, this.editWhatsapp.id.toString());
+      formData.append(`status`, this.addWhatsAppForm.value['status']);
       this.adminService.editWhatsappSubmit(formData, this.editWhatsapp.id).subscribe(
         next => {
           if(next.status){
