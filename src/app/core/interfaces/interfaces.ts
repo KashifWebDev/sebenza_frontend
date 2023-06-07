@@ -31,6 +31,7 @@ export interface User {
   last_name: string,
   email: string,
   phone: string,
+  profile: string,
   company_name: string,
   account_type_id: number,
   country: string,
@@ -133,5 +134,20 @@ export interface Ticket {
   status: string,
   solved_By: number,
   created_at: string,
-  updated_at: string
+  updated_at: string,
+  users?: User
+}
+
+
+export interface ticketReplies {
+  id: number,
+  ticket_id: number,
+  replay: string,
+  replayatt: string,
+  status: 'Customer-Replay' | 'Answered',
+  type: string,
+  from_user_id: number,
+  created_at: string,
+  updated_at: string,
+  users: User | null
 }

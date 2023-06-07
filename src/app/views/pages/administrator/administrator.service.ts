@@ -6,11 +6,12 @@ import {
   basicSettings,
   News,
   Package,
-  role, Ticket,
+  role, Ticket, ticketReplies,
   User, WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
+import {Tick} from "chart.js";
 
 @Injectable({
   providedIn: 'root'
@@ -241,7 +242,14 @@ export class AdministratorService {
     return this.http.get<any>(environment.backendURI+'/admin/supporttickets');
   }
 
-  getTicketsById(id: number): Observable<ApiResponse<{supporttickets: Ticket[]}>>{
-    return this.http.get<any>(environment.backendURI+`admin/supportticket/edit/${id}`);
+  getTicketsById(id: number): Observable<ApiResponse<{supporttickets: Ticket, replays: ticketReplies[]}>>{
+    return this.http.get<any>(environment.backendURI+`/admin/supportticket/edit/${id}`);
+  }
+
+  adminSubmitTicketMessage(formData: FormData, id: number): Observable<ApiResponse<{ supporttickets: Ticket }>>{
+    return this.http.post<ApiResponse<{supporttickets: Ticket}>>(
+      environment.backendURI+`/admin/replay/ticket/${id}`,
+      formData
+    );
   }
 }

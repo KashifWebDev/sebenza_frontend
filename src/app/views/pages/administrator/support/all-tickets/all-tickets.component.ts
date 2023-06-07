@@ -1,10 +1,9 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {Ticket, User} from "../../../../../core/interfaces/interfaces";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {Ticket, ticketReplies} from "../../../../../core/interfaces/interfaces";
 import {AdministratorService} from "../../administrator.service";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../../../../../app.service";
-import {defaultIfEmpty, filter, map, Observable} from "rxjs";
-
+import {AuthService} from "../../../auth/auth.service";
 @Component({
   selector: 'app-all-tickets',
   templateUrl: './all-tickets.component.html',
@@ -26,10 +25,18 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
   filteredClosedTickets: Ticket[] = [];
 
   searchText: string = '';
+  singleTicket: Ticket;
+  ticketReplies: ticketReplies[];
+  loadingReply: boolean = false;
+  sendReplyForm: FormGroup;
 
-  constructor(private adminService: AdministratorService) { }
+  constructor(private adminService: AdministratorService, private appService: AppService, private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.sendReplyForm = new FormGroup({
+      message: new FormControl('', [Validators.required]),
+    });
+
     this.adminService.getAllTickets().subscribe(response => {
       if (response.status && response.data) {
         if(response.data.supporttickets.length){
@@ -63,7 +70,6 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
 
   }
 
-  // back to chat-list for tablet and mobile devices
   backToChatList() {
     document.querySelector('.chat-content')!.classList.toggle('show');
   }
@@ -93,6 +99,51 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
       }
     }
     return false;
+  }
+
+  getTicketDetails(id: number){
+    this.loadingReply = true;
+    this.adminService.getTicketsById(id).subscribe( res => {
+      if(res.status){
+        if(res.data?.supporttickets) this.singleTicket = res.data.supporttickets;
+        if(res.data?.replays) this.ticketReplies = res.data.replays;
+      }
+      this.loadingReply = false;
+    })
+  }
+
+  submitReply(){
+    if(!this.sendReplyForm.valid){
+      this.appService.swalFire('Message filed cannot be empty', 'error')
+      return;
+    }
+    let formData = new FormData();
+    formData.append(`type`, 'Admin');
+    formData.append(`replay`, this.sendReplyForm.value['message']);
+    this.adminService.adminSubmitTicketMessage(formData, this.singleTicket.id).subscribe(
+      res => {
+        if(res.status && res.data?.supporttickets){
+          let ticketReply: ticketReplies = {
+            from_user_id: 0,
+            replayatt: "",
+            users: this.authService.getLoggedInUser(),
+            ticket_id: this.singleTicket.id,
+            replay: this.sendReplyForm.value['message'],
+            id: res.data.supporttickets.id,
+            updated_at: res.data.supporttickets.created_at,
+            type: 'Admin',
+            status: 'Answered',
+            created_at: res.data.supporttickets.created_at
+          };
+          this.ticketReplies.push(ticketReply);
+        }else{
+          this.appService.swalFire('An error occurred while sending message!', 'error');
+        }
+      },
+    error => {
+      this.appService.swalFire('An error occurred while sending message!', 'error');
+    }
+    );
   }
 
 }
