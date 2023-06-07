@@ -1,3 +1,11 @@
 .chat-wrapper1 {
   max-height: calc(100vh - 329px) !important;
 }
+.file-input-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.file-input {
+  display: none;
+}

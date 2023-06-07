@@ -252,4 +252,11 @@ export class AdministratorService {
       formData
     );
   }
+
+  adminCloseTicket(formData: FormData, id: number): Observable<ApiResponse<{ supporttickets: Ticket }>>{
+    return this.http.post<ApiResponse<{supporttickets: Ticket}>>(
+      environment.backendURI+`/admin/supportticket/update/${id}`,
+      formData
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Ticket, ticketReplies} from "../../../../../core/interfaces/interfaces";
 import {AdministratorService} from "../../administrator.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -13,8 +13,7 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
   tickets: Ticket[] = [];
   filteredData: Ticket[] = [...this.tickets];
   defaultNavActiveId = 1;
-  empty: boolean;
-  loadingTickets: boolean = true;
+  loadingTickets: boolean = false;
 
   pendingTickets: Ticket[] = [];
   answeredTickets: Ticket[] = [];
@@ -25,10 +24,12 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
   filteredClosedTickets: Ticket[] = [];
 
   searchText: string = '';
-  singleTicket: Ticket;
+  singleTicket: Ticket | undefined;
   ticketReplies: ticketReplies[];
   loadingReply: boolean = false;
   sendReplyForm: FormGroup;
+  fileToUpload: File;
+  @ViewChild('fileInputRef') fileInputRef!: ElementRef;
 
   constructor(private adminService: AdministratorService, private appService: AppService, private authService: AuthService) { }
 
@@ -37,24 +38,34 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
       message: new FormControl('', [Validators.required]),
     });
 
+    this.getAllTickets();
+  }
+
+  getAllTickets(){
+    this.loadingTickets = true;
+
+    this.filteredPendingTickets = [];
+    this.filteredAnsweredTickets = [];
+    this.filteredClosedTickets = [];
+    this.pendingTickets = [];
+    this.answeredTickets = [];
+    this.closedTickets = [];
+
     this.adminService.getAllTickets().subscribe(response => {
       if (response.status && response.data) {
         if(response.data.supporttickets.length){
-          this.empty = false;
           this.tickets = response.data.supporttickets;
           this.filterData();
-        }else{
-          this.empty = true;
+
+          this.pendingTickets = this.tickets.filter(ticket => ticket.status === 'Pending');
+          this.answeredTickets = this.tickets.filter(ticket => ticket.status === 'Answered');
+          this.closedTickets = this.tickets.filter(ticket => ticket.status === 'Closed');
+          this.filteredPendingTickets = [...this.pendingTickets];
+          this.filteredAnsweredTickets = [...this.answeredTickets];
+          this.filteredClosedTickets = [...this.closedTickets];
+
+          this.loadingTickets = false;
         }
-        this.loadingTickets = false;
-
-        this.pendingTickets = this.tickets.filter(ticket => ticket.status === 'Pending');
-        this.answeredTickets = this.tickets.filter(ticket => ticket.status === 'Answered');
-        this.closedTickets = this.tickets.filter(ticket => ticket.status === 'Closed');
-
-        this.filteredPendingTickets = [...this.pendingTickets];
-        this.filteredAnsweredTickets = [...this.answeredTickets];
-        this.filteredClosedTickets = [...this.closedTickets];
       }
     });
   }
@@ -120,14 +131,15 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
     let formData = new FormData();
     formData.append(`type`, 'Admin');
     formData.append(`replay`, this.sendReplyForm.value['message']);
-    this.adminService.adminSubmitTicketMessage(formData, this.singleTicket.id).subscribe(
+    if(this.fileToUpload) formData.append('replayatt', this.fileToUpload);
+    this.adminService.adminSubmitTicketMessage(formData, (this.singleTicket && this.singleTicket.id) ? this.singleTicket.id : 0).subscribe(
       res => {
         if(res.status && res.data?.supporttickets){
           let ticketReply: ticketReplies = {
             from_user_id: 0,
             replayatt: "",
             users: this.authService.getLoggedInUser(),
-            ticket_id: this.singleTicket.id,
+            ticket_id: (this.singleTicket && this.singleTicket.id) ? this.singleTicket.id : 0,
             replay: this.sendReplyForm.value['message'],
             id: res.data.supporttickets.id,
             updated_at: res.data.supporttickets.created_at,
@@ -145,5 +157,27 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
     }
     );
   }
+
+  closeTicket(id: number){
+    this.singleTicket = undefined;
+    let formData = new FormData();
+    formData.append(`status`, 'Closed');
+    this.adminService.adminCloseTicket(formData, id).subscribe(
+      res => {
+        this.getAllTickets();
+      },
+      error => {
+
+      }
+    );
+  }
+
+  handleFileInput(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.fileToUpload = fileInput.files[0];
+    }
+  }
+
 
 }
