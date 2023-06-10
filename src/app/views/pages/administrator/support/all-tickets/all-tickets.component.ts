@@ -148,6 +148,7 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
             created_at: res.data.supporttickets.created_at
           };
           this.ticketReplies.push(ticketReply);
+          this.sendReplyForm.reset();
         }else{
           this.appService.swalFire('An error occurred while sending message!', 'error');
         }
