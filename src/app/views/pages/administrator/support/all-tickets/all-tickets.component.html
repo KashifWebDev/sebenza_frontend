@@ -193,6 +193,9 @@
                 </div>
               </div>
               <div class="chat-body" [perfectScrollbar]>
+                <ngb-alert [type]="'primary'">
+                  <strong>{{singleTicket.subject}}</strong> {{singleTicket.message}}
+                </ngb-alert>
                 <ng-container *ngIf="!ticketReplies.length">
                   <div class="h-100 w-100 d-flex align-items-center justify-content-center">
                     <h3 class="mb-3 mb-md-0 text-muted">

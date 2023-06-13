@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">My Tickets</h6>
+        <app-css-loader *ngIf="!tickets.length"></app-css-loader>
+        <div class="table-responsive" *ngIf="tickets && tickets.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="From" prop="name"></ngx-datatable-column>
+            <ngx-datatable-column name="subject" prop="subject"></ngx-datatable-column>
+            <ngx-datatable-column name="Department" prop="department"></ngx-datatable-column>
+            <ngx-datatable-column name="Priority">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.priority == 'High'}">
+                  {{ row.priority}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 'Closed','bg-success': row.status == 'Answered'}">
+                  {{ row.status}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Created at" prop="created_at"></ngx-datatable-column>
+            <ngx-datatable-column name="Updated at" prop="updated_at"></ngx-datatable-column>
+            <ngx-datatable-column name="Solved By" prop="solved_By"></ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a [routerLink]="[row.id]" class="btn btn-icon">
+                  <i class="feather icon-eye text-primary"></i>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

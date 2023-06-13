@@ -246,8 +246,8 @@ export class AdministratorService {
     return this.http.get<any>(environment.backendURI+`/admin/supportticket/edit/${id}`);
   }
 
-  adminSubmitTicketMessage(formData: FormData, id: number): Observable<ApiResponse<{ supporttickets: Ticket }>>{
-    return this.http.post<ApiResponse<{supporttickets: Ticket}>>(
+  adminSubmitTicketMessage(formData: FormData, id: number): Observable<ApiResponse<{ supporttickets: Ticket, replay: ticketReplies }>>{
+    return this.http.post<ApiResponse<{supporttickets: Ticket, replay: ticketReplies}>>(
       environment.backendURI+`/admin/replay/ticket/${id}`,
       formData
     );

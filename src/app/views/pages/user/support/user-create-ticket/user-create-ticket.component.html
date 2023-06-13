@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{isEditMode ? 'Edit News Details' : 'Add a News/Announcement'}}</h6>
+        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addTicketForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Name" formControlName="subject"
+                   [ngClass]="{'is-invalid': formProcessed && form.subject.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.subject.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="dep" class="form-label">Department</label>
+            <select class="form-select" id="dep" formControlName="department"
+                    [ngClass]="{'is-invalid': formProcessed && form.department.errors && formProcessed}">
+              <option value selected>Select department</option>
+              <option *ngFor="let depart of departments" [value]="depart">{{depart}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.department.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="per" class="form-label">Priority</label>
+            <select class="form-select" id="per" formControlName="priority"
+                    [ngClass]="{'is-invalid': formProcessed && form.priority.errors && formProcessed}">
+              <option value selected>Select priority</option>
+              <option *ngFor="let priority of priorities" [value]="priority">{{priority}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.priority.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername11" class="form-label">Ticket Details</label>
+            <textarea class="form-control" id="exampleInputUsername11" rows="5" formControlName="message"></textarea>
+            <div *ngIf="formProcessed && form.message.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername4" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
+            <input type="file" class="form-control" id="exampleInputUsername4"
+                   autocomplete="off" placeholder="Name" formControlName="uploadImg" (change)="handleFileInput($event)">
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Generate Ticket'"
+            [loadingText]="'Generating...'"
+            [btnIcon]="'plus'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

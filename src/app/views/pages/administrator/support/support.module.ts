@@ -7,7 +7,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../../shared/shared.module";
 import {AllTicketsComponent} from "./all-tickets/all-tickets.component";
-import {NgbNavModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbAlertModule, NgbNavModule, NgbTooltipModule} from "@ng-bootstrap/ng-bootstrap";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 
 const routes: Routes = [
@@ -32,7 +32,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgbTooltipModule,
     PerfectScrollbarModule,
-    NgbNavModule
+    NgbNavModule,
+    NgbAlertModule
   ]
 })
 export class SupportModule { }

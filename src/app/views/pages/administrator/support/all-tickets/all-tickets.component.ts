@@ -141,11 +141,11 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
             users: this.authService.getLoggedInUser(),
             ticket_id: (this.singleTicket && this.singleTicket.id) ? this.singleTicket.id : 0,
             replay: this.sendReplyForm.value['message'],
-            id: res.data.supporttickets.id,
-            updated_at: res.data.supporttickets.created_at,
+            id: res.data.replay.id,
+            updated_at: res.data.replay.updated_at,
             type: 'Admin',
             status: 'Answered',
-            created_at: res.data.supporttickets.created_at
+            created_at: res.data.replay.created_at
           };
           this.ticketReplies.push(ticketReply);
           this.sendReplyForm.reset();

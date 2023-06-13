@@ -18,5 +18,23 @@ export const UserMenu: MenuItem[] = [
     label: 'Announcements',
     icon: 'bell',
     link: 'news/all-news'
-  }
+  },
+  {
+    label: 'Help & Support',
+    isTitle: true
+  },
+  {
+    label: 'Tickets System',
+    icon: 'mail',
+    subItems: [
+      {
+        label: 'My Tickets',
+        link: 'support/tickets'
+      },
+      {
+        label: 'Generate New Ticket',
+        link: 'support/ticket/new'
+      }
+    ]
+  },
   ];
