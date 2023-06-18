@@ -5,7 +5,7 @@ import {
   ApiResponse,
   basicSettings,
   News,
-  Package,
+  Package, promoCode,
   role, Ticket, ticketReplies,
   User, WhatsApp
 } from "../../../core/interfaces/interfaces";
@@ -256,6 +256,34 @@ export class AdministratorService {
   adminCloseTicket(formData: FormData, id: number): Observable<ApiResponse<{ supporttickets: Ticket }>>{
     return this.http.post<ApiResponse<{supporttickets: Ticket}>>(
       environment.backendURI+`/admin/supportticket/update/${id}`,
+      formData
+    );
+  }
+
+  getPromoCodes(): Observable<ApiResponse<{promocodes: promoCode[]}>>{
+    return this.http.get<any>(environment.backendURI+`/admin/promocodes`);
+  }
+
+  submitPromoCode(formData: FormData): Observable<ApiResponse<{promocodes: promoCode[]}>>{
+    return this.http.post<ApiResponse<{promocodes: promoCode[]}>>(
+      environment.backendURI+'/admin/promocodes',
+      formData
+    );
+  }
+
+  deletePromoCodeSubmit(id: number): Observable<ApiResponse<{promocodes: promoCode[]}>>{
+    return this.http.delete<ApiResponse<{promocodes: promoCode[]}>>(
+      environment.backendURI+`/admin/promocodes/${id}`
+    );
+  }
+
+  getPromoCodeById(id: number): Observable<ApiResponse<{promocodes: promoCode}>>{
+    return this.http.get<any>(environment.backendURI+`/admin/promocodes/${id}/edit`);
+  }
+
+  editPromoCodeSubmit(formData: FormData, id: number): Observable<ApiResponse<{promocodes: promoCode }>>{
+    return this.http.post<ApiResponse<{promocodes: promoCode}>>(
+      environment.backendURI+`/admin/promocode/update/${id}`,
       formData
     );
   }

@@ -138,7 +138,6 @@ export interface Ticket {
   users?: User
 }
 
-
 export interface ticketReplies {
   id: number,
   ticket_id: number,
@@ -150,4 +149,15 @@ export interface ticketReplies {
   created_at: string,
   updated_at: string,
   users: User | null
+}
+
+export interface promoCode {
+  id: number,
+  title: string,
+  promocode: string,
+  expired_date: string,
+  discount_percent: string,
+  status: string,
+  created_at: string,
+  updated_at: string,
 }

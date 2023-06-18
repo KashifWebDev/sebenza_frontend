@@ -120,4 +120,22 @@ export const AdminMenu: MenuItem[] = [
       }
     ]
   },
+  {
+    label: 'Marketing',
+    isTitle: true
+  },
+  {
+    label: 'Promo Codes',
+    icon: 'gift',
+    subItems: [
+      {
+        label: 'All Promo Codes',
+        link: 'marketing/promocodes'
+      },
+      {
+        label: 'Add New Code',
+        link: 'marketing/promocodes/add'
+      }
+    ]
+  },
   ];

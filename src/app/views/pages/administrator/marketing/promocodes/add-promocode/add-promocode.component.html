@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">{{isEditMode ? 'Edit Promo Code' : 'Add New Promo Code'}}</h6>
+        <app-css-loader *ngIf="loading && isEditMode"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addWhatsAppForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Name" formControlName="title"
+                   [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername2" class="form-label">PromoCode</label>
+            <input type="text" class="form-control" id="exampleInputUsername2"
+                   autocomplete="off" placeholder="xxxxxxx" formControlName="promocode"
+                   [ngClass]="{'is-invalid': formProcessed && form.promocode.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.promocode.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="expired_date" class="form-label">Expiry Date</label>
+            <input type="date" class="form-control" id="expired_date"
+                   autocomplete="off" placeholder="xxxxxxx" formControlName="expired_date"
+                   [ngClass]="{'is-invalid': formProcessed && form.expired_date.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.expired_date.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="discount_percent" class="form-label">Discount Percentage</label>
+            <input type="number" min="0" max="100" class="form-control" id="discount_percent"
+                   autocomplete="off" placeholder="xx" formControlName="discount_percent"
+                   [ngClass]="{'is-invalid': formProcessed && form.discount_percent.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.discount_percent.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3" *ngIf="isEditMode">
+            <label for="exampleInputUsername3" class="form-label">Status</label>
+            <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                    [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+              <option value selected>Select Status</option>
+              <option value="Active" [selected]="form.status.value == 'Active'">Active</option>
+              <option value="Disable" [selected]="form.status.value == 'Disable'">Disable</option>
+            </select>
+            <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="isEditMode ? 'Update Promo Code' : 'Save Promo Code'"
+            [loadingText]="isEditMode ? 'Updating...' : 'Saving...'"
+            [btnIcon]="isEditMode ? 'edit' : 'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
