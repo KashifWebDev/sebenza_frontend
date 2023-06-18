@@ -4,6 +4,7 @@ import {AdministratorService} from "../../administrator.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../../../../../app.service";
 import {AuthService} from "../../../auth/auth.service";
+import {PerfectScrollbarDirective} from "ngx-perfect-scrollbar";
 @Component({
   selector: 'app-all-tickets',
   templateUrl: './all-tickets.component.html',
@@ -30,6 +31,7 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
   sendReplyForm: FormGroup;
   fileToUpload: File;
   @ViewChild('fileInputRef') fileInputRef!: ElementRef;
+  @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
 
   constructor(private adminService: AdministratorService, private appService: AppService, private authService: AuthService) { }
 
@@ -39,6 +41,10 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
     });
 
     this.getAllTickets();
+    // Scroll to bottom after a slight delay
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100);
   }
 
   getAllTickets(){
@@ -78,6 +84,10 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
         document.querySelector('.chat-content')!.classList.toggle('show');
       })
     });
+    // Scroll to bottom after a slight delay
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100);
 
   }
 
@@ -149,6 +159,9 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
           };
           this.ticketReplies.push(ticketReply);
           this.sendReplyForm.reset();
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 100);
         }else{
           this.appService.swalFire('An error occurred while sending message!', 'error');
         }
@@ -180,5 +193,8 @@ export class AllTicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
+  scrollToBottom() {
+    this.directiveRef?.scrollToBottom();
+  }
 
 }

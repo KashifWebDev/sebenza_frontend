@@ -6,6 +6,7 @@ import {AppService} from "../../../../../app.service";
 import {AuthService} from "../../../auth/auth.service";
 import {UserService} from "../../user.service";
 import {ActivatedRoute} from "@angular/router";
+import {PerfectScrollbarComponent, PerfectScrollbarDirective} from "ngx-perfect-scrollbar";
 
 @Component({
   selector: 'app-user-view-ticket',
@@ -23,6 +24,7 @@ export class UserViewTicketComponent implements OnInit, AfterViewInit{
   @ViewChild('fileInputRef') fileInputRef!: ElementRef;
   ticketID: number;
   adminUser: User;
+  @ViewChild(PerfectScrollbarDirective) directiveRef?: PerfectScrollbarDirective;
 
   constructor(private userService: UserService, private appService: AppService, private authService: AuthService,
               private route: ActivatedRoute) { }
@@ -37,7 +39,6 @@ export class UserViewTicketComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-
     // Show chat-content when clicking on chat-item for tablet and mobile devices
     document.querySelectorAll('.chat-list .chat-item').forEach(item => {
       item.addEventListener('click', event => {
@@ -45,6 +46,10 @@ export class UserViewTicketComponent implements OnInit, AfterViewInit{
       })
     });
 
+    // Scroll to bottom after a slight delay
+    setTimeout(() => {
+      this.scrollToBottom();
+    }, 100);
   }
 
   backToChatList() {
@@ -89,6 +94,9 @@ export class UserViewTicketComponent implements OnInit, AfterViewInit{
           };
           this.ticketReplies.push(ticketReply);
           this.sendReplyForm.reset();
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 100);
         }else{
           this.appService.swalFire('An error occurred while sending message!', 'error');
         }
@@ -104,6 +112,10 @@ export class UserViewTicketComponent implements OnInit, AfterViewInit{
     if (fileInput.files && fileInput.files.length > 0) {
       this.fileToUpload = fileInput.files[0];
     }
+  }
+
+  scrollToBottom() {
+    this.directiveRef?.scrollToBottom();
   }
 
 }

@@ -23,14 +23,14 @@
                   <div class="d-flex align-items-center">
                     <i (click)="backToChatList()" class="feather icon-corner-up-left icon-md me-2 ms-n2 text-muted d-lg-none"></i>
                     <figure class="mb-0 me-2">
-                      <img *ngIf="adminUser" [src]="adminUser.profile" class="img-sm rounded-circle" alt="image">
-                      <img *ngIf="!adminUser" src="https://via.placeholder.com/30x30" class="img-sm rounded-circle" alt="image">
+                      <img *ngIf="adminUser.profile" [src]="adminUser.profile" class="img-sm rounded-circle" alt="image">
+                      <img *ngIf="!adminUser.profile" src="https://via.placeholder.com/30x30" class="img-sm rounded-circle" alt="image">
                       <div class="status online"></div>
                       <div class="status online"></div>
                     </figure>
                     <div>
-                      <p *ngIf="adminUser">{{adminUser.first_name+' '+adminUser.last_name}}</p>
-                      <p *ngIf="!adminUser">Admin User</p>
+                      <p *ngIf="adminUser.first_name">{{adminUser.first_name+' '+adminUser.last_name}}</p>
+                      <p *ngIf="!adminUser.first_name">Admin User</p>
                       <p class="text-muted tx-13">
                         <span class="fw-boldest">Subject: </span> {{this.singleTicket.subject}}
                       </p>

@@ -3,7 +3,15 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">My Tickets</h6>
-        <app-css-loader *ngIf="!tickets.length"></app-css-loader>
+        <app-css-loader *ngIf="!tickets.length && loading"></app-css-loader>
+        <ng-container *ngIf="!tickets.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No tickets history found!
+            </h3>
+          </div>
+        </ng-container>
         <div class="table-responsive" *ngIf="tickets && tickets.length">
 
           <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
