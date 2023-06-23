@@ -45,11 +45,15 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    if(this.authService.getUserRole() === UserRole.superAdmin) {
-      this.menuItems = AdminMenu;
-    }
-    if(this.authService.getUserRole() === UserRole.User || this.authService.getUserRole() === UserRole.superUser) {
-      this.menuItems = UserMenu;
+    switch (this.authService.getUserRole()) {
+      case UserRole.superAdmin:
+        this.menuItems = AdminMenu;
+        break;
+      case UserRole.User:
+      case UserRole.superUser:
+      case UserRole.HR:
+      default:
+        this.menuItems = UserMenu;
     }
     // this.menuItems = MENU;
 

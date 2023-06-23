@@ -115,6 +115,7 @@ export class AuthService {
         break;
       case UserRole.User:
       case UserRole.superUser:
+      case UserRole.HR:
         path = '/user';
         break;
       default:

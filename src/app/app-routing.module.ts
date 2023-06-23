@@ -31,7 +31,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: '', pathMatch: 'full' },
       {
-        data: { roles: [UserRole.superUser] },
+        data: { roles: [UserRole.superUser, UserRole.HR] },
         canActivate: [RoleGuard],
         path: '',
         loadChildren: () => import('./views/pages/user/user.module').then(m => m.UserModule)
