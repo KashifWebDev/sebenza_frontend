@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="mx-auto col-md-8 grid-margin stretch-card">
+    <div class="card">
+      <app-css-loader class="ms-3 my-3" *ngIf="loading"></app-css-loader>
+      <ng-container *ngIf="!loading">
+        <div class="card-header">
+          {{meeting.title}}
+        </div>
+        <div class="card-body">
+          <div [innerHTML]="meeting.description"></div>
+          <hr >
+          <a [href]="meeting.link" target="_blank" class="btn btn-primary btn-icon-text">
+            <i class="feather icon-monitor btn-icon-prepend"></i>
+            Join Now
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

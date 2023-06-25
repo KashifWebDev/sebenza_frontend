@@ -11,6 +11,24 @@ export const UserMenu: MenuItem[] = [
     link: 'home'
   },
   {
+    label: 'Quick Links',
+    isTitle: true
+  },
+  {
+    label: 'Meetings Schedules',
+    icon: 'mail',
+    subItems: [
+      {
+        label: 'My Meetings',
+        link: 'meeting'
+      },
+      {
+        label: 'Add a Meeting',
+        link: 'meeting/new'
+      }
+    ]
+  },
+  {
     label: 'News & Updates',
     isTitle: true
   },

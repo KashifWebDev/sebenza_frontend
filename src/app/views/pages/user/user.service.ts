@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ApiResponse, News, Ticket, ticketReplies, User} from "../../../core/interfaces/interfaces";
+import {ApiResponse, Meeting, News, Ticket, ticketReplies, User} from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {Tick} from "chart.js";
 
@@ -47,6 +47,23 @@ export class UserService {
       environment.backendURI+`/user/replay/ticket/${id}`,
       formData
     );
+  }
+
+  getMeetings(): Observable<ApiResponse<{metings: Meeting[]}>>{
+    return this.http.get<ApiResponse<{ metings: Meeting[]}>>(
+      environment.backendURI+`/user/metings`
+    );
+  }
+
+  submitAddMeeting(formData: FormData): Observable<ApiResponse<{ meeting: Meeting }>>{
+    return this.http.post<ApiResponse<{meeting: Meeting}>>(
+      environment.backendURI+`/user/metings`,
+      formData
+    );
+  }
+
+  getMeetingById(id: number): Observable<ApiResponse<{metings: Meeting}>>{
+    return this.http.get<any>(environment.backendURI+`/user/metings/${id}/edit`);
   }
 
 }

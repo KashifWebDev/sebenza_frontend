@@ -1,37 +1,37 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Ticket} from "../../../../../core/interfaces/interfaces";
+import { Component, OnInit } from '@angular/core';
+import {Meeting, Ticket} from "../../../../../core/interfaces/interfaces";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-user-tickets',
-  templateUrl: './user-tickets.component.html',
-  styleUrls: ['./user-tickets.component.scss']
+  selector: 'app-all-meetings',
+  templateUrl: './all-meetings.component.html',
+  styleUrls: ['./all-meetings.component.scss']
 })
-export class UserTicketsComponent implements OnInit {
+export class AllMeetingsComponent implements OnInit {
 
-  tickets: Ticket[] = [];
+  meetings: Meeting[] = [];
   loading: boolean = true;
 
   ColumnMode = ColumnMode;
   deleteLoading: boolean = false;
-  filteredData: Ticket[] = [...this.tickets];
+  filteredData: Meeting[] = [...this.meetings];
   searchText = '';
 
   constructor(private userService: UserService, private appService: AppService) { }
 
   ngOnInit(): void {
-    this.userService.getUserTickets().subscribe(
+    this.userService.getMeetings().subscribe(
       res => {
-        if(res.status && res.data?.supporttickets.length){
-          this.tickets = res.data.supporttickets;
+        if(res.status && res.data?.metings.length){
+          this.meetings = res.data.metings;
           this.filterData();
         }
         this.loading = false;
       },
       error => {
-        this.appService.swalFire('Error occurred while listing tickets', 'error');
+        this.appService.swalFire('Error occurred while listing meetings', 'error');
         this.loading = false;
       }
     );
@@ -41,7 +41,7 @@ export class UserTicketsComponent implements OnInit {
     if (this.searchText.trim() !== '') {
       const searchTerms = this.searchText.toLowerCase().split(' ');
 
-      this.filteredData = this.tickets.filter(item => {
+      this.filteredData = this.meetings.filter(item => {
         const itemValues = Object.values(item).map(value => {
           if (value !== null && value !== undefined) {
             return value.toString().toLowerCase();
@@ -51,7 +51,7 @@ export class UserTicketsComponent implements OnInit {
         return searchTerms.every(term => itemValues.some(value => value.includes(term)));
       });
     } else {
-      this.filteredData = [...this.tickets];
+      this.filteredData = [...this.meetings];
     }
   }
 

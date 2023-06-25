@@ -161,3 +161,17 @@ export interface promoCode {
   created_at: string,
   updated_at: string,
 }
+export interface Meeting{
+  id: number,
+  form_id: number,
+  title: string,
+  place: string,
+  description: string,
+  date: string,
+  time: string,
+  status: string,
+  link: string,
+  recipients: any,
+  created_at: string,
+  updated_at: string
+}
