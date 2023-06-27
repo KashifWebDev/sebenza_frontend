@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ApiResponse, Meeting, News, Ticket, ticketReplies, User} from "../../../core/interfaces/interfaces";
+import {ApiResponse, Meeting, News, Ticket, ticketReplies, User, Task} from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
-import {Tick} from "chart.js";
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +63,23 @@ export class UserService {
 
   getMeetingById(id: number): Observable<ApiResponse<{metings: Meeting}>>{
     return this.http.get<any>(environment.backendURI+`/user/metings/${id}/edit`);
+  }
+
+  getTask(): Observable<ApiResponse<{tasks: Task[]}>>{
+    return this.http.get<ApiResponse<{ tasks: Task[]}>>(
+      environment.backendURI+`/user/tasks`
+    );
+  }
+
+  submitAddTask(formData: FormData): Observable<ApiResponse<{ tasks: Task }>>{
+    return this.http.post<ApiResponse<{tasks: Task}>>(
+      environment.backendURI+`/user/tasks`,
+      formData
+    );
+  }
+
+  getTaskById(id: number): Observable<ApiResponse<{tasks: Task}>>{
+    return this.http.get<any>(environment.backendURI+`/user/tasks/${id}/edit`);
   }
 
 }

@@ -175,3 +175,15 @@ export interface Meeting{
   created_at: string,
   updated_at: string
 }
+
+export interface Task{
+  id: number,
+  form_id: number,
+  name: string,
+  details: string,
+  date: string,
+  time: string,
+  status: string,
+  created_at: string,
+  updated_at: string
+}

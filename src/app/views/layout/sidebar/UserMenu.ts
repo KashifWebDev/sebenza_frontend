@@ -29,6 +29,20 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'My Tasks',
+    icon: 'list',
+    subItems: [
+      {
+        label: 'Tasks list',
+        link: 'tasks'
+      },
+      {
+        label: 'Add a Task',
+        link: 'tasks/new'
+      }
+    ]
+  },
+  {
     label: 'News & Updates',
     isTitle: true
   },

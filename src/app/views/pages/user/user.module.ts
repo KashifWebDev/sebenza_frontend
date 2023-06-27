@@ -10,6 +10,7 @@ const routes: Routes = [
   {path: 'news',loadChildren: () => import('./news/userNews.module').then(m => m.UserNewsModule)},
   {path: 'support',loadChildren: () => import('./support/support.module').then(m => m.SupportModule)},
   {path: 'meeting',loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)},
+  {path: 'tasks',loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
 ]
 
 @NgModule({
