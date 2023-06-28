@@ -187,3 +187,24 @@ export interface Task{
   created_at: string,
   updated_at: string
 }
+
+export interface Task{
+  id: number,
+  form_id: number,
+  name: string,
+  details: string,
+  date: string,
+  time: string,
+  status: string,
+  created_at: string,
+  updated_at: string,
+  tasknotes: taskNote[]
+}
+
+export interface taskNote {
+  id: number,
+  task_id: number,
+  description: string,
+  created_at: string,
+  updated_at: string
+}

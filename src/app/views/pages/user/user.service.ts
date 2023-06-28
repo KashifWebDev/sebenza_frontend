@@ -1,7 +1,16 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ApiResponse, Meeting, News, Ticket, ticketReplies, User, Task} from "../../../core/interfaces/interfaces";
+import {
+  ApiResponse,
+  Meeting,
+  News,
+  Ticket,
+  ticketReplies,
+  User,
+  Task,
+  taskNote
+} from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
 @Injectable({
@@ -80,6 +89,13 @@ export class UserService {
 
   getTaskById(id: number): Observable<ApiResponse<{tasks: Task}>>{
     return this.http.get<any>(environment.backendURI+`/user/tasks/${id}/edit`);
+  }
+
+  submitAddTaskNotes(formData: FormData, id: number): Observable<ApiResponse<{ tasknotes: taskNote }>>{
+    return this.http.post<ApiResponse<{tasknotes: taskNote}>>(
+      environment.backendURI+`/user/task/${id}/addnote`,
+      formData
+    );
   }
 
 }
