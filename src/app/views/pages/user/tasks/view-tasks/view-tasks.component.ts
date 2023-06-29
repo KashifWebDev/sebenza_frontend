@@ -85,6 +85,9 @@ export class ViewTasksComponent implements OnInit {
           this.appService.swalFire(data.message, 'error');
         }
         this.addNoteSubmitLoading = false;
+        this.addNoteSubmitLoading = false;
+        this.formProcessed = false;
+        this.addNotesForm.reset();
       },
       (error) => {
         this.addNoteSubmitLoading = false;

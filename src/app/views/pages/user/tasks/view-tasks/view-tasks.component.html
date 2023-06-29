@@ -7,7 +7,7 @@
           {{task.name}}
           <button type="button" class="btn btn-primary btn-icon-text" (click)="openModal()">
             <i class="feather icon-plus btn-icon-prepend"></i>
-            Add Details
+            Add Updates
           </button>
         </div>
         <div class="card-body">
@@ -19,7 +19,6 @@
               <ul class="timeline">
                 <li class="event" *ngFor="let notes of taskNotes" [attr.data-date]="notes.updated_at | date:'short'">
                   <h3 class="title">{{notes.description}}</h3>
-<!--                  <p>{{notes.updated_at | date}} {{}}</p>-->
                 </li>
               </ul>
             </div>
@@ -41,7 +40,7 @@
       <div class="mb-3">
         <label for="exampleInputUsername1" class="form-label">Task Update</label>
         <input type="text" class="form-control" id="exampleInputUsername1"
-               autocomplete="off" placeholder="Starter Package" formControlName="details"
+               autocomplete="off" placeholder="Post something regarding this task..." formControlName="details"
                [ngClass]="{'is-invalid': formProcessed && form.details.errors}">
         <div *ngIf="formProcessed && form.details.errors?.required" class="invalid-feedback">
           Required
@@ -52,7 +51,7 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="addNoteSubmitLoading">Close</button>
     <button type="button" class="btn btn-primary" (click)="submitForm()" *ngIf="!addNoteSubmitLoading">
-      <i class="feather icon-user-x btn-icon-prepend me-1"></i>
+      <i class="feather icon-align-left btn-icon-prepend me-1"></i>
       Add Details
     </button>
     <button class="btn btn-primary" type="button" disabled *ngIf="addNoteSubmitLoading">
