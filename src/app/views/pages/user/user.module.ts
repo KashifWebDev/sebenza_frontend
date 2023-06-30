@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'support',loadChildren: () => import('./support/support.module').then(m => m.SupportModule)},
   {path: 'meeting',loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)},
   {path: 'tasks',loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
+  {path: 'calendar',loadChildren: () => import('./calender/calender.module').then(m => m.CalenderModule)},
 ]
 
 @NgModule({

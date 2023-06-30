@@ -43,6 +43,20 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'My Calendar',
+    icon: 'calendar',
+    subItems: [
+      {
+        label: 'Visit Calendar',
+        link: 'calendar'
+      },
+      {
+        label: 'Add an Event',
+        link: 'calendar/new'
+      }
+    ]
+  },
+  {
     label: 'News & Updates',
     isTitle: true
   },
