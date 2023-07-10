@@ -11,12 +11,17 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class AddUserCalenderComponent implements OnInit {
 
-  addTaskForm: FormGroup;
+  addEventForm: FormGroup;
   loadingBtn: boolean = false;
   formSubmit: boolean = false;
   formProcessed: boolean = false;
   loading: boolean = false;
-  time = {hour: 13, minute: 30};
+  time = {hour: (new Date()).getHours(), minute: (new Date()).getMinutes()};
+  date = {
+    year: (new Date()).getFullYear(),
+    month: (new Date()).getMonth()+1,
+    day: (new Date()).getDate()
+  };
   color = '#0d4430'
 
   constructor(private userService: UserService,
@@ -26,45 +31,52 @@ export class AddUserCalenderComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.addTaskForm = this.formBuilder.group({
+    this.addEventForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      startDate: [this.time, Validators.required],
+      startDate: [this.date, Validators.required],
       startTime: [this.time, Validators.required],
-      endDate: [this.time, Validators.required],
-      endTime: [this.time, Validators.required],
-      bgColor: [this.time, Validators.required]
+      endDate: [this.date, Validators.required],
+      endTime: [this.time, Validators.required]
     });
   }
 
   get form() {
-    return this.addTaskForm.controls;
+    return this.addEventForm.controls;
   }
 
   submitForm(){
+    console.log('ok');
     this.loadingBtn = true;
 
     this.formProcessed = true;
     this.formSubmit = true;
-    if (this.addTaskForm.invalid) {
+    if (this.addEventForm.invalid) {
       this.formSubmit = false;
       this.loadingBtn = false;
+      this.appService.swalFire('Fill All Fields', 'error');
+      console.log(this.addEventForm.value);
       return;
     }
 
     const formData = new FormData();
-    let time = this.addTaskForm.value['time'].hour+':'+this.addTaskForm.value['time'].minute+':'+this.addTaskForm.value['time'].second;
-    let date = this.addTaskForm.value['date'].year+'-'+this.addTaskForm.value['date'].month+'-'+this.addTaskForm.value['date'].day;
-    formData.append(`name`, this.addTaskForm.value['title']);
-    formData.append(`details`, this.addTaskForm.value['description']);
-    formData.append(`date`, date);
-    formData.append(`time`, time);
-    this.userService.submitAddTask(formData).subscribe(
+    let startTime = this.addEventForm.value['startTime'].hour+':'+this.addEventForm.value['startTime'].minute+':00';
+    let startDate = this.addEventForm.value['startDate'].year+'-'+this.addEventForm.value['startDate'].month+'-'+this.addEventForm.value['startDate'].day;
+    let endTime = this.addEventForm.value['endTime'].hour+':'+this.addEventForm.value['endTime'].minute+':00';
+    let endDate = this.addEventForm.value['endDate'].year+'-'+this.addEventForm.value['endDate'].month+'-'+this.addEventForm.value['endDate'].day;
+    formData.append(`title`, this.addEventForm.value['title']);
+    formData.append(`details`, this.addEventForm.value['description']);
+    formData.append(`startDate`, startDate);
+    formData.append(`startTime`, startTime);
+    formData.append(`endDate`, endDate);
+    formData.append(`endTime`, endTime);
+    formData.append(`bgColor`, this.color);
+    this.userService.submitAddCalender(formData).subscribe(
       next => {
         if(next.status){
-          this.appService.swalFire('Task Added Successfully!', 'success');
-          this.addTaskForm.reset();
-          this.router.navigate(['/user/tasks']);
+          this.appService.swalFire('Calendar Added Successfully!', 'success');
+          this.addEventForm.reset();
+          this.router.navigate(['/user/calendar']);
         }else{
           this.appService.swalFire(next.message, 'error');
         }
@@ -72,7 +84,7 @@ export class AddUserCalenderComponent implements OnInit {
       },
       error => {
         this.loadingBtn = false;
-        this.appService.swalFire('Error Occurred while adding Task!', 'error');
+        this.appService.swalFire('Error Occurred while adding Calendar!', 'error');
       }
     );
   }

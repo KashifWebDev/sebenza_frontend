@@ -112,7 +112,7 @@ export class UserService {
   }
 
   delCalender(id: number): Observable<ApiResponse<{calenders: Calender}>>{
-    return this.http.delete<any>(environment.backendURI+`/user/tasks/${id}/edit`);
+    return this.http.delete<any>(environment.backendURI+`/user/calenders/${id}`);
   }
 
 }

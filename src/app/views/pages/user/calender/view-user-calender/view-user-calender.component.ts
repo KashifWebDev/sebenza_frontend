@@ -4,8 +4,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridWeek from '@fullcalendar/timegrid';
 import timeGridDay from '@fullcalendar/timegrid';
 import listWeek from '@fullcalendar/list';
-import {CalendarOptions} from "@fullcalendar/angular";
+import {CalendarOptions, EventClickArg} from "@fullcalendar/angular";
 import {UserService} from "../../user.service";
+import {AppService} from "../../../../../app.service";
 
 @Component({
   selector: 'app-view-user-calender',
@@ -33,7 +34,7 @@ export class ViewUserCalenderComponent implements OnInit {
     eventClick: this.handleDateClick.bind(this),
   };
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private appService: AppService) {
     const name = Calendar.name; // add this line in your constructor
   }
 
@@ -53,8 +54,16 @@ export class ViewUserCalenderComponent implements OnInit {
     );
   }
 
-  handleDateClick(arg: any) {
-    alert('date click! ');
-    console.log(arg.event.id);
+  handleDateClick(arg: EventClickArg) {
+    if (confirm(`Are you sure you want to delete the event '${arg.event.title}'`)) {
+      this.userService.delCalender(+arg.event.id).subscribe(
+        (response) => {
+          if(response.status){
+            this.appService.swalFire('Event Removed', 'info');
+            arg.event.remove();
+          }
+        }
+      );
+    }
   }
 }
