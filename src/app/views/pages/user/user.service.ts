@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote
+  taskNote, Calender
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -96,6 +96,23 @@ export class UserService {
       environment.backendURI+`/user/task/${id}/addnote`,
       formData
     );
+  }
+
+  getCalenders(): Observable<ApiResponse<{calenders: Calender[]}>>{
+    return this.http.get<ApiResponse<{ calenders: Calender[]}>>(
+      environment.backendURI+`/user/calenders`
+    );
+  }
+
+  submitAddCalender(formData: FormData): Observable<ApiResponse<{ calenders: Calender }>>{
+    return this.http.post<ApiResponse<{calenders: Calender}>>(
+      environment.backendURI+`/user/calenders`,
+      formData
+    );
+  }
+
+  delCalender(id: number): Observable<ApiResponse<{calenders: Calender}>>{
+    return this.http.delete<any>(environment.backendURI+`/user/tasks/${id}/edit`);
   }
 
 }

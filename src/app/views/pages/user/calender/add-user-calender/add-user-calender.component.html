@@ -1,1 +1,91 @@
-<h1>Add User Calender</h1>
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Add New Event</h6>
+        <app-css-loader *ngIf="loading"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addTaskForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="title" class="form-label">Event Name</label>
+            <input type="text" class="form-control" id="title"
+                   autocomplete="off" placeholder="Title" formControlName="title"
+                   [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Event Details</label>
+            <textarea class="form-control" id="description" rows="5" formControlName="description"></textarea>
+            <div *ngIf="formProcessed && form.description.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="" class="form-label">Start Date & Time</label>
+                <div class="row">
+                  <div class="input-group col-md-6">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp"  ngbDatepicker #d="ngbDatepicker" formControlName="startDate">
+                    <button class="input-group-text" type="button" (click)="d.toggle()">
+                      <i class="feather icon-calendar icon-md text-muted"></i>
+                    </button>
+                    <div *ngIf="formProcessed && form.date.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <ngb-timepicker [meridian]="true" formControlName="startTime"></ngb-timepicker>
+                  </div>
+                  <div *ngIf="formProcessed && form.time.errors?.required" class="invalid-feedback">
+                    Required
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="" class="form-label">End Date & Time</label>
+                <div class="row">
+                  <div class="input-group col-md-6">
+                    <input class="form-control" placeholder="yyyy-mm-dd"
+                           name="dp"  ngbDatepicker #d="ngbDatepicker" formControlName="endDate">
+                    <button class="input-group-text" type="button" (click)="d.toggle()">
+                      <i class="feather icon-calendar icon-md text-muted"></i>
+                    </button>
+                    <div *ngIf="formProcessed && form.date.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <ngb-timepicker [meridian]="true" formControlName="endTime"></ngb-timepicker>
+                  </div>
+                  <div *ngIf="formProcessed && form.time.errors?.required" class="invalid-feedback">
+                    Required
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="color" class="form-label">Background Color</label>
+
+            <input class="form-control wd-150"
+                   id="color"
+                   [value]="color"
+                   autocomplete="off"
+                   [style.background]="color"
+                   [(colorPicker)]="color"/>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Save Event'"
+            [loadingText]="'Saving...'"
+            [btnIcon]="'check'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

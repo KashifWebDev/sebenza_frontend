@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Calendar, EventApi, EventClickArg} from '@fullcalendar/core'; // include this line
+import {Calendar} from '@fullcalendar/core'; // include this line
 import dayGridPlugin from '@fullcalendar/daygrid';
-import {createEventId} from "./event-utils";
-import {DateSelectArg} from "@fullcalendar/angular";
-import { INITIAL_EVENTS } from './event-utils';
-
+import timeGridWeek from '@fullcalendar/timegrid';
+import timeGridDay from '@fullcalendar/timegrid';
+import listWeek from '@fullcalendar/list';
+import {CalendarOptions} from "@fullcalendar/angular";
+import {UserService} from "../../user.service";
 
 @Component({
   selector: 'app-view-user-calender',
@@ -13,63 +14,47 @@ import { INITIAL_EVENTS } from './event-utils';
 })
 export class ViewUserCalenderComponent implements OnInit {
 
-  currentEvents: EventApi[] = [];
-
-  calendarOptions = {
+  events: any = [
+  ];
+  calendarOptions: CalendarOptions = {
     headerToolbar: {
       left: 'prev,today,next',
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
-    plugins: [dayGridPlugin],
     initialView: 'dayGridMonth',
-    initialEvents: INITIAL_EVENTS, // alternatively, use the `events` setting to fetch from a feed
+    plugins: [dayGridPlugin, timeGridWeek,timeGridDay,listWeek],
+    events: [],
     weekends: true,
     editable: true,
     selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this)
+    eventClick: this.handleDateClick.bind(this),
   };
 
-  constructor() {
+  constructor(private userService: UserService) {
     const name = Calendar.name; // add this line in your constructor
   }
 
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.userService.getCalenders().subscribe(
+      (response) => {
+        if (response.status && response.data?.calenders) {
+          this.calendarOptions.events = response.data.calenders.map(event => ({
+            id: event.id.toString(),
+            title: event.title,
+            color: event.bgColor,
+            start: `${event.startDate}T${event.startTime}`,
+            end: `${event.endDate}T${event.endTime}`
+          }));
+        }
+      }
+    );
   }
 
-
-  handleDateSelect(selectInfo: DateSelectArg) {
-    const title = prompt('Please enter a new title for your event');
-    const calendarApi = selectInfo.view.calendar;
-
-    calendarApi.unselect(); // clear date selection
-
-    if (title) {
-      calendarApi.addEvent({
-        id: createEventId(),
-        title,
-        start: selectInfo.startStr,
-        end: selectInfo.endStr,
-        allDay: selectInfo.allDay,
-        backgroundColor: 'rgba(0,204,204,.25)',
-        borderColor: '#00cccc'
-      });
-    }
+  handleDateClick(arg: any) {
+    alert('date click! ');
+    console.log(arg.event.id);
   }
-
-  handleEventClick(clickInfo: EventClickArg) {
-    if (confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)) {
-      clickInfo.event.remove();
-    }
-  }
-
-  handleEvents(events: EventApi[]) {
-    this.currentEvents = events;
-  }
-
 }

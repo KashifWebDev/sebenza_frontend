@@ -208,3 +208,16 @@ export interface taskNote {
   created_at: string,
   updated_at: string
 }
+export interface Calender{
+  id: number,
+  form_id: number,
+  title: string,
+  details: string,
+  bgColor: string,
+  startDate: string,
+  startTime: string,
+  endDate: string,
+  endTime: string,
+  created_at: string,
+  updated_at: string
+}

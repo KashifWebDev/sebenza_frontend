@@ -1,4 +1,5 @@
-import { EventInput } from '@fullcalendar/angular';
+import {EventInput} from '@fullcalendar/angular';
+
 
 let eventGuid = 0;
 const TODAY_STR = () => {
@@ -102,7 +103,7 @@ let holidayEvents= [
     end: TODAY_STR() +'-06',
     title: 'Feast Day',
     backgroundColor: 'rgba(241,0,117,.25)',
-    borderColor: '#f10075'
+    borderColor: 'rgba(241,0,117,.25)'
   },
   {
     id: createEventId(),
@@ -140,7 +141,7 @@ let meetupEvents= [
     end: TODAY_STR() +'-05',
     title: 'UI/UX Meetup Conference',
     backgroundColor: 'rgba(91,71,251,.2)',
-    borderColor: '#5b47fb'
+    borderColor: 'rgba(91,71,251,.2)'
   },
   {
     id: createEventId(),
@@ -170,6 +171,8 @@ let otherEvents= [
     borderColor: '#fd7e14'
   }
 ];
+
+
 
 
 export const INITIAL_EVENTS: EventInput[] = [ ...exampleEvents, ...birthdayEvents, ...holidayEvents, ...discoveredEvents, ...meetupEvents, ...otherEvents];
