@@ -32,6 +32,7 @@ export class CreateMeetingComponent implements OnInit {
       title: ['', Validators.required],
       platform: ['', Validators.required],
       description: ['', Validators.required],
+      link: ['', Validators.required],
       date: [this.time, Validators.required],
       time: [this.time, Validators.required]
     });
@@ -56,6 +57,7 @@ export class CreateMeetingComponent implements OnInit {
     let time = this.addMeetingForm.value['time'].hour+':'+this.addMeetingForm.value['time'].minute+':'+this.addMeetingForm.value['time'].second;
     let date = this.addMeetingForm.value['date'].year+'-'+this.addMeetingForm.value['date'].month+'-'+this.addMeetingForm.value['date'].day;
     formData.append(`title`, this.addMeetingForm.value['title']);
+    formData.append(`link`, this.addMeetingForm.value['link']);
     formData.append(`place`, this.addMeetingForm.value['platform']);
     formData.append(`description`, this.addMeetingForm.value['description']);
     formData.append(`date`, date);

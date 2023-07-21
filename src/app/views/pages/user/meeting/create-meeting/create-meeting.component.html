@@ -26,6 +26,15 @@
             </div>
           </div>
           <div class="mb-3">
+            <label for="link" class="form-label">Meeting Link</label>
+            <input type="text" class="form-control" id="link"
+                   autocomplete="off" placeholder="Link" formControlName="link"
+                   [ngClass]="{'is-invalid': formProcessed && form.link.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.link.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
             <label for="description" class="form-label">Meeting Description</label>
             <textarea class="form-control" id="description" rows="5" formControlName="description"></textarea>
             <div *ngIf="formProcessed && form.description.errors?.required" class="invalid-feedback">

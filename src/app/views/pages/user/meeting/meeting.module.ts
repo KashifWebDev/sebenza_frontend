@@ -8,6 +8,7 @@ import {SharedModule} from "../../../shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgbDatepickerModule, NgbTimepickerModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {QuillModule} from "ngx-quill";
 
 const routes: Routes = [
   {path: '', component: AllMeetingsComponent},
@@ -21,15 +22,16 @@ const routes: Routes = [
     AllMeetingsComponent,
     ViewMeetingComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    ReactiveFormsModule,
-    NgbDatepickerModule,
-    NgbTimepickerModule,
-    FormsModule,
-    NgxDatatableModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        ReactiveFormsModule,
+        NgbDatepickerModule,
+        NgbTimepickerModule,
+        FormsModule,
+        NgxDatatableModule,
+        QuillModule
+    ]
 })
 export class MeetingModule { }

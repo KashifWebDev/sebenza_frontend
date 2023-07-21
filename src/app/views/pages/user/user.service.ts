@@ -115,4 +115,10 @@ export class UserService {
     return this.http.delete<any>(environment.backendURI+`/user/calenders/${id}`);
   }
 
+  addMeetingNotes(meetingID: number, formData: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<any>>(
+      environment.backendURI+`/user/meting/${meetingID}/addnote`,
+      formData
+    );
+  }
 }

@@ -1,20 +1,53 @@
-<div class="row">
-  <div class="mx-auto col-md-8 grid-margin stretch-card">
-    <div class="card">
-      <app-css-loader class="ms-3 my-3" *ngIf="loading"></app-css-loader>
-      <ng-container *ngIf="!loading">
-        <div class="card-header">
-          {{meeting.title}}
-        </div>
-        <div class="card-body">
-          <div [innerHTML]="meeting.description"></div>
-          <hr >
-          <a [href]="meeting.link" target="_blank" class="btn btn-primary btn-icon-text">
-            <i class="feather icon-monitor btn-icon-prepend"></i>
-            Join Now
-          </a>
-        </div>
-      </ng-container>
+<ng-container *ngIf="!notesMode">
+  <div class="row">
+    <div class="mx-auto col-md-8 grid-margin stretch-card">
+      <div class="card">
+        <app-css-loader class="ms-3 my-3" *ngIf="loading"></app-css-loader>
+        <ng-container *ngIf="!loading">
+          <div class="card-header">
+            {{meeting.title}}
+          </div>
+          <div class="card-body">
+            <div [innerHTML]="meeting.description"></div>
+            <hr >
+            <a [href]="meeting.link" target="_blank" class="btn btn-primary btn-icon-text" (click)="notesMode = true">
+              <i class="feather icon-monitor btn-icon-prepend"></i>
+              Join Now
+            </a>
+          </div>
+        </ng-container>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-container *ngIf="notesMode">
+  <div class="row">
+    <div class="mx-auto col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title">Save your meeting notes</h6>
+          <app-css-loader *ngIf="loading"></app-css-loader>
+          <form class="forms-sample" [formGroup]="addNotesForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+            <div class="mb-3">
+              <quill-editor formControlName="notes"
+                            id="exampleInputUsername11"
+                            [modules]="quillConfig"
+                            (onSelectionChanged)="onSelectionChanged($event)"
+                            (onContentChanged)="onContentChanged($event)">
+              </quill-editor>
+            </div>
+            <app-loading-button
+              [isLoading]="loadingBtn"
+              [btnText]="'Save News'"
+              [loadingText]="'Saving...'"
+              [btnIcon]="'check-square'">
+            </app-loading-button>
+            <a routerLink="../" class="btn btn-secondary">Cancel</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-container>
