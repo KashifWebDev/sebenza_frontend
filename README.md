@@ -1,28 +1,45 @@
-# NobleuiAngular
+# Sebenza Project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+![Sebenza Logo](https://sebenza.kashifali.me/assets/img/custom/logo.png)
 
-## Development server
+## Introduction
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Welcome to the Sebenza project repository! This project aims to develop an all-in-one platform (CRM) that provides a comprehensive suite of tools to handle various business operations. It includes features like dashboard management, client relationship management, invoicing, accounting, project management, and much more.
 
-## Code scaffolding
+## Project Details
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Project Owner: Kashif Ali Rabbani
+- Portfolio: [https://kashifali.me](https://kashifali.me)
+- Email: admin@kashifali.me
+- Project URL: [https://sebenza.kashifali.me/](https://sebenza.kashifali.me/)
 
-## Build
+## Features
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Dashboard: Get a comprehensive overview of all business activities.
+- Client/CRM: Manage clients and build strong relationships with them.
+- Invoices: Create and manage invoices with ease.
+- Project Management: Efficiently manage projects and tasks.
+- Stock/Inventory Management: Track and manage inventory effectively.
+- Accounting: Handle financial transactions and generate reports.
 
-## Running unit tests
+## Installation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone this repository to your local machine.
+2. Install dependencies using `npm install`.
+3. Run the development server using `npm start`.
 
-## Running end-to-end tests
+## Contributing
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+We welcome contributions from the community! If you'd like to contribute to the project, please follow these steps:
 
-## Further help
+1. Fork the repository on GitHub.
+2. Create a new branch with a descriptive name for your feature or bug fix.
+3. Make your changes and commit them with clear commit messages.
+4. Push your branch to your forked repository.
+5. Create a pull request to the main repository.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Feedback and Support
 
+We value your feedback and are here to support you. If you have any questions, suggestions, or encounter any issues, please feel free to contact us via [email](mailto:admin@kashifali.me) or through the project's [URL](https://sebenza.kashifali.me/).
+
+Thank you for your interest in the Sebenza project! We hope you find it useful and look forward to your contributions. Happy coding!

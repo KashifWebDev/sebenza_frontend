@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row justify-content-end">
+          <div class="col-md-6">
+            <h6 class="card-title">My Tasks</h6>
+          </div>
+          <div class="col-md-6">
+            <div class="w-100 d-flex justify-content-end">
+              <button type="button" class="btn btn-outline-primary btn-icon-text" (click)="openModal()">
+                <i class="feather icon-plus btn-icon-prepend"></i>
+                Add Expense Type
+              </button>
+            </div>
+          </div>
+        </div>
+        <app-css-loader *ngIf="!expenseTypes.length && loading"></app-css-loader>
+        <ng-container *ngIf="!expenseTypes.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No expense types are registered!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="expenseTypes && expenseTypes.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" prop="expence_type"></ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 'Closed','bg-success': row.status == 'Answered'}">
+                  {{ row.status}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a class="btn btn-icon">
+                  <i class="feather icon-eye text-primary"></i>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Expense Type</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="addTypeForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">Role Name</label>
+        <input type="text" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="Name" formControlName="expName"
+               [ngClass]="{'is-invalid': formProcessed && addTypeForm.controls.expName.errors && formProcessed}">
+        <div *ngIf="formProcessed && addTypeForm.controls.expName.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="'Save Role'"
+        [loadingText]="'Saving...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
+    </form>
+  </div>
+</ng-template>

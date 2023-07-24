@@ -12,6 +12,7 @@ const routes: Routes = [
   {path: 'meeting',loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)},
   {path: 'tasks',loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
   {path: 'calendar',loadChildren: () => import('./calender/calender.module').then(m => m.CalenderModule)},
+  {path: 'expenses',loadChildren: () => import('./finance/finance.module').then(m => m.FinanceModule)},
 ]
 
 @NgModule({

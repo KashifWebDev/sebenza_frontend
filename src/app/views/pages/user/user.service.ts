@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender
+  taskNote, Calender, expenseType
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -121,4 +121,18 @@ export class UserService {
       formData
     );
   }
+
+  getExpenseTypes(): Observable<ApiResponse<{expensetypes: expenseType[]}>>{
+    return this.http.get<ApiResponse<{ expensetypes: expenseType[]}>>(
+      environment.backendURI+`/user/expensetypes`
+    );
+  }
+
+  addNewExpenseTypeSubmit(formData: FormData): Observable<ApiResponse<{ expensetypes: expenseType }>>{
+    return this.http.post<ApiResponse<{expensetypes: expenseType}>>(
+      environment.backendURI+'/user/expensetypes',
+      formData
+    );
+  }
+
 }

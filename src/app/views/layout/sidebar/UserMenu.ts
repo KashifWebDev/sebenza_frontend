@@ -57,6 +57,24 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'My Finances',
+    icon: 'dollar-sign',
+    subItems: [
+      {
+        label: 'My Statement',
+        link: 'expenses'
+      },
+      {
+        label: 'Add Expense/Income',
+        link: 'expenses/new'
+      },
+      {
+        label: 'Expense Type',
+        link: 'expenses/types'
+      }
+    ]
+  },
+  {
     label: 'News & Updates',
     isTitle: true
   },

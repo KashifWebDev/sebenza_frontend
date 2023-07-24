@@ -208,6 +208,7 @@ export interface taskNote {
   created_at: string,
   updated_at: string
 }
+
 export interface Calender{
   id: number,
   form_id: number,
@@ -218,6 +219,14 @@ export interface Calender{
   startTime: string,
   endDate: string,
   endTime: string,
+  created_at: string,
+  updated_at: string
+}
+
+export interface expenseType{
+  id: number,
+  membership_id: number,
+  expence_type: string,
   created_at: string,
   updated_at: string
 }
