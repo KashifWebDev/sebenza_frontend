@@ -1,1 +1,55 @@
-<p>add-expense works!</p>
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Add new Expense</h6>
+        <app-css-loader *ngIf="loading"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addExpenseForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">Expense Details</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Expense Name" formControlName="name"
+                   [ngClass]="{'is-invalid': formProcessed && form.name.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.name.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="type" class="form-label">Expense Type</label>
+            <select class="form-select" id="type" formControlName="type"
+                    [ngClass]="{'is-invalid': formProcessed && form.type.errors}">
+              <option *ngFor="let type of expenseTypes" [value]="type.id" [selected]="">{{type.expence_type}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.type.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="amount" class="form-label">Total Amount</label>
+            <input type="number" class="form-control" id="amount"
+                   autocomplete="off" placeholder="Amount" formControlName="amount"
+                   [ngClass]="{'is-invalid': formProcessed && form.amount.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.amount.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputUsername4" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
+            <input type="file" class="form-control" id="exampleInputUsername4"
+                   autocomplete="off" placeholder="Name" formControlName="file" (change)="handleFileInput($event)">
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Add Expense'"
+            [loadingText]="'Adding...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

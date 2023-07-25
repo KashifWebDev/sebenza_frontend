@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {
   ApiResponse,
   Meeting,
@@ -9,9 +9,10 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType
+  taskNote, Calender, expenseType, expense, accountType
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
+import {date} from "ngx-custom-validators/src/app/date/validator";
 
 @Injectable({
   providedIn: 'root'
@@ -133,6 +134,43 @@ export class UserService {
       environment.backendURI+'/user/expensetypes',
       formData
     );
+  }
+
+  getAllExpense(): Observable<expense[]>{
+    return this.http.get<ApiResponse<{ expenses: expense[]}>>(
+      environment.backendURI+`/user/expenses`
+    ).pipe(
+      map(response => {
+        if(response.data?.expenses && response.data.expenses.length){
+          return response.data.expenses.map(expense => ({
+            ...expense,
+            created_at: expense.created_at.split('T')[0] // Extract only the date part
+          }));
+        }else{
+          console.log('nbo');
+          throw new Error("No expenses found");
+        }
+      })
+    );
+  }
+
+  deleteExpenseSubmit(id: number): Observable<ApiResponse<{ accounttype: accountType }>>{
+    return this.http.delete<ApiResponse<{accounttype: accountType}>>(
+      environment.backendURI+`/user/expenses/${id}`
+    );
+  }
+
+  addNewExpenseSubmit(formData: FormData): Observable<ApiResponse<{ expenses: expense }>>{
+    return this.http.post<ApiResponse<{expenses: expense}>>(
+      environment.backendURI+'/user/expenses',
+      formData
+    );
+  }
+
+  getSingleExpense(id: number): Observable<ApiResponse<{ expenses: expense}>>{
+    return this.http.get<ApiResponse<{ expenses: expense}>>(
+      environment.backendURI+`/user/expenses/${id}/edit`
+    )
   }
 
 }

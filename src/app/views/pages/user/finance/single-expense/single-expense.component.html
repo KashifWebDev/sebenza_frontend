@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="mx-auto col-md-8 grid-margin stretch-card">
+    <div class="card">
+      <app-css-loader class="ms-3 my-3" *ngIf="loading"></app-css-loader>
+      <ng-container *ngIf="!loading">
+        <div class="card-header">
+          Expense Details
+        </div>
+        <div class="card-body">
+          <div>
+            <p><span class="fw-boldest">Expense: </span> {{expense.notes}}</p>
+            <p><span class="fw-boldest">Expense Amount: </span> {{expense.amount}}</p>
+          </div>
+          <hr *ngIf="expense.image">
+          <a [href]="expense.image" target="_blank" class="btn btn-primary btn-icon-text" *ngIf="expense.image">
+            <i class="feather icon-download-cloud btn-icon-prepend"></i>
+            Download Attachment
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

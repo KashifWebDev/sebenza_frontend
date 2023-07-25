@@ -230,3 +230,15 @@ export interface expenseType{
   created_at: string,
   updated_at: string
 }
+
+export interface expense{
+  id: number,
+  membership_id: number,
+  expensetype_id: number,
+  amount: number,
+  notes: string,
+  image: string,
+  created_at: string,
+  updated_at: string,
+  expensetypes: expenseType
+}

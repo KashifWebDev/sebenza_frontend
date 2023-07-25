@@ -61,7 +61,7 @@ export const UserMenu: MenuItem[] = [
     icon: 'dollar-sign',
     subItems: [
       {
-        label: 'My Statement',
+        label: 'All Expenses',
         link: 'expenses'
       },
       {
