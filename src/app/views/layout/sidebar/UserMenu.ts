@@ -84,6 +84,24 @@ export const UserMenu: MenuItem[] = [
     link: 'news/all-news'
   },
   {
+    label: 'Payments & Invoices',
+    isTitle: true
+  },
+  {
+    label: 'My Orders',
+    icon: 'inbox',
+    subItems: [
+      {
+        label: 'Orders History',
+        link: 'orders'
+      },
+      {
+        label: 'New Order',
+        link: 'orders/new'
+      }
+    ]
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },
@@ -101,4 +119,4 @@ export const UserMenu: MenuItem[] = [
       }
     ]
   },
-  ];
+];

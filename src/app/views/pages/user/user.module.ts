@@ -13,6 +13,7 @@ const routes: Routes = [
   {path: 'tasks',loadChildren: () => import('./tasks/tasks.module').then(m => m.TasksModule)},
   {path: 'calendar',loadChildren: () => import('./calender/calender.module').then(m => m.CalenderModule)},
   {path: 'expenses',loadChildren: () => import('./finance/finance.module').then(m => m.FinanceModule)},
+  {path: 'orders',loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
 ]
 
 @NgModule({

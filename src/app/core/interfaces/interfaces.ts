@@ -33,11 +33,15 @@ export interface User {
   phone: string,
   profile: string,
   company_name: string,
+  membership_code?: string,
+  member_by?: string,
+  account_type: string,
   account_type_id: number,
   country: string,
   city: string,
   address: string,
-  user_limit_id: string,
+  user_limit: string,
+  user_limit_id: number,
   roles: role[]
 }
 
@@ -161,6 +165,7 @@ export interface promoCode {
   created_at: string,
   updated_at: string,
 }
+
 export interface Meeting{
   id: number,
   form_id: number,
@@ -241,4 +246,38 @@ export interface expense{
   created_at: string,
   updated_at: string,
   expensetypes: expenseType
+}
+
+export interface order {
+  id: number;
+  user_id: number;
+  membership_id: string;
+  account_total_user: number;
+  new_user: number;
+  cost_per_user: string;
+  amount_total: string;
+  orderDate: string;
+  expireDate: string | null;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  users: {
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone: string,
+    profile: string,
+    company_name: string,
+    membership_code?: string,
+    member_by?: string,
+    account_type: string,
+    account_type_id: number,
+    country: string,
+    city: string,
+    address: string,
+    user_limit: string,
+    user_limit_id: number,
+    roles: role[]
+  };
 }
