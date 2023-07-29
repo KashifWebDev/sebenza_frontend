@@ -84,7 +84,7 @@ export const UserMenu: MenuItem[] = [
     link: 'news/all-news'
   },
   {
-    label: 'Payments & Invoices',
+    label: 'Orders & Invoices',
     isTitle: true
   },
   {
@@ -100,6 +100,11 @@ export const UserMenu: MenuItem[] = [
         link: 'orders/new'
       }
     ]
+  },
+  {
+    label: 'Invoices',
+    icon: 'credit-card',
+    link: 'invoices'
   },
   {
     label: 'Help & Support',

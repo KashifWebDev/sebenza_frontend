@@ -1,1 +1,27 @@
-<p>users-create-orders works!</p>
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">User Package Upgrade</h6>
+        <form class="forms-sample" [formGroup]="updateUsersForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="number" class="form-label">Number of users:</label>
+            <input type="number" class="form-control" id="number"
+                   autocomplete="off" formControlName="number"
+                   [ngClass]="{'is-invalid': formProcessed && form.number.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.number.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Update Package'"
+            [loadingText]="'Updating...'"
+            [btnIcon]="isEditMode ? 'edit' : 'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

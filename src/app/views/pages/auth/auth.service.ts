@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  public currentUser: User | adminUser;
+  public currentUser: User;
   public userType: UserRole;
   $currentUser: Subject<User | adminUser> = new Subject<User | adminUser>();
   private authToken: string = '';
@@ -39,7 +39,7 @@ export class AuthService {
     }
   }
 
-  setSession(token: any, user: User | adminUser){
+  setSession(token: any, user: User){
     this.currentUser = user;
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
@@ -76,7 +76,7 @@ export class AuthService {
     return localStorage.getItem('token') !== null;
   }
 
-  login(email: string, password: string, userType: UserRole): Observable<ApiResponse<{ token: string, user: User | adminUser }>>{
+  login(email: string, password: string, userType: UserRole): Observable<ApiResponse<{ token: string, user: User }>>{
     if(userType == UserRole.superAdmin){
       return this.http.post<ApiResponse<any>>(environment.backendURI+'/admin/login',
         {email, password}

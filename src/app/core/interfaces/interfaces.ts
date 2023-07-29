@@ -281,3 +281,23 @@ export interface order {
     roles: role[]
   };
 }
+
+export interface invoice {
+  id: number,
+  invoiceID: string,
+  order_id: number,
+  account_total_user: number,
+  cost_per_user: string,
+  amount_total: string,
+  discount: string,
+  payable_amount: string,
+  paid_amount: string,
+  payment_id: string,
+  payment_type: string,
+  invoiceDate: string,
+  paymentDate: string,
+  status: string,
+  created_at: string,
+  updated_at: string,
+  orders: order
+}

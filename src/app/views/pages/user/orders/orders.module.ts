@@ -5,6 +5,7 @@ import { UsersCreateOrdersComponent } from './users-create-orders/users-create-o
 import { UsersSingleOrderComponent } from './users-single-order/users-single-order.component';
 import {RouterModule, Routes} from "@angular/router";
 import {SharedModule} from "../../../shared/shared.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 const routes: Routes = [
@@ -22,7 +23,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class OrdersModule { }

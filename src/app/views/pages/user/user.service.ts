@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order
+  taskNote, Calender, expenseType, expense, accountType, order, invoice
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -185,5 +185,23 @@ export class UserService {
     )
   }
 
+  updateSubscription(formData: FormData): Observable<ApiResponse<{ invoice: invoice }>>{
+    return this.http.post<ApiResponse<{invoice: invoice}>>(
+      environment.backendURI+'/user/order/update/2',
+      formData
+    );
+  }
+
+  getInvoices(): Observable<ApiResponse<{ invoices: invoice[]}>>{
+    return this.http.get<ApiResponse<{ invoices: invoice[]}>>(
+      environment.backendURI+`/user/invoices`
+    );
+  }
+
+  getInvoiceByID(id: number): Observable<ApiResponse<{ invoices: invoice}>>{
+    return this.http.get<ApiResponse<{ invoices: invoice}>>(
+      environment.backendURI+`/user/invoices/${id}/edit`
+    )
+  }
 
 }
