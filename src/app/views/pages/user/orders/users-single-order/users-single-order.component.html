@@ -1,1 +1,55 @@
-<p>users-single-order works!</p>
+<div class="row">
+  <div class="mx-auto col-md-8 grid-margin stretch-card">
+    <div class="card">
+      <app-css-loader class="ms-3 my-3" *ngIf="loading"></app-css-loader>
+      <ng-container *ngIf="!loading">
+        <div class="card-header">
+          User Subscription | <span class="text-muted">Order Details</span>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Service</th>
+                <th>Details</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Status</td>
+                <td><a href="" (click)="false" class="badge bg-primary">{{order.status}}</a></td>
+              </tr>
+              <tr>
+                <td>Total users</td>
+                <td>{{order.account_total_user}}</td>
+              </tr>
+              <tr *ngIf="order.new_user">
+                <td>New users</td>
+                <td>{{order.new_user}}</td>
+              </tr>
+              <tr>
+                <td>Order Date</td>
+                <td>{{order.orderDate}}</td>
+              </tr>
+              <tr *ngIf="order.expireDate">
+                <td>Subscription Expiry Date</td>
+                <td>{{order.expireDate}}</td>
+              </tr>
+              <tr style="background-color: #080f1b">
+                <td>Total Amount</td>
+                <td>${{order.amount_total}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <a class="btn btn-outline-info btn-icon-text mt-3">
+            <i class="feather icon-dollar-sign btn-icon-prepend"></i>
+            {{order.status == 'Pending' ? 'Pay' : 'View'}} Invoice
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

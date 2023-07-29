@@ -4,6 +4,7 @@ import { UsersAllOrdersComponent } from './users-all-orders/users-all-orders.com
 import { UsersCreateOrdersComponent } from './users-create-orders/users-create-orders.component';
 import { UsersSingleOrderComponent } from './users-single-order/users-single-order.component';
 import {RouterModule, Routes} from "@angular/router";
+import {SharedModule} from "../../../shared/shared.module";
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class OrdersModule { }

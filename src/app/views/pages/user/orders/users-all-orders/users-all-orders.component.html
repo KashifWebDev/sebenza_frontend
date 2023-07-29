@@ -4,31 +4,32 @@
   </div>
 </div>
 
-<div class="row">
+<app-css-loader *ngIf="loading"></app-css-loader>
+<div class="row" *ngIf="!loading">
   <div class="col-12 col-md-6 col-xl-4">
     <div class="card">
       <div class="card-header">
         <div class="w-100 d-flex justify-content-between">
           <span>Users Subscription</span>
-          <span class="badge bg-danger">Unpaid</span>
+          <span class="badge" [ngClass]="order.status == 'Pending' ? 'bg-danger' : 'bg-success'">{{order.status}}</span>
         </div>
       </div>
       <div class="card-body">
         <h5 class="card-title d-flex justify-content-between">
-          <span>Order ID# 2</span>
-          <span class="fs- text-muted">2023-07-28</span>
+          <span>Order ID# {{order.id}}</span>
+          <span class="fs- text-muted">{{modifyDate(order.updated_at)}}</span>
         </h5>
         <p class="card-text mb-3">
-          <b>Total Amount:</b> <span class="text-muted ms-2">$10.00</span>
+          <b>Total Amount:</b> <span class="text-muted ms-2">${{order.amount_total}}</span>
         </p>
-        <button type="button" class="btn btn-outline-info btn-icon-text me-2">
+        <a class="btn btn-outline-info btn-icon-text me-2">
           <i class="feather icon-dollar-sign btn-icon-prepend"></i>
-          Pay Invoice
-        </button>
-        <button type="button" class="btn btn-outline-primary btn-icon-text">
+          Invoice
+        </a>
+        <a [routerLink]="['view', order.id]" class="btn btn-outline-primary btn-icon-text">
           <i class="feather icon-eye btn-icon-prepend"></i>
-          View Details
-        </button>
+          Details
+        </a>
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType
+  taskNote, Calender, expenseType, expense, accountType, order
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -172,5 +172,18 @@ export class UserService {
       environment.backendURI+`/user/expenses/${id}/edit`
     )
   }
+
+  getOrders(): Observable<ApiResponse<{ order: order}>>{
+    return this.http.get<ApiResponse<{ order: order}>>(
+      environment.backendURI+`/user/orders`
+    );
+  }
+
+  getSingleOrder(id: number): Observable<ApiResponse<{ order: order}>>{
+    return this.http.get<ApiResponse<{ order: order}>>(
+      environment.backendURI+`/user/orders/${id}/edit`
+    )
+  }
+
 
 }

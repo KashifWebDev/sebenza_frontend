@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UserService} from "../../user.service";
+import {order} from "../../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-users-all-orders',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersAllOrdersComponent implements OnInit {
 
-  constructor() { }
+  order: order;
+  loading: boolean = true;
+
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.userService.getOrders().subscribe(response => {
+      if (response.status && response.data?.order) {
+        this.order = response.data.order;
+        this.loading = false;
+      }
+    });
   }
 
+  modifyDate(date: string){
+    return date.split('T')[0];
+  }
 }
