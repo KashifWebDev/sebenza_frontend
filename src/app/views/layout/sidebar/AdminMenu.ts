@@ -2,10 +2,6 @@ import { MenuItem } from './menu.model';
 
 export const AdminMenu: MenuItem[] = [
   {
-    label: 'Main',
-    isTitle: true
-  },
-  {
     label: 'Dashboard',
     icon: 'home',
     link: 'home'
@@ -138,4 +134,22 @@ export const AdminMenu: MenuItem[] = [
       }
     ]
   },
+  {
+    label: 'Finance',
+    isTitle: true
+  },
+  {
+    label: 'Orders & Invoices',
+    icon: 'credit-card',
+    subItems: [
+      {
+        label: 'Orders History',
+        link: 'orders'
+      },
+      {
+        label: 'Invoices',
+        link: 'invoices'
+      }
+    ]
+  }
   ];

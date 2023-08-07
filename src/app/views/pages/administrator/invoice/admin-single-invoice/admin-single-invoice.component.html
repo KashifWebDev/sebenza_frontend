@@ -1,1 +1,94 @@
-<p>admin-single-invoice works!</p>
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink=".">User Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Invoice</li>
+  </ol>
+</nav>
+
+<app-css-loader *ngIf="loading"></app-css-loader>
+<div *ngIf="!loading" class="row" #invoiceBody>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid d-flex justify-content-between">
+          <div class="col-lg-3 ps-0">
+            <a routerLink="." class="nobleui-logo d-block mt-3 logo-light">
+              <img src="assets/images/logo.png" height="50px">
+            </a>
+            <p class="mt-1 mb-1"><b>Sebenza Systems</b></p>
+            <p>108,<br> Great Russell St,<br>London, WC1B 3NA.</p>
+            <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
+            <p class="mt-1 mb-1"><b>{{user.company_name}}</b></p>
+            <p>{{user.first_name+' '+user.last_name}},<br> {{user.address}},<br> {{user.city+", "+user.country}}.</p>
+          </div>
+          <div class="col-lg-3 pe-0">
+            <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">invoice</h4>
+            <h6 class="text-end mb-5 pb-4">{{invoice.invoiceID}}</h6>
+            <p class="text-end mb-1">Balance Due</p>
+            <h4 class="text-end fw-normal">{{invoice.amount_total | currency}}</h4>
+            <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Invoice Date :</span> {{invoice.invoiceDate | date}}</h6>
+          </div>
+        </div>
+        <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+          <div class="table-responsive w-100">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th class="text-end">Users</th>
+                <th class="text-end">Unit cost</th>
+                <th class="text-end">Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="text-end">
+                <td class="text-start">1</td>
+                <td class="text-start">Users Subscriptions</td>
+                <td>{{invoice.account_total_user}}</td>
+                <td>{{invoice.cost_per_user | currency}}</td>
+                <td>{{invoice.amount_total | currency}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="container-fluid mt-5 w-100">
+          <div class="row">
+            <div class="col-md-6 ms-auto">
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td class="text-end">{{invoice.amount_total | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>Discount</td>
+                    <td class="text-danger text-end">(-) {{invoice.discount | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td class="text-end">{{calculateTotal(invoice.amount_total, invoice.discount) | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>Payment Made</td>
+                    <td class="text-danger text-end">(-) {{invoice.paid_amount | currency}}</td>
+                  </tr>
+                  <tr class="bg-dark">
+                    <td class="text-bold-800">Balance Due</td>
+                    <td class="text-bold-800 text-end">{{invoice.payable_amount | currency}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid w-100">
+          <button class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send" appFeatherIcon class="me-2 icon-md"></i>Pay Invoice</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

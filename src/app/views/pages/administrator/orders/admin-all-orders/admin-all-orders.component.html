@@ -1,1 +1,49 @@
-<p>admin-all-orders works!</p>
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">All Orders</h6>
+        <app-css-loader *ngIf="!orders.length"></app-css-loader>
+        <div class="table-responsive" *ngIf="orders && orders.length">
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="orders"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="User">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{extractName(row)}}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': (row.status == 'Unpaid' || row.status == 'Pending'),'bg-success': (row.status == 'Paid' || row.status == 'Active')}">
+                  {{ row.status}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Total Users" prop="account_total_user"></ngx-datatable-column>
+            <ngx-datatable-column name="Total Amount" prop="amount_total">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <span>{{row.amount_total | currency}}</span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a [routerLink]="['view', row.id]" class="btn btn-outline-primary btn-icon-text">
+                  <i class="feather icon-eye btn-icon-prepend"></i>
+                  Details
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {
   accountType,
   ApiResponse,
-  basicSettings,
-  News,
+  basicSettings, invoice,
+  News, order,
   Package, promoCode,
   role, Ticket, ticketReplies,
   User, WhatsApp
@@ -286,5 +286,29 @@ export class AdministratorService {
       environment.backendURI+`/admin/promocode/update/${id}`,
       formData
     );
+  }
+
+  getInvoices(): Observable<ApiResponse<{ invoices: invoice[]}>>{
+    return this.http.get<ApiResponse<{ invoices: invoice[]}>>(
+      environment.backendURI+`/admin/invoices`
+    );
+  }
+
+  getInvoiceByID(id: number): Observable<ApiResponse<{ invoices: invoice}>>{
+    return this.http.get<ApiResponse<{ invoices: invoice}>>(
+      environment.backendURI+`/admin/invoices/${id}/edit`
+    )
+  }
+
+  getOrders(): Observable<ApiResponse<{ orders: order[]}>>{
+    return this.http.get<ApiResponse<{ orders: order[]}>>(
+      environment.backendURI+`/admin/orders`
+    );
+  }
+
+  getSingleOrder(id: number): Observable<ApiResponse<{ order: order}>>{
+    return this.http.get<ApiResponse<{ order: order}>>(
+      environment.backendURI+`/admin/orders/${id}/edit`
+    )
   }
 }
