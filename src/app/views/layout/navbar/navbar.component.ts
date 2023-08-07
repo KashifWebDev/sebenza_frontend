@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject, Renderer2 } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
+import {Component, Inject, OnInit, Renderer2} from '@angular/core';
+import {DOCUMENT} from '@angular/common';
+import {Router} from '@angular/router';
 import {User} from "../../../core/interfaces/interfaces";
 import {AuthService} from "../../pages/auth/auth.service";
+import {UserRole} from "../../../core/roles/UserRole";
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,8 @@ import {AuthService} from "../../pages/auth/auth.service";
 export class NavbarComponent implements OnInit {
 
   user: User | any;
+  profileURL: string = '';
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
@@ -22,6 +25,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.getLoggedInUser();
     // this.user = this.authService.getLoggedInUser();
+    if(this.authService.getUserRole() == UserRole.superAdmin){
+      this.profileURL = '/administrator/profile';
+    }else{
+      this.profileURL = '/user/profile';
+    }
+    console.log(this.profileURL);
   }
 
   /**

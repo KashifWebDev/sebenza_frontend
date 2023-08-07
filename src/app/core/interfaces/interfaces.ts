@@ -301,3 +301,14 @@ export interface invoice {
   updated_at: string,
   orders: order
 }
+
+export interface userProfile {
+  firstName: string,
+  lastName: string,
+  mobile: string,
+  address: string,
+  postcode: string,
+  state: string,
+  country: string,
+  city: string
+}

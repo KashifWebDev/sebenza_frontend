@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order, invoice
+  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -202,6 +202,12 @@ export class UserService {
     return this.http.get<ApiResponse<{ invoices: invoice}>>(
       environment.backendURI+`/user/invoices/${id}/edit`
     )
+  }
+
+  getProfileDetails(): Observable<ApiResponse<{profile: userProfile}>>{
+    return this.http.get<ApiResponse<{profile: userProfile}>>(
+      environment.backendURI+`/shared/profile`
+    );
   }
 
 }
