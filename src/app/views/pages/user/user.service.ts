@@ -187,7 +187,7 @@ export class UserService {
 
   updateSubscription(formData: FormData): Observable<ApiResponse<{ invoice: invoice }>>{
     return this.http.post<ApiResponse<{invoice: invoice}>>(
-      environment.backendURI+'/user/order/update/2',
+      environment.backendURI+'/user/order/update',
       formData
     );
   }

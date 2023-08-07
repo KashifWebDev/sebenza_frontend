@@ -57,7 +57,7 @@ export class UsersCreateOrdersComponent implements OnInit {
       },
       error => {
         this.loadingBtn = false;
-        this.appService.swalFire('Error Occurred while creating role!', 'error');
+        this.appService.swalFire('Error Occurred while updating details!', 'error');
       }
     );
 
