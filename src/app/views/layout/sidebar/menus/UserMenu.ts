@@ -11,6 +11,20 @@ export const UserMenu: MenuItem[] = [
     link: 'home'
   },
   {
+    label: 'Invite Users',
+    icon: 'user-plus',
+    subItems: [
+      {
+        label: 'Email Invitation',
+        link: 'invite-users'
+      },
+      {
+        label: 'Import Excel File',
+        link: 'invite-users/bulk-import'
+      }
+    ]
+  },
+  {
     label: 'Quick Links',
     isTitle: true
   },
@@ -57,34 +71,7 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
-    label: 'My Finances',
-    icon: 'dollar-sign',
-    subItems: [
-      {
-        label: 'All Expenses',
-        link: 'expenses'
-      },
-      {
-        label: 'Add Expense/Income',
-        link: 'expenses/new'
-      },
-      {
-        label: 'Expense Type',
-        link: 'expenses/types'
-      }
-    ]
-  },
-  {
-    label: 'News & Updates',
-    isTitle: true
-  },
-  {
-    label: 'Announcements',
-    icon: 'bell',
-    link: 'news/all-news'
-  },
-  {
-    label: 'Orders & Invoices',
+    label: 'Finance Management',
     isTitle: true
   },
   {
@@ -107,6 +94,24 @@ export const UserMenu: MenuItem[] = [
     link: 'invoices'
   },
   {
+    label: 'My Finances',
+    icon: 'dollar-sign',
+    subItems: [
+      {
+        label: 'All Expenses',
+        link: 'expenses'
+      },
+      {
+        label: 'Add Expense/Income',
+        link: 'expenses/new'
+      },
+      {
+        label: 'Expense Type',
+        link: 'expenses/types'
+      }
+    ]
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },
@@ -124,4 +129,9 @@ export const UserMenu: MenuItem[] = [
       }
     ]
   },
+  {
+    label: 'Announcements',
+    icon: 'bell',
+    link: 'news/all-news'
+  }
 ];

@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Send an Email Invitation</h6>
+        <app-css-loader *ngIf="loading"></app-css-loader>
+        <form class="forms-sample" [formGroup]="inviteForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">User Email</label>
+            <input type="email" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Name" formControlName="email"
+                   [ngClass]="{'is-invalid': formProcessed && form.email.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.email.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername3" class="form-label">Select Role</label>
+            <select class="form-select" id="exampleInputUsername3" formControlName="roleName"
+                    [ngClass]="{'is-invalid': formProcessed && form.roleName.errors && formProcessed}">
+              <option value selected>Select New User Role</option>
+              <option *ngFor="let role of userRoles" [value]="role.name">{{role.name}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.roleName.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Send Invitation'"
+            [loadingText]="'Sending...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

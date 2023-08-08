@@ -3,10 +3,9 @@ import {DOCUMENT} from '@angular/common';
 
 import MetisMenu from 'metismenujs';
 
-import {MENU} from './menu';
-import {AdminMenu} from './AdminMenu';
-import {UserMenu} from './UserMenu';
-import {MenuItem} from './menu.model';
+import {AdminMenu} from './menus/AdminMenu';
+import {UserMenu} from './menus/UserMenu';
+import {MenuItem} from './menus/menu.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";

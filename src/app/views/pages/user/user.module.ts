@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'expenses',loadChildren: () => import('./finance/finance.module').then(m => m.FinanceModule)},
   {path: 'orders',loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
   {path: 'invoices',loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)},
+  {path: 'invite-users',loadChildren: () => import('./invite-users/invite-users.module').then(m => m.InviteUsersModule)},
 ]
 
 @NgModule({

@@ -210,4 +210,18 @@ export class UserService {
     );
   }
 
+  inviteUserByEmail(formData: FormData): Observable<ApiResponse<{ user: any }>>{
+    return this.http.post<ApiResponse<{user: any}>>(
+      environment.backendURI+'/user/add-by',
+      formData
+    );
+  }
+
+  bulkImport(formData: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<any>>(
+      environment.backendURI+'/user/import',
+      formData
+    );
+  }
+
 }

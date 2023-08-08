@@ -1,0 +1,38 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Import Bulk Users</h6>
+        <form class="forms-sample" [formGroup]="inviteForm" (ngSubmit)="submitForm()" >
+          <ngb-alert [dismissible]="false" [type]="'primary'">
+
+            <h4><i class="feather icon-alert-circle"></i>Guidelines for Data Upload</h4>
+            <p>Before proceeding with data upload, please adhere to the following instructions:</p>
+            <ul>
+              <li>Download the exemplar Excel file using the link below:</li>
+              <li>Insert your data into the Excel file using the prescribed format.</li>
+              <li>It is crucial to follow the specified format meticulously to ensure successful and efficient data import. Deviations from the format may lead to upload failures.</li>
+            </ul>
+
+            <a href="javascript:void(0)" class="btn btn-outline-primary btn-icon-text">
+              <i class="feather icon-download-cloud btn-icon-prepend"></i>
+              Download Exemplar Excel File
+            </a>
+          </ngb-alert>
+          <div class="mb-3">
+            <label for="exampleInputUsername4" class="form-label">Upload Excel File</label>
+            <input type="file" class="form-control" id="exampleInputUsername4"
+                   autocomplete="off" placeholder="Name" formControlName="file" (change)="handleFileInput($event)">
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Import Users'"
+            [loadingText]="'Importing...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
