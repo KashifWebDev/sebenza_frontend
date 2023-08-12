@@ -1,6 +1,6 @@
 <nav class="page-breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink=".">User Dashboard</a></li>
+    <li class="breadcrumb-item"><a routerLink="/">User Dashboard</a></li>
     <li class="breadcrumb-item active" aria-current="page">Invoice</li>
   </ol>
 </nav>
@@ -64,7 +64,14 @@
                     <td class="text-end">{{invoice.amount_total | currency}}</td>
                   </tr>
                   <tr>
-                    <td>Discount</td>
+                    <td>
+                      Discount
+                      <button type="button"
+                              (click)="openModal()"
+                               class="btn btn-sm ms-2 btn-outline-primary">
+                        Have Voucher?
+                      </button>
+                    </td>
                     <td class="text-danger text-end">(-) {{invoice.discount | currency}}</td>
                   </tr>
                   <tr>
@@ -92,3 +99,32 @@
     </div>
   </div>
 </div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="addNewOrderForm" (ngSubmit)="confirmModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">Voucher Code</label>
+        <input type="text" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="XXXXXX" formControlName="voucher"
+               [ngClass]="{'is-invalid': formProcessed && form.voucher.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.voucher.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="btnLoading"
+        [btnText]="btnLoading ? 'Creating Order' : 'Apply Voucher'"
+        [loadingText]="'Applying Discount'"
+        [btnIcon]="'gift'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+
+</ng-template>

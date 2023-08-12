@@ -173,8 +173,8 @@ export class UserService {
     )
   }
 
-  getOrders(): Observable<ApiResponse<{ order: order}>>{
-    return this.http.get<ApiResponse<{ order: order}>>(
+  getOrders(): Observable<ApiResponse<{ order: order[]}>>{
+    return this.http.get<ApiResponse<{ order: order[]}>>(
       environment.backendURI+`/user/orders`
     );
   }
@@ -224,4 +224,21 @@ export class UserService {
     );
   }
 
+  addNewOrder(formData: FormData): Observable<ApiResponse<{ invoice: invoice }>>{
+    return this.http.post<ApiResponse<{invoice: invoice}>>(
+      environment.backendURI+'/user/orders',
+      formData
+    );
+  }
+
+  getAccTypes(): Observable<ApiResponse<{accounttypes: accountType[]}>>{
+    return this.http.get<any>(environment.backendURI+'/gettypes');
+  }
+
+  applyVoucher(formData: FormData): Observable<ApiResponse<{ invoice: invoice }>>{
+    return this.http.post<ApiResponse<{invoice: invoice}>>(
+      environment.backendURI+'/user/order/use-promo',
+      formData
+    );
+  }
 }

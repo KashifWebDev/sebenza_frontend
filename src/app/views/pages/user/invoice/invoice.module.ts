@@ -5,7 +5,7 @@ import { UserSingleInvoiceComponent } from './user-single-invoice/user-single-in
 import {RouterModule, Routes} from "@angular/router";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {SharedModule} from "../../../shared/shared.module";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FeatherIconModule} from "../../../../core/feather-icon/feather-icon.module";
 
 const routes: Routes = [
@@ -18,13 +18,14 @@ const routes: Routes = [
     UserAllInvoicesComponent,
     UserSingleInvoiceComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    NgxDatatableModule,
-    SharedModule,
-    FormsModule,
-    FeatherIconModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        NgxDatatableModule,
+        SharedModule,
+        FormsModule,
+        FeatherIconModule,
+        ReactiveFormsModule
+    ]
 })
 export class InvoiceModule { }

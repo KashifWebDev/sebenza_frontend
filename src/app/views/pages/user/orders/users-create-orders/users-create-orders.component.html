@@ -3,19 +3,30 @@
     <div class="card">
       <div class="card-body">
         <h6 class="card-title">User Package Upgrade</h6>
-        <form class="forms-sample" [formGroup]="updateUsersForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+        <form class="forms-sample" [formGroup]="addNewOrderForm" (ngSubmit)="submitForm()" *ngIf="!loading">
           <div class="mb-3">
             <label for="number" class="form-label">Number of users:</label>
             <input type="number" class="form-control" id="number"
-                   autocomplete="off" formControlName="number"
-                   [ngClass]="{'is-invalid': formProcessed && form.number.errors && formProcessed}">
-            <div *ngIf="formProcessed && form.number.errors?.required" class="invalid-feedback">
+                   autocomplete="off" formControlName="totalUsers"
+                   [ngClass]="{'is-invalid': formProcessed && form.totalUsers.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.totalUsers.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputUsername3" class="form-label">Status</label>
+            <select class="form-select" id="exampleInputUsername3" formControlName="accountType"
+                    [ngClass]="{'is-invalid': formProcessed && form.accountType.errors && formProcessed}">
+              <option value selected>Select Account Type</option>
+              <option *ngFor="let account of accountTypes" [value]="account.id">{{account.account_type}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.accountType.errors?.required" class="invalid-feedback">
               Required
             </div>
           </div>
           <app-loading-button
             [isLoading]="loadingBtn"
-            [btnText]="'Update Package'"
+            [btnText]="'Add Order'"
             [loadingText]="'Updating...'"
             [btnIcon]="isEditMode ? 'edit' : 'check-square'">
           </app-loading-button>

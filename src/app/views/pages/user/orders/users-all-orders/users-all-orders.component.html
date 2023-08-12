@@ -2,11 +2,15 @@
   <div>
     <h4 class="mb-3 mb-md-0">My Orders History</h4>
   </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="openModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add new order
+  </button>
 </div>
 
 <app-css-loader *ngIf="loading"></app-css-loader>
 <div class="row" *ngIf="!loading">
-  <div class="col-12 col-md-6 col-xl-4">
+  <div class="col-sm-12 col-md-4 mb-3" *ngFor="let order of orders">
     <div class="card">
       <div class="card-header">
         <div class="w-100 d-flex justify-content-between">
@@ -30,3 +34,42 @@
     </div>
   </div>
 </div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="addNewOrderForm" (ngSubmit)="confirmModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">Number of users</label>
+        <input type="number" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="Name" formControlName="totalUsers"
+               [ngClass]="{'is-invalid': formProcessed && form.totalUsers.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.totalUsers.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername3" class="form-label">Status</label>
+        <select class="form-select" id="exampleInputUsername3" formControlName="accountType"
+                [ngClass]="{'is-invalid': formProcessed && form.accountType.errors && formProcessed}">
+          <option value selected>Select Account Type</option>
+          <option *ngFor="let account of accountTypes" [value]="account.id">{{account.account_type}}</option>
+        </select>
+        <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="btnLoading"
+        [btnText]="btnLoading ? 'Creating Order' : 'Place New Order'"
+        [loadingText]="'Creating Order'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+
+</ng-template>

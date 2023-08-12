@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "../../../../../app.service";
 import {UserService} from "../../user.service";
 import {Router} from "@angular/router";
+import {accountType} from "../../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-users-create-orders',
@@ -10,7 +11,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./users-create-orders.component.scss']
 })
 export class UsersCreateOrdersComponent implements OnInit {
-  updateUsersForm: FormGroup;
+  addNewOrderForm: FormGroup;
   loadingBtn: boolean = false;
 
   isEditMode: boolean = false;
@@ -18,14 +19,26 @@ export class UsersCreateOrdersComponent implements OnInit {
   formProcessed: boolean = false;
   formData: FormData = new FormData();
   loading: boolean = false;
+  btnLoading: boolean = false;
+  accountTypes: accountType[];
 
   constructor(private userService: UserService,
               private appService: AppService,
+              private formBuilder: FormBuilder,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.updateUsersForm = new FormGroup({
-      number: new FormControl('', [Validators.required]),
+    this.userService.getAccTypes().subscribe(
+      (response) => {
+        if(response.status && response.data?.accounttypes){
+          this.accountTypes = response.data.accounttypes;
+        }
+      }
+    );
+
+    this.addNewOrderForm = this.formBuilder.group({
+      totalUsers: ['', Validators.required],
+      accountType: ['', Validators.required],
     });
   }
 
@@ -33,31 +46,29 @@ export class UsersCreateOrdersComponent implements OnInit {
     this.loadingBtn = true;
     this.formProcessed = true;
     this.formSubmit = true;
-    if (this.updateUsersForm.invalid) {
+    if (this.addNewOrderForm.invalid) {
       this.loadingBtn = false;
       this.formSubmit = false;
       return;
     }
 
     const formData = new FormData();
-    formData.append(`new_user`, this.updateUsersForm.value['number']);
+    formData.append(`user_limit_id`, this.addNewOrderForm.value['totalUsers']);
+    formData.append(`account_type_id`, this.addNewOrderForm.value['accountType']);
 
-    this.userService.updateSubscription(formData).subscribe(
-      next => {
-        if(next.status){
-          this.appService.swalFire('Order Updated successfully!', 'success');
-          this.formProcessed = false;
-          this.formSubmit = false;
-          this.updateUsersForm.reset();
-          this.router.navigate(['user/orders']);
+    this.userService.addNewOrder(formData).subscribe(
+      data => {
+        if(data.status){
+          this.appService.swalFire('Order Placed Successfully', 'success');
+          this.router.navigate(['user', 'orders']);
         }else{
-          this.appService.swalFire(next.message, 'error');
+          this.appService.swalFire(data.message, 'error');
         }
-        this.loadingBtn = false;
+        this.btnLoading = false;
       },
-      error => {
-        this.loadingBtn = false;
-        this.appService.swalFire('Error Occurred while updating details!', 'error');
+      (error) => {
+        this.btnLoading = false;
+        this.appService.swalFire('An error occurred while creating Order', 'error');
       }
     );
 
@@ -66,7 +77,7 @@ export class UsersCreateOrdersComponent implements OnInit {
   }
 
   get form() {
-    return this.updateUsersForm.controls;
+    return this.addNewOrderForm.controls;
   }
 
 }
