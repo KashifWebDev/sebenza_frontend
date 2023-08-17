@@ -85,8 +85,8 @@ export class UserSingleInvoiceComponent implements OnInit {
     }
     const formData = new FormData();
     formData.append(`invoiceID`, this.invoice.invoiceID.toString());
-    formData.append(`promoco`, this.addNewOrderForm.value['voucher']);
-    this.userService.addNewOrder(formData).subscribe(
+    formData.append(`promocode`, this.addNewOrderForm.value['voucher']);
+    this.userService.applyVoucher(formData).subscribe(
       data => {
         if(data.status){
           this.appService.swalFire('Voucher was applied successfully!', 'success');
