@@ -312,3 +312,13 @@ export interface userProfile {
   country: string,
   city: string
 }
+
+export interface payFrequency {
+  id: number,
+  user_id: number,
+  membership_id: string,
+  frequecy_name: string,
+  status: string,
+  updated_at: string,
+  created_at: string,
+}

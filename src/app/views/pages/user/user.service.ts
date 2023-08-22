@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile
+  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -241,4 +241,22 @@ export class UserService {
       formData
     );
   }
+
+  getAllPaymentFrequency(): Observable<ApiResponse<{paymentfrequencys: payFrequency[]}>>{
+    return this.http.get<any>(environment.backendURI+'/user/paymentfrequencys');
+  }
+
+  deletePayFrequency(id: number): Observable<ApiResponse<{ paymentfrequencys: payFrequency }>>{
+    return this.http.delete<ApiResponse<{paymentfrequencys: payFrequency}>>(
+      environment.backendURI+`/user/paymentfrequencys/${id}`
+    );
+  }
+
+  addNewFrequency(formData: FormData): Observable<ApiResponse<{ paymentfrequencys: payFrequency }>>{
+    return this.http.post<ApiResponse<{paymentfrequencys: payFrequency}>>(
+      environment.backendURI+'/user/paymentfrequencys',
+      formData
+    );
+  }
+
 }

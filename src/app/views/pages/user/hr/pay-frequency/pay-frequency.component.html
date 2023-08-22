@@ -1,0 +1,85 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">Payment Frequencies</h4>
+  </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="openModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add new frequency
+  </button>
+</div>
+
+<app-css-loader *ngIf="loading"></app-css-loader>
+<div class="row" *ngIf="!loading">
+  <div class="col-sm-12 col-md-4 mb-3" *ngFor="let freq of paymentFrequencies">
+    <div class="card">
+      <div class="card-header">
+        <div class="w-100 d-flex justify-content-between">
+          <span>Payment Frequency</span>
+          <span class="badge" [ngClass]="freq.status == 'Pending' ? 'bg-danger' : 'bg-success'">{{freq.status}}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between">
+          <span>Name: {{freq.frequecy_name}}</span>
+          <span class="fs- text-muted">{{modifyDate(freq.updated_at)}}</span>
+        </h5>
+        <p class="card-text mb-3">
+        </p>
+        <button type="button" class="btn btn-outline-danger btn-icon-text" (click)="openDelModal(freq.id)">
+          <i class="feather icon-trash-2 btn-icon-prepend"></i>
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="addNewPaymentFreqForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">Frequency Name</label>
+        <input type="text" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="Name" formControlName="freqName"
+               [ngClass]="{'is-invalid': formProcessed && form.freqName.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.freqName.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="btnLoading"
+        [btnText]="btnLoading ? 'Saving New Frequency...' : 'Save Frequency'"
+        [loadingText]="'Saving New Frequency...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #delModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel1">Confirm Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close" [disabled]="loading"></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to delete this?
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="loading">Close</button>
+    <button type="button" class="btn btn-danger" (click)="confirmModal()" *ngIf="!loading">
+      <i class="feather icon-trash-2 btn-icon-prepend me-1"></i>
+      Delete
+    </button>
+    <button class="btn btn-danger" type="button" disabled *ngIf="loading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Deleting..
+    </button>
+  </div>
+</ng-template>

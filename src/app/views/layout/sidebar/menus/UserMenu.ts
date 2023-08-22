@@ -112,6 +112,15 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'HR & Payroll',
+    isTitle: true
+  },
+  {
+    label: 'Pay Frequency',
+    icon: 'bar-chart-2',
+    link: 'hr'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },
