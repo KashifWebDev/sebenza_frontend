@@ -322,3 +322,22 @@ export interface payFrequency {
   updated_at: string,
   created_at: string,
 }
+
+export interface salary{
+  id: number,
+  created_by: number,
+  user_id: number,
+  payment_frequency_id: number,
+  "payment_frequency": string,
+  "membership_id": string,
+  "basic_salaray": string,
+  "hourly_rate": string,
+  "working_hour": string,
+  "account_balance": string,
+  "pending_withdrew": string,
+  "withdrew_balance": string,
+  "status": string,
+  "created_at": string,
+  "updated_at": string,
+  full_name: string
+}

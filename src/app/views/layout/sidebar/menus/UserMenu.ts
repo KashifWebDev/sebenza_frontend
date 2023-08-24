@@ -121,6 +121,20 @@ export const UserMenu: MenuItem[] = [
     link: 'hr'
   },
   {
+    label: 'Employees salary',
+    icon: 'pie-chart',
+    subItems: [
+      {
+        label: 'Salary Details',
+        link: 'hr/salaries'
+      },
+      {
+        label: 'Add New Salary',
+        link: 'hr/salaries/new'
+      }
+    ]
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },

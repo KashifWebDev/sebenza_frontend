@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+    <app-css-loader *ngIf="isEditMode && loading"></app-css-loader>
+    <div class="col-md-6 mx-auto grid-margin stretch-card" *ngIf="!loading">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{isEditMode ? 'Edit Salary' : 'Add Salary Info'}}</h4>
+            <form [formGroup]="salaryForm" (ngSubmit)="onSubmit()">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-3">
+                    <label class="form-label">User</label>
+                    <ng-select [items]="users"
+                               bindLabel="name"
+                               bindValue="id"
+                               placeholder="type to search"
+                               formControlName="user_id">
+                    </ng-select>
+                    <div *ngIf="formProcessed && form.user_id.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-3">
+                    <label for="payment_freq_id" class="form-label">Pay Frequency</label>
+                    <select class="form-select" id="payment_freq_id" formControlName="payment_freq_id"
+                            [ngClass]="{'is-invalid': formProcessed && form.payment_freq_id.errors}">
+                      <option *ngFor="let freq of paymentFrequencies" [value]="freq.id" [selected]="">{{freq.frequecy_name}}</option>
+                    </select>
+                    <div *ngIf="formProcessed && form.payment_freq_id.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-3">
+                    <label for="basic_salaray" class="form-label">Basic Salary</label>
+                    <input type="number" class="form-control" id="basic_salaray" formControlName="basic_salaray"
+                           [ngClass]="{'is-invalid': formProcessed && form.basic_salaray.errors}">
+                    <div *ngIf="formProcessed && form.basic_salaray.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-3">
+                    <label for="hourly_rate" class="form-label">Hourly Rate</label>
+                    <input type="number" class="form-control" id="hourly_rate"  formControlName="hourly_rate"
+                           [ngClass]="{'is-invalid': formProcessed && form.hourly_rate.errors}">
+                    <div *ngIf="formProcessed && form.hourly_rate.errors?.required" class="invalid-feedback">
+                      Required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="mb-3">
+                    <label for="working_hour" class="form-label">Working Hours</label>
+                    <input type="text" class="form-control" id="working_hour" formControlName="working_hour"
+                           [ngClass]="{'is-invalid': formProcessed && form.working_hour.errors}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <app-loading-button
+                  [btnIcon]="isEditMode ? 'edit-3' : 'user-plus'"
+                  [btnText]="isEditMode ? 'Edt Salary' : 'Save Salary'"
+                  [loadingText]="isEditMode ? 'Updating salary...' : 'Saving User...'"
+                  [isLoading]="formSubmit"></app-loading-button>
+                <a routerLink="../" class="btn btn-secondary">Cancel</a>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

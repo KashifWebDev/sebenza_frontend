@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency
+  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency, salary
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -255,6 +255,31 @@ export class UserService {
   addNewFrequency(formData: FormData): Observable<ApiResponse<{ paymentfrequencys: payFrequency }>>{
     return this.http.post<ApiResponse<{paymentfrequencys: payFrequency}>>(
       environment.backendURI+'/user/paymentfrequencys',
+      formData
+    );
+  }
+
+  getAllSalaries(): Observable<ApiResponse<{ salarys: salary[] }>>{
+    return this.http.get<ApiResponse<{salarys: salary[]}>>(
+      environment.backendURI+'/user/salaries'
+    );
+  }
+
+  deleteSalary(id: number): Observable<ApiResponse<{ salarys: salary }>>{
+    return this.http.delete<ApiResponse<{salarys: salary}>>(
+      environment.backendURI+`/user/salaries/${id}`
+    );
+  }
+
+  fetchSingleSalary(id: number): Observable<ApiResponse<{salarys: salary}>>{
+    return this.http.get<ApiResponse<{ salarys: salary }>>(
+      environment.backendURI+`/user/salaries/${id}/edit`
+    );
+  }
+
+  addNewSalary(formData: FormData): Observable<ApiResponse<{ salarys: salary}>>{
+    return this.http.post<ApiResponse<{salarys: salary}>>(
+      environment.backendURI+'/user/salaries',
       formData
     );
   }
