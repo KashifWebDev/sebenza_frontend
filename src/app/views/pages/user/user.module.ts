@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: 'orders',loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)},
   {path: 'invoices',loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule)},
   {path: 'invite-users',loadChildren: () => import('./invite-users/invite-users.module').then(m => m.InviteUsersModule)},
+  {path: 'salary',loadChildren: () => import('./salary-withdraw/salary-withdraw.module').then(m => m.SalaryWithdrawModule)},
   {path: 'hr',loadChildren: () => import('./hr/hr.module').then(m => m.HrModule)},
 ]
 

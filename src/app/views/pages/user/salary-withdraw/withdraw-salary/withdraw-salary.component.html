@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <div class="row justify-content-start">
+          <div class="col-md-6">
+            <h6 class="card-title">My Withdraw Requests</h6>
+          </div>
+        </div>
+        <app-css-loader *ngIf="!withdraws.length && loading"></app-css-loader>
+        <ng-container *ngIf="!withdraws.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No withdraw requests found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="withdraws && withdraws.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Amount">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.amount | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Payment Method" prop="payment_method"></ngx-datatable-column>
+            <ngx-datatable-column name="Account #" prop="account_number"></ngx-datatable-column>
+            <ngx-datatable-column name="Date">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.updated_at | date }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-success': row.status == 'Paid','bg-danger': row.status == 'Pending'}">
+                  {{ row.status}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a class="btn btn-icon" [routerLink]="[row.id]">
+                  <i class="feather icon-eye text-primary"></i>
+                </a>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

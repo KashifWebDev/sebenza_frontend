@@ -341,3 +341,18 @@ export interface salary{
   "updated_at": string,
   full_name: string
 }
+
+export interface withdraw{
+  id: number,
+  user_id: number,
+  membership_id: string,
+  payment_method: string,
+  account_number: string,
+  amount: string,
+  status: string,
+  fullname?: string,
+  created_at: string,
+  updated_at: string
+}
+
+

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MySalaryComponent } from './my-salary.component';
+import { MakeWithdrawComponent } from './make-withdraw.component';
 
-describe('MySalaryComponent', () => {
-  let component: MySalaryComponent;
-  let fixture: ComponentFixture<MySalaryComponent>;
+describe('MakeWithdrawComponent', () => {
+  let component: MakeWithdrawComponent;
+  let fixture: ComponentFixture<MakeWithdrawComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MySalaryComponent ]
+      declarations: [ MakeWithdrawComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MySalaryComponent);
+    fixture = TestBed.createComponent(MakeWithdrawComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

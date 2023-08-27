@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Generate Withdraw Request</h6>
+        <form class="forms-sample" [formGroup]="withdrawForm" (ngSubmit)="submitForm()">
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" class="form-control" id="amount"
+                   autocomplete="off" placeholder="000" formControlName="amount"
+                   [ngClass]="{'is-invalid': formProcessed && form.amount.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.amount.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Generate Request'"
+            [loadingText]="'Generating...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

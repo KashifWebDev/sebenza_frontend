@@ -9,7 +9,7 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency, salary
+  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency, salary, withdraw
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -294,6 +294,38 @@ export class UserService {
   getCurrentUserSalary(): Observable<ApiResponse<{ salarys: salary }>>{
     return this.http.get<ApiResponse<{salarys: salary}>>(
       environment.backendURI+'/user/my/salary'
+    );
+  }
+
+  getAllWithdraws(): Observable<ApiResponse<{ withdrews: withdraw[] }>>{
+    return this.http.get<ApiResponse<{withdrews: withdraw[] }>>(
+      environment.backendURI+'/user/withdrews'
+    );
+  }
+
+  getCurrentUserWithdraws(): Observable<ApiResponse<{ withdrews: withdraw[] }>>{
+    return this.http.get<ApiResponse<{withdrews: withdraw[] }>>(
+      environment.backendURI+'/user/my/withdrew'
+    );
+  }
+
+  withdrawRequest(formData: FormData): Observable<ApiResponse<{ withdrews: withdraw }>>{
+    return this.http.post<ApiResponse<{withdrews: withdraw}>>(
+      environment.backendURI+'/user/withdrews',
+      formData
+    );
+  }
+
+  fetchSingleWithdraw(id: number): Observable<ApiResponse<{withdrews: withdraw}>>{
+    return this.http.get<ApiResponse<{ withdrews: withdraw }>>(
+      environment.backendURI+`/user/withdrews/${id}/edit`
+    );
+  }
+
+  updateWithdrawRequest(formData: FormData, id: number): Observable<ApiResponse<{ withdrews: withdraw }>>{
+    return this.http.post<ApiResponse<{ withdrews: withdraw }>>(
+      environment.backendURI+`/user/withdrew/update/${id}`,
+      formData
     );
   }
 }

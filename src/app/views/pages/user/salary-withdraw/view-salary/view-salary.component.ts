@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import {salary} from "../../../../../core/interfaces/interfaces";
 
 @Component({
-  selector: 'app-my-salary',
-  templateUrl: './my-salary.component.html',
-  styleUrls: ['./my-salary.component.scss']
+  selector: 'app-view-salary',
+  templateUrl: './view-salary.component.html',
+  styleUrls: ['./view-salary.component.scss']
 })
-export class MySalaryComponent implements OnInit {
+export class ViewSalaryComponent implements OnInit {
 
   salary: salary;
   loading: boolean = false

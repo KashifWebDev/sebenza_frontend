@@ -94,9 +94,22 @@ export const UserMenu: MenuItem[] = [
     link: 'invoices'
   },
   {
-    label: 'My Salary',
+    label: 'Salary & Withdraws',
     icon: 'gift',
-    link: 'hr/my-salary'
+    subItems: [
+      {
+        label: 'My Salary',
+        link: 'salary'
+      },
+      {
+        label: 'Withdraw Requests',
+        link: 'salary/withdraw'
+      },
+      {
+        label: 'Make a Withdraw',
+        link: 'salary/make-withdraw'
+      }
+    ]
   },
   {
     label: 'My Finances',
@@ -138,6 +151,11 @@ export const UserMenu: MenuItem[] = [
         link: 'hr/salaries/new'
       },
     ]
+  },
+  {
+    label: 'Withdraw Requests',
+    icon: 'alert-circle',
+    link: 'hr/withdraw-requests'
   },
   {
     label: 'Help & Support',
