@@ -284,4 +284,16 @@ export class UserService {
     );
   }
 
+  editSalary(formData: FormData, id: number): Observable<ApiResponse<{ salarys: salary}>>{
+    return this.http.post<ApiResponse<{salarys: salary}>>(
+      environment.backendURI+`/user/salary/update/${id}`,
+      formData
+    );
+  }
+
+  getCurrentUserSalary(): Observable<ApiResponse<{ salarys: salary }>>{
+    return this.http.get<ApiResponse<{salarys: salary}>>(
+      environment.backendURI+'/user/my/salary'
+    );
+  }
 }

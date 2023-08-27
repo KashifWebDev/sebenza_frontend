@@ -94,6 +94,11 @@ export const UserMenu: MenuItem[] = [
     link: 'invoices'
   },
   {
+    label: 'My Salary',
+    icon: 'gift',
+    link: 'hr/my-salary'
+  },
+  {
     label: 'My Finances',
     icon: 'dollar-sign',
     subItems: [
@@ -131,7 +136,7 @@ export const UserMenu: MenuItem[] = [
       {
         label: 'Add New Salary',
         link: 'hr/salaries/new'
-      }
+      },
     ]
   },
   {

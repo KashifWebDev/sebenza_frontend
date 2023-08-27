@@ -8,14 +8,16 @@ import { SalariesComponent } from './salaries/salaries.component';
 import { AddSalaryComponent } from './add-salary/add-salary.component';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { ViewSingleSalaryComponent } from './view-single-salary/view-single-salary.component';
-import { EditSalaryComponent } from './edit-salary/edit-salary.component';
 import {NgSelectModule} from "@ng-select/ng-select";
+import { MySalaryComponent } from './my-salary/my-salary.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'pay-frequency'},
   {path: 'pay-frequency', component: PayFrequencyComponent},
   {path: 'salaries', component: SalariesComponent},
   {path: 'salaries/new', component: AddSalaryComponent},
+  {path: 'salary/:id', component: ViewSingleSalaryComponent},
+  {path: 'my-salary', component: MySalaryComponent},
 ]
 
 @NgModule({
@@ -24,7 +26,7 @@ const routes: Routes = [
     SalariesComponent,
     AddSalaryComponent,
     ViewSingleSalaryComponent,
-    EditSalaryComponent
+    MySalaryComponent
   ],
   imports: [
     RouterModule.forChild(routes),

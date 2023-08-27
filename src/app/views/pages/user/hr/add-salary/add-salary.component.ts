@@ -17,8 +17,7 @@ export class AddSalaryComponent implements OnInit {
   isEditMode: boolean = false;
   salaryID: number;
   formSubmit: boolean = false;
-  formProcessed: boolean = false;
-  formData: FormData = new FormData();
+  formProcessed: boolean = false;;
   loading: boolean = false;
   users: {id: number, name: string}[];
   paymentFrequencies: payFrequency[];
@@ -57,7 +56,7 @@ export class AddSalaryComponent implements OnInit {
       this.initializeForm();
       if (this.isEditMode) {
         this.loading = true;
-        // Fetch user details by userId or use the provided user data
+
         const user = this.userService.fetchSingleSalary(this.salaryID).subscribe(
           (res) => {
             if(res.status && res.data?.salarys){
@@ -109,18 +108,19 @@ export class AddSalaryComponent implements OnInit {
       return;
     }
 
-    this.formData.append('user_id', this.salaryForm.controls['user_id'].value);
-    this.formData.append('payment_freq_id', this.salaryForm.controls['payment_freq_id'].value);
-    this.formData.append('basic_salaray', this.salaryForm.controls['basic_salaray'].value);
-    this.formData.append('hourly_rate', this.salaryForm.controls['hourly_rate'].value);
-    this.formData.append('working_hour', this.salaryForm.controls['working_hour'].value);
+    let formData: FormData = new FormData()
+    formData.append('user_id', this.salaryForm.controls['user_id'].value);
+    formData.append('payment_frequency_id', this.salaryForm.controls['payment_freq_id'].value);
+    formData.append('basic_salaray', this.salaryForm.controls['basic_salaray'].value);
+    formData.append('hourly_rate', this.salaryForm.controls['hourly_rate'].value);
+    formData.append('working_hour', this.salaryForm.controls['working_hour'].value);
 
     if (this.isEditMode) {
-      this.adminService.editUserSubmit(this.formData, this.salaryID).subscribe(
+      this.userService.editSalary(formData, this.salaryID).subscribe(
         (data) => {
           if(data.status){
-            this.appService.swalFire('User was updated successfully', 'success');
-            this.router.navigate(['/administrator/users-management'], );
+            this.appService.swalFire('Salary was updated successfully', 'success');
+            this.router.navigate(['/user/hr/salaries']);
             this.formSubmit = false;
             this.salaryForm.reset();
           }else{
@@ -130,17 +130,18 @@ export class AddSalaryComponent implements OnInit {
         },
         (error) => {
           this.formSubmit = false;
-          this.appService.swalFire('An error was occurred while updating user', 'error');
+          this.appService.swalFire('An error was occurred while updating Salary', 'error');
         }
       );
     } else {
-      this.userService.addNewSalary(this.formData).subscribe(
+      this.userService.addNewSalary(formData).subscribe(
         (data) => {
           if(data.status){
             this.appService.swalFire('Salary info was added successfully', 'success');
             this.formProcessed = false;
             this.formSubmit = false;
             this.salaryForm.reset();
+            this.router.navigate(['/user/hr/salaries']);
           }else{
             this.appService.swalFire(data.message, 'error');
           }

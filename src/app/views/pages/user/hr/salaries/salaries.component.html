@@ -64,13 +64,13 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="['add-user']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                <a [routerLink]="['../', 'salary', row.id]" class="btn btn-icon">
                   <i class="feather icon-eye text-secondary"></i>
                 </a>
-                <a [routerLink]="['add-user']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
+                <a [routerLink]="['new']" [queryParams]="{'edit': row.id}" class="btn btn-icon">
                   <i class="feather icon-edit-3 text-primary"></i>
                 </a>
-                <button type="button" class="btn btn-icon" (click)="deleteRole(row)">
+                <button type="button" class="btn btn-icon" (click)="deleteRole(row.id)">
                   <i class="feather icon-trash-2 text-danger"></i>
                 </button>
               </ng-template>

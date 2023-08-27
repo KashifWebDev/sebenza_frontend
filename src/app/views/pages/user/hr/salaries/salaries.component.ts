@@ -26,7 +26,6 @@ export class SalariesComponent implements OnInit {
   constructor(private userService: UserService, private modalService: NgbModal,
               private appService: AppService) { }
 
-
   ngOnInit(): void {
     this.userService.getAllSalaries().subscribe(response => {
       if (response.status && response.data) {
@@ -79,10 +78,6 @@ export class SalariesComponent implements OnInit {
         this.appService.swalFire('An error occurred while deleting Salary Info', 'error');
       }
     );
-  }
-
-  getUserRole(user: User){
-    return user.roles[0].name;
   }
 
 }
