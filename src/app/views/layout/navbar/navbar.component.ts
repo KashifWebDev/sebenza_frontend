@@ -30,7 +30,10 @@ export class NavbarComponent implements OnInit {
     }else{
       this.profileURL = '/user/profile';
     }
-    console.log(this.profileURL);
+
+    this.authService.$currentUser.subscribe(newUserDetails => {
+      this.user = newUserDetails
+    })
   }
 
   /**

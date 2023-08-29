@@ -303,14 +303,15 @@ export interface invoice {
 }
 
 export interface userProfile {
-  firstName: string,
-  lastName: string,
-  mobile: string,
+  first_name: string,
+  last_name: string,
+  phone: string,
   address: string,
   postcode: string,
   state: string,
   country: string,
-  city: string
+  city: string,
+  profile: string
 }
 
 export interface payFrequency {

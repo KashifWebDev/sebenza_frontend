@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import {DashboardComponent} from "../administrator/dashboard/dashboard.component";
-import {UserProfileComponent} from "../../shared/user-profile/user-profile.component";
+import { ProfileComponent } from './profile/profile.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {SharedModule} from "../../shared/shared.module";
 
 const routes: Routes = [
   {path: '',redirectTo: 'home',pathMatch: 'full'},
   {path: 'home',component: DashboardComponent},
-  {path: 'profile',component: UserProfileComponent},
+  {path: 'profile',component: ProfileComponent},
   {path: 'news',loadChildren: () => import('./news/userNews.module').then(m => m.UserNewsModule)},
   {path: 'support',loadChildren: () => import('./support/support.module').then(m => m.SupportModule)},
   {path: 'meeting',loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)},
@@ -24,11 +26,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    UserDashboardComponent
+    UserDashboardComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    SharedModule,
   ]
 })
 export class UserModule { }

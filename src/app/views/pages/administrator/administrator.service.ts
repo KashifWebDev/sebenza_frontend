@@ -7,7 +7,7 @@ import {
   News, order,
   Package, promoCode,
   role, Ticket, ticketReplies,
-  User, WhatsApp
+  User, userProfile, WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
@@ -19,6 +19,19 @@ import {Tick} from "chart.js";
 export class AdministratorService {
 
   constructor(private http: HttpClient) { }
+
+  getProfileDetails(): Observable<ApiResponse<{user: userProfile}>>{
+    return this.http.get<ApiResponse<{user: userProfile}>>(
+      environment.backendURI+`/user/view-profile`
+    );
+  }
+
+  updateProfileDetails(formData: FormData): Observable<ApiResponse<{ user: userProfile }>>{
+    return this.http.post<ApiResponse<{user: userProfile}>>(
+      environment.backendURI+'/user/update-profile',
+      formData
+    );
+  }
 
   getAllRoles(): Observable<ApiResponse<{roles: role[]}>>{
     return this.http.get<ApiResponse<{ roles: role[] }>>(environment.backendURI+'/admin/userroles');

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {accountType, adminUser, ApiResponse, Package, User} from "../../../core/interfaces/interfaces";
+import {accountType, adminUser, ApiResponse, Package, User, userProfile} from "../../../core/interfaces/interfaces";
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -45,6 +45,21 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('userType', this.userType);
     this.$currentUser.next(this.currentUser);
+  }
+
+  userDataUpdated(user: userProfile){
+    let newData: User | any = {
+      ...this.getLoggedInUser(),
+      first_name: user.first_name,
+      last_name: user.last_name,
+      profile : user.profile,
+    };
+
+    localStorage.setItem(
+      'user',
+      JSON.stringify(newData)
+    );
+    this.$currentUser.next(newData);
   }
 
   getLoggedInUser(): User | null {

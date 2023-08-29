@@ -1,0 +1,31 @@
+.form-control:focus {
+  color: #d0d6e1;
+  background-color: #0c1427;
+  border-color: #243866;
+  outline: 0;
+  box-shadow: none;
+}
+
+.labels {
+  font-size: 14px
+}
+label{
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+input{
+  display: block;
+  width: 100%;
+  padding: 0.469rem 0.8rem;
+  font-size: .875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #d0d6e1;
+  background-color: #0c1427;
+  background-clip: padding-box;
+  border: 1px solid #172340;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../pages/auth/auth.service";
-import {UserService} from "../../pages/user/user.service";
-import {User, userProfile} from "../../../core/interfaces/interfaces";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {AppService} from "../../../app.service";
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {User, userProfile} from "../../../../core/interfaces/interfaces";
+import {AuthService} from "../../auth/auth.service";
+import {UserService} from "../user.service";
+import {AppService} from "../../../../app.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class UserProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   userProfile: userProfile;
   profileForm: FormGroup;
@@ -22,29 +22,13 @@ export class UserProfileComponent implements OnInit {
   loadingBtn: boolean = false;
   formSubmit: boolean = false;
   formProcessed: boolean = false;
-  loading: boolean = false;
+  loading: boolean = true;
 
   constructor(private authService: AuthService,
               private userService: UserService,
-              private appService: AppService,
-              private router: Router) { }
+              private appService: AppService) { }
 
   ngOnInit(): void {
-    this.userService.getProfileDetails().subscribe(
-      response => {
-        if(response.status && response.data?.profile){
-          this.userProfile = response.data.profile;
-        }
-      },
-      error => {
-        this.loadingBtn = false;
-        this.appService.swalFire('Error Occurred while fetching profile data!', 'error');
-      }
-    );
-
-    this.userRole = this.authService.getUserRole();
-    this.loggedInUser = this.authService.getLoggedInUser();
-
     this.profileForm = new FormGroup({
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
@@ -54,11 +38,43 @@ export class UserProfileComponent implements OnInit {
       state: new FormControl('', [Validators.required]),
       country: new FormControl('', [Validators.required]),
       city: new FormControl('', [Validators.required]),
-      img: new FormControl('', [Validators.required]),
+      img: new FormControl(''),
     });
+
+    this.getProfileDetails();
+    this.userRole = this.authService.getUserRole();
+    this.loggedInUser = this.authService.getLoggedInUser();
   }
 
+  getProfileDetails(){
+    this.loading = true;
+    this.userService.getProfileDetails().subscribe(
+      response => {
+        if(response.status && response.data?.user){
+          this.userProfile = response.data.user;
+          this.populateForm();
+          this.loading = false;
+        }
+      },
+      error => {
+        this.loadingBtn = false;
+        this.appService.swalFire('Error Occurred while fetching profile data!', 'error');
+      }
+    );
+  }
 
+  populateForm() {
+    this.profileForm.patchValue({
+      firstName: this.userProfile.first_name,
+      lastName: this.userProfile.last_name,
+      mobile: this.userProfile.phone,
+      address: this.userProfile.address,
+      postcode: this.userProfile.postcode,
+      state: this.userProfile.state,
+      country: this.userProfile.country,
+      city: this.userProfile.city
+    });
+  }
 
   get form() {
     return this.profileForm.controls;
@@ -85,11 +101,12 @@ export class UserProfileComponent implements OnInit {
     formData.append(`country`, this.profileForm.value['country']);
     formData.append(`city`, this.profileForm.value['city']);
     if(this.fileToUpload) formData.append('img', this.fileToUpload);
-    this.userService.submitTicket(formData).subscribe(
+    this.userService.updateProfileDetails(formData).subscribe(
       next => {
-        if(next.status){
+        if(next.status && next.data?.user){
           this.appService.swalFire('Profile Updated Successfully!', 'success');
-          this.router.navigate(['/']);
+          this.getProfileDetails();
+          this.authService.userDataUpdated(next.data.user);
         }else{
           this.appService.swalFire(next.message, 'error');
         }

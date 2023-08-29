@@ -204,9 +204,16 @@ export class UserService {
     )
   }
 
-  getProfileDetails(): Observable<ApiResponse<{profile: userProfile}>>{
-    return this.http.get<ApiResponse<{profile: userProfile}>>(
-      environment.backendURI+`/shared/profile`
+  getProfileDetails(): Observable<ApiResponse<{user: userProfile}>>{
+    return this.http.get<ApiResponse<{user: userProfile}>>(
+      environment.backendURI+`/user/view-profile`
+    );
+  }
+
+  updateProfileDetails(formData: FormData): Observable<ApiResponse<{ user: userProfile }>>{
+    return this.http.post<ApiResponse<{user: userProfile}>>(
+      environment.backendURI+'/user/update-profile',
+      formData
     );
   }
 

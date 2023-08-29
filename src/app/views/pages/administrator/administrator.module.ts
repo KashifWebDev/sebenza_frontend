@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {RouterModule, Routes} from "@angular/router";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FeatherIconModule} from "../../../core/feather-icon/feather-icon.module";
 import {NgbDatepickerModule, NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {NgApexchartsModule} from "ng-apexcharts";
-import {UserProfileComponent} from "../../shared/user-profile/user-profile.component";
+import { ProfileComponent } from './profile/profile.component';
+import {SharedModule} from "../../shared/shared.module";
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: UserProfileComponent
+    component: ProfileComponent
   },
   {
     path: 'users-management',
@@ -66,7 +67,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +77,9 @@ const routes: Routes = [
     FeatherIconModule,
     NgbDropdownModule,
     NgbDatepickerModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class AdministratorModule { }
