@@ -350,7 +350,7 @@ export interface withdraw{
   account_number: string,
   amount: string,
   status: string,
-  fullname?: string,
+  full_name?: string,
   created_at: string,
   updated_at: string
 }

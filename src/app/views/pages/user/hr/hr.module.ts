@@ -10,6 +10,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { ViewSingleSalaryComponent } from './view-single-salary/view-single-salary.component';
 import {NgSelectModule} from "@ng-select/ng-select";
 import { WithdrawRequestsComponent } from './withdraw-requests/withdraw-requests.component';
+import { WithdrawRequestSingleComponent } from './withdraw-request-single/withdraw-request-single.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'pay-frequency'},
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'salaries', component: SalariesComponent},
   {path: 'salaries/new', component: AddSalaryComponent},
   {path: 'salary/:id', component: ViewSingleSalaryComponent},
-  {path: 'withdraw-requests', component: WithdrawRequestsComponent}
+  {path: 'withdraw-requests', component: WithdrawRequestsComponent},
+  {path: 'withdraw-requests/:id', component: WithdrawRequestSingleComponent}
 ]
 
 @NgModule({
@@ -26,7 +28,8 @@ const routes: Routes = [
     SalariesComponent,
     AddSalaryComponent,
     ViewSingleSalaryComponent,
-    WithdrawRequestsComponent
+    WithdrawRequestsComponent,
+    WithdrawRequestSingleComponent
   ],
   imports: [
     RouterModule.forChild(routes),

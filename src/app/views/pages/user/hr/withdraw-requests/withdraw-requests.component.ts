@@ -1,6 +1,6 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {withdraw} from "../../../../../core/interfaces/interfaces";
-import {NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {User, withdraw} from "../../../../../core/interfaces/interfaces";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import { ColumnMode } from '@swimlane/ngx-datatable';
@@ -20,10 +20,12 @@ export class WithdrawRequestsComponent implements OnInit {
   filteredData: withdraw[] = [...this.withdraws];
   searchText = '';
   modalReference: NgbModalRef;
-  @ViewChild('basicModal', { static: true }) addTypeModal: TemplateRef<any> | NgbModalRef;
+  @ViewChild('basicModal', { static: true }) editDetailsModal: TemplateRef<any> | NgbModalRef;
+  editRequest: withdraw
 
 
   constructor(private userService: UserService,
+              private modalService: NgbModal,
               private appService: AppService) { }
 
   ngOnInit(): void {
@@ -62,5 +64,32 @@ export class WithdrawRequestsComponent implements OnInit {
     } else {
       this.filteredData = [...this.withdraws];
     }
+  }
+
+  editDetails(editRequest: withdraw) {
+    this.editRequest = editRequest;
+    this.modalReference = this.modalService.open(this.editDetailsModal, {});
+  }
+
+  confirmUpdateStatus(status: string){
+    this.deleteLoading = true;
+    const formData = new FormData();
+    formData.append('status', status);
+    this.userService.updateWithdrawRequest(formData, this.editRequest.id).subscribe(
+      data => {
+        if(data.status){
+          this.appService.swalFire(`Payment was ${status}`, 'success');
+          this.modalReference.close();
+        }else{
+          this.appService.swalFire(data.message, 'error');
+        }
+        this.deleteLoading = false;
+        this.fetchList();
+      },
+      (error) => {
+        this.deleteLoading = false;
+        this.appService.swalFire('An error occurred while processing request', 'error');
+      }
+    );
   }
 }

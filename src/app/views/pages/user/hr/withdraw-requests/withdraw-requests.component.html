@@ -34,7 +34,7 @@
                 {{ row.amount | currency }}
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="Employee Name" prop="fullname"></ngx-datatable-column>
+            <ngx-datatable-column name="Employee Name" prop="full_name"></ngx-datatable-column>
             <ngx-datatable-column name="Payment Method" prop="payment_method"></ngx-datatable-column>
             <ngx-datatable-column name="Account #" prop="account_number"></ngx-datatable-column>
             <ngx-datatable-column name="Date">
@@ -44,7 +44,8 @@
             </ngx-datatable-column>
             <ngx-datatable-column name="Status">
               <ng-template ngx-datatable-cell-template let-row="row">
-                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-success': row.status == 'Paid','bg-danger': row.status == 'Pending'}">
+                <span class="custom-cell fs-6 px-2 py-1 rounded"
+                      [ngClass]="{'bg-success': row.status == 'Paid','bg-danger': row.status == 'Canceled','bg-primary': row.status == 'Pending'}">
                   {{ row.status}}
                 </span>
               </ng-template>
@@ -52,8 +53,11 @@
             <ngx-datatable-column name="Action">
               <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
                 <a class="btn btn-icon" [routerLink]="[row.id]">
-                  <i class="feather icon-eye text-primary"></i>
+                  <i class="feather icon-eye text-white"></i>
                 </a>
+                <button class="btn btn-icon" (click)="editDetails(row)">
+                  <i class="feather icon-edit text-primary"></i>
+                </button>
               </ng-template>
             </ngx-datatable-column>
           </ngx-datatable>
@@ -62,3 +66,31 @@
     </div>
   </div>
 </div>
+
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Confirm User Deletion</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close" [disabled]="deleteLoading"></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Are you sure you want to delete this user?
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('cancel')" [disabled]="deleteLoading">Close</button>
+    <button type="button" class="btn btn-success" (click)="confirmUpdateStatus('Paid')" *ngIf="!deleteLoading">
+      <i class="feather icon-thumbs-up btn-icon-prepend me-1"></i>
+      Approve Payment
+    </button>
+    <button type="button" class="btn btn-danger" (click)="confirmUpdateStatus('Canceled')" *ngIf="!deleteLoading">
+      <i class="feather icon-thumbs-down btn-icon-prepend me-1"></i>
+      Decline Request
+    </button>
+    <button class="btn btn-danger" type="button" disabled *ngIf="deleteLoading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Processing...
+    </button>
+  </div>
+</ng-template>
