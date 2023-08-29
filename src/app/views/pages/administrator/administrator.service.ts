@@ -22,13 +22,13 @@ export class AdministratorService {
 
   getProfileDetails(): Observable<ApiResponse<{user: userProfile}>>{
     return this.http.get<ApiResponse<{user: userProfile}>>(
-      environment.backendURI+`/user/view-profile`
+      environment.backendURI+`/admin/view-profile`
     );
   }
 
   updateProfileDetails(formData: FormData): Observable<ApiResponse<{ user: userProfile }>>{
     return this.http.post<ApiResponse<{user: userProfile}>>(
-      environment.backendURI+'/user/update-profile',
+      environment.backendURI+'/admin/update-profile',
       formData
     );
   }
