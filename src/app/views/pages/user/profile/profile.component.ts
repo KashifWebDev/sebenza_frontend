@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User, userProfile} from "../../../../core/interfaces/interfaces";
+import {salary, User, userProfile} from "../../../../core/interfaces/interfaces";
 import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../user.service";
 import {AppService} from "../../../../app.service";
@@ -23,6 +23,7 @@ export class ProfileComponent implements OnInit {
   formSubmit: boolean = false;
   formProcessed: boolean = false;
   loading: boolean = true;
+  salary: salary;
 
   constructor(private authService: AuthService,
               private userService: UserService,
@@ -40,6 +41,20 @@ export class ProfileComponent implements OnInit {
       city: new FormControl('', [Validators.required]),
       img: new FormControl(''),
     });
+
+    this.userService.getCurrentUserSalary().subscribe(
+      (res) => {
+        if(res.status && res.data?.salarys){
+          this.salary = res.data.salarys;
+          this.loading = false;
+        }else{
+          this.appService.swalFire(res.message, 'error');
+        }
+      },
+      (error) => {
+        this.appService.swalFire('An error was occurred while fetching salary details!', 'error');
+      }
+    );
 
     this.getProfileDetails();
     this.userRole = this.authService.getUserRole();
