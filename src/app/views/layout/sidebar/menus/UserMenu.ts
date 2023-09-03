@@ -158,6 +158,11 @@ export const UserMenu: MenuItem[] = [
     link: 'hr/withdraw-requests'
   },
   {
+    label: 'Vat & Taxes',
+    icon: 'trending-up',
+    link: 'hr/vat-tax'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },

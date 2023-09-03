@@ -356,4 +356,12 @@ export interface withdraw{
   updated_at: string
 }
 
-
+export interface VatTax {
+  id: number,
+  user_id: number,
+  membership_id: string,
+  vat: string,
+  tax: string,
+  created_at: string,
+  updated_at: string
+}
