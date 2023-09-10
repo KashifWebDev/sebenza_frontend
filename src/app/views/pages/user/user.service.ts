@@ -335,4 +335,11 @@ export class UserService {
       formData
     );
   }
+
+  paymentSuccess(formData: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<any>>(
+      environment.backendURI+`/user/paypal-success`,
+      formData
+    );
+  }
 }

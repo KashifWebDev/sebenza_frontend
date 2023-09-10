@@ -1,11 +1,12 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {AuthService} from "../../../auth/auth.service";
-import {accountType, invoice, User} from "../../../../../core/interfaces/interfaces";
-import {ActivatedRoute} from "@angular/router";
+import { invoice, User} from "../../../../../core/interfaces/interfaces";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {render } from 'creditcardpayments/creditCardPayments'
 
 @Component({
   selector: 'app-user-single-invoice',
@@ -33,6 +34,7 @@ export class UserSingleInvoiceComponent implements OnInit {
               private modalService: NgbModal,
               private appService: AppService,
               private formBuilder: FormBuilder,
+              private router: Router,
               private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -46,6 +48,29 @@ export class UserSingleInvoiceComponent implements OnInit {
       this.invoiceID = parseInt(params['id']);
       this.getInvoice();
     });
+
+    render(
+      {
+        id: "#payments",
+        currency: "USD",
+        value: "100.00",
+        onApprove: (details: any) => {
+          const formData = new FormData();
+          formData.append('invoiceID', this.invoiceID.toString());
+          formData.append('successResponse', JSON.stringify(details));
+          this.userService.paymentSuccess(formData).subscribe(
+            response => {
+              if(response.status){
+                this.appService.swalFire(response.message, 'success');
+                this.router.navigate(['../']);
+              }
+              this.appService.swalFire(response.message, 'error');
+            }
+          );
+        }
+      }
+    );
+
   }
 
   getInvoice(){
@@ -103,4 +128,5 @@ export class UserSingleInvoiceComponent implements OnInit {
       }
     );
   }
+
 }

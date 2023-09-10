@@ -7,6 +7,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {SharedModule} from "../../../shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FeatherIconModule} from "../../../../core/feather-icon/feather-icon.module";
+import {NgbAccordionModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {path: '', component: UserAllInvoicesComponent},
@@ -18,14 +19,15 @@ const routes: Routes = [
     UserAllInvoicesComponent,
     UserSingleInvoiceComponent
   ],
-    imports: [
-        RouterModule.forChild(routes),
-        CommonModule,
-        NgxDatatableModule,
-        SharedModule,
-        FormsModule,
-        FeatherIconModule,
-        ReactiveFormsModule
-    ]
+  imports: [
+    RouterModule.forChild(routes),
+    CommonModule,
+    NgxDatatableModule,
+    SharedModule,
+    FormsModule,
+    FeatherIconModule,
+    ReactiveFormsModule,
+    NgbAccordionModule
+  ]
 })
 export class InvoiceModule { }

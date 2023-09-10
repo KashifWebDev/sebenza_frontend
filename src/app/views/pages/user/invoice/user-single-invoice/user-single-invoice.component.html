@@ -92,13 +92,24 @@
             </div>
           </div>
         </div>
-        <div class="container-fluid w-100">
-          <button class="btn btn-primary float-end mt-4 ms-2"><i data-feather="send" appFeatherIcon class="me-2 icon-md"></i>Pay Invoice</button>
-        </div>
       </div>
     </div>
   </div>
+
+
 </div>
+
+<div class="row">
+  <div class="col-md-6"></div>
+  <div class="col-md-6 d-flex justify-content-center align-items-center">
+    <h3 class="me-4">
+      <i data-feather="send" appFeatherIcon class="me-2 icon-md"></i>
+      Pay now
+    </h3>
+    <div id="payments"></div>
+  </div>
+</div>
+
 
 
 <ng-template #basicModal let-modal>
@@ -128,3 +139,4 @@
   </div>
 
 </ng-template>
+
