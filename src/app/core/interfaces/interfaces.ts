@@ -366,4 +366,17 @@ export interface vat{
   updated_at: string
 }
 
+export interface bank{
+  id: number,
+  user_id: number,
+  membership_id: string,
+  account_name: string,
+  payment_method: string,
+  account_number: string,
+  additional_info: string,
+  status: string,
+  created_at: string,
+  updated_at: string
+}
+
 

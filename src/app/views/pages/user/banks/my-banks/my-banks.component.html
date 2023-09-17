@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Roles Management</h6>
+        <app-css-loader *ngIf="!banks.length"></app-css-loader>
+        <div class="table-responsive"  *ngIf="banks && banks.length">
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Bank Name" prop="additional_info"></ngx-datatable-column>
+            <ngx-datatable-column name="Account Name" prop="account_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Payment Method" prop="payment_method"></ngx-datatable-column>
+            <ngx-datatable-column name="Account Number" prop="account_number"></ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell fs-6 px-2 py-1 rounded"
+                      [ngClass]="{'bg-success': row.status=='Active','bg-danger': row.status=='Disable'}">
+                  {{ row.status }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <button type="button" class="btn btn-icon" (click)="editBank(row)">
+                  <i class="feather icon-edit-3 text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Bank Details</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editForm" (ngSubmit)="confirmModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">Payment Method</label>
+        <input type="text" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="Payment Method" formControlName="payment_method"
+               [ngClass]="{'is-invalid': formProcessed && form.payment_method.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.payment_method.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="additional_info" class="form-label">Bank Name</label>
+        <input type="text" class="form-control" id="additional_info"
+               autocomplete="off" placeholder="Bank Name" formControlName="additional_info"
+               [ngClass]="{'is-invalid': formProcessed && form.additional_info.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.additional_info.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername2" class="form-label">Account Name</label>
+        <input type="text" class="form-control" id="exampleInputUsername2"
+               autocomplete="off" placeholder="Account Name" formControlName="account_name"
+               [ngClass]="{'is-invalid': formProcessed && form.account_name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.account_name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="account_number" class="form-label">Account Number</label>
+        <input type="text" class="form-control" id="account_number"
+               autocomplete="off" placeholder="Account Number" formControlName="account_number"
+               [ngClass]="{'is-invalid': formProcessed && form.account_number.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.account_number.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="btnLoading"
+        [btnText]="btnLoading ? 'Creating Order' : 'Save Details'"
+        [loadingText]="'Saving...'"
+        [btnIcon]="'edit'">
+      </app-loading-button>
+
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>

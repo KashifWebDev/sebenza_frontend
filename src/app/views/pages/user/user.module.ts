@@ -22,6 +22,7 @@ const routes: Routes = [
   {path: 'invite-users',loadChildren: () => import('./invite-users/invite-users.module').then(m => m.InviteUsersModule)},
   {path: 'salary',loadChildren: () => import('./salary-withdraw/salary-withdraw.module').then(m => m.SalaryWithdrawModule)},
   {path: 'hr',loadChildren: () => import('./hr/hr.module').then(m => m.HrModule)},
+  {path: 'banks',loadChildren: () => import('./banks/banks.module').then(m => m.BanksModule)},
 ]
 
 @NgModule({

@@ -94,6 +94,11 @@ export const UserMenu: MenuItem[] = [
     link: 'invoices'
   },
   {
+    label: 'My Banks',
+    icon: 'cloud',
+    link: 'banks'
+  },
+  {
     label: 'Salary & Withdraws',
     icon: 'gift',
     subItems: [

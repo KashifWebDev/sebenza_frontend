@@ -20,7 +20,7 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat
+  vat, bank
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -374,5 +374,17 @@ export class UserService {
     );
   }
 
+  getCurrentUserBanks(): Observable<ApiResponse<{ banks: bank[]}>>{
+    return this.http.get<ApiResponse<{ banks: bank[]}>>(
+      environment.backendURI+`/user/banks`
+    );
+  }
+
+  updateBank(formData: FormData, id: number): Observable<ApiResponse<{ banks: bank }>>{
+    return this.http.post<ApiResponse<{ banks: bank }>>(
+      environment.backendURI+`/user/bank/update/${id}`,
+      formData
+    );
+  }
 
 }
