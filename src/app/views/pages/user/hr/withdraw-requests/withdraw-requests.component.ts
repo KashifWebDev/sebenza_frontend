@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {User, withdraw} from "../../../../../core/interfaces/interfaces";
+import {withdraw} from "../../../../../core/interfaces/interfaces";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";

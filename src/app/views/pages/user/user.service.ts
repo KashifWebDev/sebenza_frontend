@@ -9,7 +9,18 @@ import {
   ticketReplies,
   User,
   Task,
-  taskNote, Calender, expenseType, expense, accountType, order, invoice, userProfile, payFrequency, salary, withdraw
+  taskNote,
+  Calender,
+  expenseType,
+  expense,
+  accountType,
+  order,
+  invoice,
+  userProfile,
+  payFrequency,
+  salary,
+  withdraw,
+  vat
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 import {date} from "ngx-custom-validators/src/app/date/validator";
@@ -342,4 +353,26 @@ export class UserService {
       formData
     );
   }
+
+  getVatList(): Observable<ApiResponse<{ vattaxs: vat }>>{
+    return this.http.get<ApiResponse<{vattaxs: vat }>>(
+      environment.backendURI+'/user/vattaxs'
+    );
+  }
+
+  updateVat(formData: FormData): Observable<ApiResponse<{ vattaxs: vat }>>{
+    return this.http.post<ApiResponse<{ vattaxs: vat }>>(
+      environment.backendURI+`/user/vattax/update`,
+      formData
+    );
+  }
+
+  addVat(formData: FormData): Observable<ApiResponse<{ vattaxs: vat }>>{
+    return this.http.post<ApiResponse<{ vattaxs: vat }>>(
+      environment.backendURI+`/user/vattaxs`,
+      formData
+    );
+  }
+
+
 }

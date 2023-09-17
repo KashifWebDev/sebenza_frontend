@@ -11,6 +11,7 @@ import { ViewSingleSalaryComponent } from './view-single-salary/view-single-sala
 import {NgSelectModule} from "@ng-select/ng-select";
 import { WithdrawRequestsComponent } from './withdraw-requests/withdraw-requests.component';
 import { WithdrawRequestSingleComponent } from './withdraw-request-single/withdraw-request-single.component';
+import { VatComponent } from './vat/vat.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'pay-frequency'},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'salaries/new', component: AddSalaryComponent},
   {path: 'salary/:id', component: ViewSingleSalaryComponent},
   {path: 'withdraw-requests', component: WithdrawRequestsComponent},
-  {path: 'withdraw-requests/:id', component: WithdrawRequestSingleComponent}
+  {path: 'withdraw-requests/:id', component: WithdrawRequestSingleComponent},
+  {path: 'vat', component: VatComponent}
 ]
 
 @NgModule({
@@ -29,7 +31,8 @@ const routes: Routes = [
     AddSalaryComponent,
     ViewSingleSalaryComponent,
     WithdrawRequestsComponent,
-    WithdrawRequestSingleComponent
+    WithdrawRequestSingleComponent,
+    VatComponent
   ],
   imports: [
     RouterModule.forChild(routes),

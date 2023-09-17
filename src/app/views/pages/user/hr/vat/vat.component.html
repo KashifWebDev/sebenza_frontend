@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">VAT Tax Info</h4>
+  </div>
+</div>
+
+<app-css-loader *ngIf="!vatTax && loading"></app-css-loader>
+<ng-container *ngIf="!vatTax && !loading">
+  <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+    <h3 class="mb-3 mb-md-0 text-muted">
+      <i class="feather icon-tag me-1"></i>
+      No tax info found!
+    </h3>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="!loading && vatTax">
+  <div class="row">
+    <div class="col-sm-12 col-md-4 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <div class="w-100 d-flex justify-content-between">
+            <span>No tax info</span>
+            <span class="badge bg-success">Active</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title d-flex justify-content-between">
+            <div>
+              <p class="card-text mb-3">
+                <b>VAT:</b> <span class="text-muted ms-2">{{vatTax.vat | currency}}</span>
+              </p>
+              <p class="card-text mb-3">
+                <b>Tax:</b> <span class="text-muted ms-2">{{vatTax.tax | currency}}</span>
+              </p>
+            </div>
+            <span class="fs- text-muted">{{modifyDate(vatTax.updated_at)}}</span>
+          </h5>
+          <button class="btn btn-outline-primary btn-icon-text" (click)="editDetails()">
+            <i class="feather icon-edit btn-icon-prepend"></i>
+            Edit
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit VAT/Tax Info</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close" [disabled]="deleteLoading"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editForm" (ngSubmit)="confirmModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">VAT</label>
+        <input type="number" class="form-control" id="exampleInputUsername1"
+               autocomplete="off" placeholder="VAT" formControlName="vat"
+               [ngClass]="{'is-invalid': formProcessed && form.vat.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.vat.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername2" class="form-label">Tax</label>
+        <input type="number" class="form-control" id="exampleInputUsername2"
+               autocomplete="off" placeholder="VAT" formControlName="tax"
+               [ngClass]="{'is-invalid': formProcessed && form.tax.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.tax.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="btnLoading"
+        [btnText]="'Edit VAT'"
+        [loadingText]="'Processing'"
+        [btnIcon]="'edit'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
