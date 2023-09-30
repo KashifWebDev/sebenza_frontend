@@ -16,7 +16,7 @@ export class RoleGuard implements CanActivate {
     const roles = route.data.roles as UserRole[];
     const currentUserRole = this.authService.getUserRole();
 
-    if (roles.includes(currentUserRole)) {
+    if (currentUserRole && roles.includes(currentUserRole)) {
       return true;
     }
     console.error("Role Guard Error! Allowed: ",roles," Provided: ",currentUserRole);

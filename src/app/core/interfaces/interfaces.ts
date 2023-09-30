@@ -379,4 +379,24 @@ export interface bank{
   updated_at: string
 }
 
+export interface termsCondition{
+  id: number
+  user_id: number,
+  category_id: number,
+  termscondition: string,
+  membership_code: string,
+  status: string,
+  updated_at: string,
+  created_at: string,
+}
+
+export interface termsConditionCategory{
+  user_id: number,
+  category_name: string,
+  membership_code: string,
+  status: string,
+  updated_at: string,
+  created_at: string,
+  id: number
+}
 

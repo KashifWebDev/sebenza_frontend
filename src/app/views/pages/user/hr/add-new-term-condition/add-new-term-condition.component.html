@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="mx-auto col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Add new Term & Condition</h6>
+        <app-css-loader *ngIf="loading"></app-css-loader>
+        <form class="forms-sample" [formGroup]="addTermForm" (ngSubmit)="submitForm()" *ngIf="!loading">
+          <div class="mb-3">
+            <label for="exampleInputUsername1" class="form-label">Title</label>
+            <input type="text" class="form-control" id="exampleInputUsername1"
+                   autocomplete="off" placeholder="Title" formControlName="termscondition"
+                   [ngClass]="{'is-invalid': formProcessed && form.termscondition.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.termscondition.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="type" class="form-label">Category</label>
+            <select class="form-select" id="type" formControlName="category_id"
+                    [ngClass]="{'is-invalid': formProcessed && form.category_id.errors}">
+              <option class="form-select" *ngFor="let type of termsCategories" [value]="type.id" [selected]="">{{type.category_name}}</option>
+            </select>
+            <div *ngIf="formProcessed && form.category_id.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <app-loading-button
+            [isLoading]="loadingBtn"
+            [btnText]="'Add Term'"
+            [loadingText]="'Adding...'"
+            [btnIcon]="'check-square'">
+          </app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

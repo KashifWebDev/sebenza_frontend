@@ -1,5 +1,13 @@
 import {Injectable} from '@angular/core';
-import {accountType, adminUser, ApiResponse, Package, User, userProfile} from "../../../core/interfaces/interfaces";
+import {
+  accountType,
+  adminUser,
+  ApiResponse,
+  Package,
+  role,
+  User,
+  userProfile
+} from "../../../core/interfaces/interfaces";
 import {Observable, Subject} from "rxjs";
 import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
@@ -118,8 +126,13 @@ export class AuthService {
     return this.http.get<any>(environment.backendURI+'/getpackages');
   }
 
-  getUserRole(){
-    return this.userType;
+  getUserRole(): UserRole | null{
+    const userData = this.getLoggedInUser();
+    if(userData){
+      const userRole: role = userData.roles[userData.roles.length - 1];
+      return userRole.name;
+    }
+    return  null;
   }
 
   redirectToDashboard(){

@@ -5,6 +5,7 @@ import {AuthService} from "../../auth/auth.service";
 import {UserService} from "../user.service";
 import {AppService} from "../../../../app.service";
 import {Router} from "@angular/router";
+import {UserRole} from "../../../../core/roles/UserRole";
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit {
 
   userProfile: userProfile;
   profileForm: FormGroup;
-  userRole: string = '';
+  userRole: UserRole | null;
   loggedInUser: User | null;
 
   fileToUpload: File;

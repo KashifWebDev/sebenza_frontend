@@ -5,6 +5,7 @@ import MetisMenu from 'metismenujs';
 
 import {AdminMenu} from './menus/AdminMenu';
 import {UserMenu} from './menus/UserMenu';
+import {HrMenu} from './menus/HrMenu';
 import {MenuItem} from './menus/menu.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
@@ -48,9 +49,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       case UserRole.superAdmin:
         this.menuItems = AdminMenu;
         break;
+      case UserRole.HR:
+        this.menuItems = HrMenu;
+        break;
       case UserRole.User:
       case UserRole.superUser:
-      case UserRole.HR:
       default:
         this.menuItems = UserMenu;
     }

@@ -20,10 +20,9 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat, bank
+  vat, bank, termsConditionCategory, termsCondition
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
-import {date} from "ngx-custom-validators/src/app/date/validator";
 
 @Injectable({
   providedIn: 'root'
@@ -383,6 +382,44 @@ export class UserService {
   updateBank(formData: FormData, id: number): Observable<ApiResponse<{ banks: bank }>>{
     return this.http.post<ApiResponse<{ banks: bank }>>(
       environment.backendURI+`/user/bank/update/${id}`,
+      formData
+    );
+  }
+
+  getTermsConditionsCategories(): Observable<ApiResponse<{termscategorys: termsConditionCategory[]}>>{
+    return this.http.get<any>(environment.backendURI+'/user/termscategories');
+  }
+
+  deleteTermsConditionsCategories(id: number): Observable<ApiResponse<{ termscategorys: termsConditionCategory }>>{
+    return this.http.delete<ApiResponse<{termscategorys: termsConditionCategory}>>(
+      environment.backendURI+`/user/termscategories/${id}`
+    );
+  }
+
+  addNewTermCategory(formData: FormData): Observable<ApiResponse<{ termscategorys: termsConditionCategory }>>{
+    return this.http.post<ApiResponse<{termscategorys: termsConditionCategory}>>(
+      environment.backendURI+'/user/termscategories',
+      formData
+    );
+  }
+
+  getTermsConditions(): Observable<ApiResponse<{termsconditions: termsCondition[]}>>{
+    return this.http.get<any>(environment.backendURI+'/user/termsconditions');
+  }
+
+  getActiveTermsConditionsTypes(): Observable<ApiResponse<{termscategorys: termsConditionCategory[]}>>{
+    return this.http.get<any>(environment.backendURI+'/user/termscondition/getdata');
+  }
+
+  deleteTermsConditions(id: number): Observable<ApiResponse<{ termsconditions: termsCondition }>>{
+    return this.http.delete<ApiResponse<{termsconditions: termsCondition}>>(
+      environment.backendURI+`/user/termsconditions/${id}`
+    );
+  }
+
+  addNewTerm(formData: FormData): Observable<ApiResponse<{ termsconditions: termsCondition }>>{
+    return this.http.post<ApiResponse<{termsconditions: termsCondition}>>(
+      environment.backendURI+'/user/termsconditions',
       formData
     );
   }
