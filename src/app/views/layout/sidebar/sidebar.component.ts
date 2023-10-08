@@ -45,19 +45,21 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    switch (this.authService.getUserRole()) {
+    let userRole: UserRole | null = this.authService.getUserRole();
+    switch (userRole) {
       case UserRole.superAdmin:
         this.menuItems = AdminMenu;
         break;
       case UserRole.HR:
-        this.menuItems = HrMenu;
+        this.menuItems = [...UserMenu, ...HrMenu];
         break;
       case UserRole.User:
       case UserRole.superUser:
       default:
         this.menuItems = UserMenu;
     }
-    // this.menuItems = MENU;
+    console.log(this.menuItems);
+
 
     /**
      * Sidebar-folded on desktop (min-width:992px and max-width: 1199px)
