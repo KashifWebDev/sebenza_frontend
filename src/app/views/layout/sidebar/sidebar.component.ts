@@ -58,7 +58,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       default:
         this.menuItems = UserMenu;
     }
-    console.log(this.menuItems);
 
 
     /**

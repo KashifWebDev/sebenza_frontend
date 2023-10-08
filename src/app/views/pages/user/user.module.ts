@@ -23,12 +23,13 @@ const routes: Routes = [
   {path: 'salary',loadChildren: () => import('./salary-withdraw/salary-withdraw.module').then(m => m.SalaryWithdrawModule)},
   {path: 'hr',loadChildren: () => import('./hr/hr.module').then(m => m.HrModule)},
   {path: 'banks',loadChildren: () => import('./banks/banks.module').then(m => m.BanksModule)},
+  {path: 'quotes',loadChildren: () => import('./estimate-quotes/estimate-quotes.module').then(m => m.EstimateQuotesModule)},
 ]
 
 @NgModule({
   declarations: [
     UserDashboardComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     CommonModule,

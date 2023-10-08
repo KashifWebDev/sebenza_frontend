@@ -135,6 +135,38 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'Estimates & Quotes',
+    isTitle: true
+  },
+  {
+    label: 'Terms & Conditions',
+    icon: 'check',
+    subItems: [
+      {
+        label: 'Add New Term',
+        link: 'quotes/add-new-term'
+      },
+      {
+        label: 'All Terms',
+        link: 'quotes/term-conditions'
+      },
+      {
+        label: 'Set Categories',
+        link: 'quotes/terms-categories'
+      },
+    ]
+  },
+  {
+    label: 'Estimate Settings',
+    icon: 'settings',
+    link: 'quotes/estimate-settings'
+  },
+  {
+    label: 'Add new Quote',
+    icon: 'plus-square',
+    link: 'quotes/new-estimate'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },

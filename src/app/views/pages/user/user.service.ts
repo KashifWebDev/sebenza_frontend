@@ -424,4 +424,24 @@ export class UserService {
     );
   }
 
+  addNewQuote(formData: FormData): Observable<ApiResponse<{ estimatequotes: any }>>{
+    return this.http.post<ApiResponse<{estimatequotes: any}>>(
+      environment.backendURI+'/user/estimatequotes',
+      formData
+    );
+  }
+
+  editQuote(formData: FormData, id: number): Observable<ApiResponse<{ estimatequotes: any }>>{
+    return this.http.post<ApiResponse<{estimatequotes: any}>>(
+      environment.backendURI+`/user/estimatequotes/${id}/edit`,
+      formData
+    );
+  }
+
+  getQuoteDetails(id: number): Observable<ApiResponse<{ estimatequotes: any }>>{
+    return this.http.get<ApiResponse<{estimatequotes: any}>>(
+      environment.backendURI+`/user/estimatequotes/${id}/edit`
+    );
+  }
+
 }

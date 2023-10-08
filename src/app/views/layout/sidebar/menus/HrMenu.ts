@@ -33,23 +33,5 @@ export const HrMenu: MenuItem[] = [
     label: 'Value Added Tax (VAT)',
     icon: 'trending-up',
     link: 'hr/vat'
-  },
-  {
-    label: 'Terms & Conditions',
-    icon: 'check',
-    subItems: [
-      {
-        label: 'Add New Term',
-        link: 'hr/add-new-term'
-      },
-      {
-        label: 'All Terms',
-        link: 'hr/term-conditions'
-      },
-      {
-        label: 'Set Categories',
-        link: 'hr/terms-categories'
-      },
-    ]
   }
 ];
