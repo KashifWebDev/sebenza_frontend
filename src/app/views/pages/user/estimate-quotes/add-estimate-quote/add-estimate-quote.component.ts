@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {role, termsCondition, User} from "../../../../../core/interfaces/interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AdministratorService} from "../../../administrator/administrator.service";
@@ -21,6 +21,29 @@ export class AddEstimateQuoteComponent implements OnInit {
   formData: FormData = new FormData();
   loading: boolean = false;
   termsConditions: termsCondition[];
+  quillConfig = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+        //  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        //  [{ 'direction': 'rtl' }],                         // text direction
+
+        //  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'align': [] }],
+
+        //  ['clean'],                                         // remove formatting button
+
+        //  ['link'],
+        ['link', 'image', 'video']
+      ],
+    },
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,15 +96,15 @@ export class AddEstimateQuoteComponent implements OnInit {
       customer_name: ['', Validators.required],
       customer_phone: ['', Validators.required],
       customer_email: ['', Validators.required],
-      customer_country: ['', [Validators.required, Validators.email]],
+      customer_country: ['', [Validators.required]],
       shipping_city: ['', Validators.required],
       shipping_zone: ['', Validators.required],
       shipping_address: ['', Validators.required],
       title: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['<p>Quote Details...</p>', Validators.required],
       notes: ['', Validators.required],
       paymentDate: ['', Validators.required],
-      customer_e_signature: ['', Validators.required],
+      customer_e_signature: [''],
       subTotal: ['', Validators.required],
       discountCharge: ['', Validators.required],
       vat: ['', Validators.required],
@@ -90,9 +113,27 @@ export class AddEstimateQuoteComponent implements OnInit {
       payment_method: ['', Validators.required],
       amount: ['', Validators.required],
       trx_id: ['', Validators.required],
-      items: ['', Validators.required],
+      items: this.formBuilder.array([]),
       termsconditions: ['', Validators.required],
     });
+    this.addItemToFormArray();
+  }
+
+  addItemToFormArray() {
+    const itemFormGroup = this.formBuilder.group({
+      itemName: [''],
+      quantity: [''],
+      itemPrice: [''],
+      color: ['#727cf5'],
+      size: [null],
+      weight: [null],
+    });
+
+    (this.quoteForm.get('items') as FormArray).push(itemFormGroup);
+  }
+
+  get formControls(){
+    return this.quoteForm.controls['items'] as FormArray;
   }
 
   populateForm(form: any) {
@@ -126,6 +167,8 @@ export class AddEstimateQuoteComponent implements OnInit {
     this.formProcessed = true;
     this.formSubmit = true;
     if (this.quoteForm.invalid) {
+      console.log('Not Valid Form');
+      console.log(this.quoteForm.value);
       this.formSubmit = false;
       return;
     }

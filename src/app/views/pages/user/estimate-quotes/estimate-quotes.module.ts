@@ -10,6 +10,9 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { EstimateSettingsComponent } from './estimate-settings/estimate-settings.component';
 import { AddEstimateQuoteComponent } from './add-estimate-quote/add-estimate-quote.component';
 import {NgSelectModule} from "@ng-select/ng-select";
+import {ColorPickerModule} from "ngx-color-picker";
+import {QuillModule} from "ngx-quill";
+import {NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {path: 'add-new-term', component: AddNewTermConditionComponent},
@@ -26,14 +29,17 @@ const routes: Routes = [
     AddNewTermConditionComponent,
     EstimateSettingsComponent,
     AddEstimateQuoteComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    SharedModule,
-    ReactiveFormsModule,
-    NgxDatatableModule,
-    FormsModule,
-    NgSelectModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        SharedModule,
+        ReactiveFormsModule,
+        NgxDatatableModule,
+        FormsModule,
+        NgSelectModule,
+        ColorPickerModule,
+        QuillModule,
+        NgbDatepickerModule
+    ]
 })
 export class EstimateQuotesModule { }
