@@ -433,8 +433,14 @@ export class UserService {
 
   editQuote(formData: FormData, id: number): Observable<ApiResponse<{ estimatequotes: any }>>{
     return this.http.post<ApiResponse<{estimatequotes: any}>>(
-      environment.backendURI+`/user/estimatequotes/${id}/edit`,
+      environment.backendURI+`/user/estimatequote/update/${id}`,
       formData
+    );
+  }
+
+  getQuotes(): Observable<ApiResponse<{ estimatequotes: any }>>{
+    return this.http.get<ApiResponse<{estimatequotes: any}>>(
+      environment.backendURI+`/user/estimatequotes`
     );
   }
 

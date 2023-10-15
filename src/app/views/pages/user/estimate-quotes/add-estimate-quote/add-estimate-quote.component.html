@@ -157,7 +157,11 @@
                           <label for="exampleInputUsername4" class="form-label">Customer's E-Signature <span class="fst-italic text-muted">*(Optional)</span></label>
                           <input type="file" class="form-control" id="exampleInputUsername4"
                                  autocomplete="off" placeholder="Name" formControlName="customer_e_signature" (change)="handleFileInput($event)">
+<<<<<<< HEAD
                           <img *ngIf="isEditMode"  alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+=======
+                          <img *ngIf="isEditMode" [src]="quoteForm.controls['customer_e_signature'].value" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+>>>>>>> user/estimateSetting
                         </div>
                       </div>
                     </div>
@@ -361,7 +365,8 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+
+        <div class="row mb-3" *ngIf="!isEditMode">
           <div class="col-md-12">
             <div class="card">
 
@@ -394,7 +399,7 @@
         <div class="text-center">
           <app-loading-button
             [btnIcon]="isEditMode ? 'edit-3' : 'trending-up'"
-            [btnText]="isEditMode ? 'Edt Quote' : 'Create New Quote'"
+            [btnText]="isEditMode ? 'Update Quote' : 'Create New Quote'"
             [loadingText]="isEditMode ? 'Updating Quote...' : 'Creating Quote...'"
             [isLoading]="formSubmit"></app-loading-button>
           <a routerLink="../" class="btn btn-secondary">Cancel</a>
