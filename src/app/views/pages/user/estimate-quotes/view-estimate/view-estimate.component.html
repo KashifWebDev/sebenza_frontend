@@ -1,0 +1,103 @@
+<nav class="page-breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">User Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Quote Details</li>
+  </ol>
+</nav>
+
+<app-css-loader *ngIf="loading"></app-css-loader>
+<div *ngIf="!loading" class="row" #invoiceBody>
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="container-fluid d-flex justify-content-between">
+          <div class="col-lg-3 ps-0">
+            <a routerLink="." class="nobleui-logo d-block mt-3 logo-light">
+              <img src="assets/images/logo.png" height="50px">
+            </a>
+            <p>{{invoice.users.first_name+' '+invoice.users.last_name}},<br> {{invoice.users.address}},<br> {{invoice.users.city+", "+invoice.users.country}}.</p>
+            <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
+            <p class="mt-1 mb-1"><b>{{user.company_name}}</b></p>
+            <p>{{user.first_name+' '+user.last_name}},<br> {{user.address}},<br> {{user.city+", "+user.country}}.</p>
+          </div>
+          <div class="col-lg-3 pe-0">
+            <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">Quote #</h4>
+            <h6 class="text-end mb-5 pb-4">{{invoice.id}}</h6>
+            <p class="text-end mb-1">Balance Due</p>
+            <h4 class="text-end fw-normal">{{invoice.total | currency}}</h4>
+            <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Payment Date :</span> {{invoice.paymentDate | date}}</h6>
+          </div>
+        </div>
+        <div class="container-fluid mt-5 d-flex justify-content-center w-100">
+          <div class="table-responsive w-100">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th class="text-end">Name</th>
+                <th class="text-end">Color</th>
+                <th class="text-end">Size</th>
+                <th class="text-end">Weight</th>
+                <th class="text-end">Quantity</th>
+                <th class="text-end">Unit Price</th>
+                <th class="text-end">Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr class="text-end" *ngFor="let item of invoice.items">
+                <td>{{item.id}}</td>
+                <td>{{item.itemName}}</td>
+                <td>{{item.color}}</td>
+                <td>{{item.size}}</td>
+                <td>{{item.weight}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.itemPrice | currency}}</td>
+                <td>{{item.totalPrice | currency}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="container-fluid mt-5 w-100">
+          <div class="row">
+            <div class="col-md-6 ms-auto">
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                  <tr>
+                    <td>Sub Total</td>
+                    <td class="text-end">{{invoice.subTotal | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>Total</td>
+                    <td class="text-end">{{calculateTotal(invoice.amount_total, invoice.discount) | currency}}</td>
+                  </tr>
+                  <tr *ngFor="let payment of invoice.payments">
+                    <td>Payment Made via {{payment.payment_methood}} <i>({{payment.date | date}})</i></td>
+                    <td class="text-danger text-end">(-) {{payment.amount | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>Discount</td>
+                    <td class="text-danger text-end">(-) {{invoice.discountCharge | currency}}</td>
+                  </tr>
+                  <tr>
+                    <td>VAT</td>
+                    <td class="text-danger text-end">(-) {{invoice.vat | currency}}</td>
+                  </tr>
+                  <tr class="bg-dark">
+                    <td class="text-bold-800">Balance Due</td>
+                    <td class="text-bold-800 text-end">{{invoice.total | currency}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+

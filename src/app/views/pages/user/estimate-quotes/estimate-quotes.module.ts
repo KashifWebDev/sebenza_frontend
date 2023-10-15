@@ -10,6 +10,11 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { EstimateSettingsComponent } from './estimate-settings/estimate-settings.component';
 import { AddEstimateQuoteComponent } from './add-estimate-quote/add-estimate-quote.component';
 import {NgSelectModule} from "@ng-select/ng-select";
+import {NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
+import {ColorPickerModule} from "ngx-color-picker";
+import {QuillModule} from "ngx-quill";
+import { ViewEstimateComponent } from './view-estimate/view-estimate.component';
+import {FeatherIconModule} from "../../../../core/feather-icon/feather-icon.module";
 
 const routes: Routes = [
   {path: 'add-new-term', component: AddNewTermConditionComponent},
@@ -17,6 +22,7 @@ const routes: Routes = [
   {path: 'term-conditions', component: TermsConditionsListingComponent},
   {path: 'estimate-settings', component: EstimateSettingsComponent},
   {path: 'new-estimate', component: AddEstimateQuoteComponent},
+  {path: 'view/:id', component: ViewEstimateComponent},
 ]
 
 @NgModule({
@@ -25,7 +31,8 @@ const routes: Routes = [
     TermsCategoryComponent,
     AddNewTermConditionComponent,
     EstimateSettingsComponent,
-    AddEstimateQuoteComponent],
+    AddEstimateQuoteComponent,
+    ViewEstimateComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -33,7 +40,11 @@ const routes: Routes = [
     ReactiveFormsModule,
     NgxDatatableModule,
     FormsModule,
-    NgSelectModule
+    NgSelectModule,
+    NgbDatepickerModule,
+    ColorPickerModule,
+    QuillModule,
+    FeatherIconModule
   ]
 })
 export class EstimateQuotesModule { }

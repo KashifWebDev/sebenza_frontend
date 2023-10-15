@@ -19,7 +19,7 @@ import {NgbActiveModal, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 @NgModule({
     declarations: [
         AppComponent,
-        ErrorPageComponent,
+        ErrorPageComponent
     ],
     imports: [
         BrowserModule,

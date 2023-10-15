@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {role, termsCondition, User} from "../../../../../core/interfaces/interfaces";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AdministratorService} from "../../../administrator/administrator.service";
@@ -21,6 +21,30 @@ export class AddEstimateQuoteComponent implements OnInit {
   formData: FormData = new FormData();
   loading: boolean = false;
   termsConditions: termsCondition[];
+  quillConfig = {
+    toolbar: {
+      container: [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['code-block'],
+        //  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+        //  [{ 'direction': 'rtl' }],                         // text direction
+
+        //  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'align': [] }],
+
+        //  ['clean'],                                         // remove formatting button
+
+        //  ['link'],
+        ['link', 'image', 'video']
+      ],
+    },
+  }
+  fileToUpload: File;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -73,15 +97,15 @@ export class AddEstimateQuoteComponent implements OnInit {
       customer_name: ['', Validators.required],
       customer_phone: ['', Validators.required],
       customer_email: ['', Validators.required],
-      customer_country: ['', [Validators.required, Validators.email]],
+      customer_country: ['', [Validators.required]],
       shipping_city: ['', Validators.required],
       shipping_zone: ['', Validators.required],
       shipping_address: ['', Validators.required],
       title: ['', Validators.required],
-      description: ['', Validators.required],
+      description: ['<p>Quote Details...</p>', Validators.required],
       notes: ['', Validators.required],
       paymentDate: ['', Validators.required],
-      customer_e_signature: ['', Validators.required],
+      customer_e_signature: [''],
       subTotal: ['', Validators.required],
       discountCharge: ['', Validators.required],
       vat: ['', Validators.required],
@@ -90,9 +114,28 @@ export class AddEstimateQuoteComponent implements OnInit {
       payment_method: ['', Validators.required],
       amount: ['', Validators.required],
       trx_id: ['', Validators.required],
-      items: ['', Validators.required],
+      items: this.formBuilder.array([]),
       termsconditions: ['', Validators.required],
     });
+    this.addItemToFormArray();
+  }
+
+  addItemToFormArray(item?: any) {
+    const itemFormGroup = this.formBuilder.group({
+      itemName: [item ? item.itemName : ''],
+      quantity: [item ? item.quantity : ''],
+      itemPrice: [item ? item.itemPrice : ''],
+      color: [item ? item.color : '#727cf5'],
+      size: [item ? item.size : null],
+      weight: [item ? item.weight : null],
+    });
+
+    (this.quoteForm.get('items') as FormArray).push(itemFormGroup);
+  }
+
+
+  get formControls(){
+    return this.quoteForm.controls['items'] as FormArray;
   }
 
   populateForm(form: any) {
@@ -120,15 +163,36 @@ export class AddEstimateQuoteComponent implements OnInit {
       items: form.items,
       termsconditions: form.termsconditions,
     });
+
+
+    // Clear existing items in the FormArray
+    while (this.formControls.length !== 0) {
+      this.formControls.removeAt(0);
+    }
+
+    // Add items from the data to the FormArray
+    for (const item of form.items) {
+      this.addItemToFormArray(item);
+    }
   }
 
   onSubmit() {
     this.formProcessed = true;
     this.formSubmit = true;
     if (this.quoteForm.invalid) {
+      console.log('Not Valid Form');
       this.formSubmit = false;
       return;
     }
+
+    let transformedData = this.quoteForm.controls['termsconditions'].value.map((item: any, index: any) => ({
+      terms_id: item.id
+    }));
+    let termsCondition = JSON.stringify(transformedData);
+    transformedData = this.quoteForm.controls['items'].value;
+    let items = JSON.stringify(transformedData);
+    let dt = this.quoteForm.controls['paymentDate'].value;
+    let paymentDate = dt.year+'-'+dt.month+'-'+dt.day;
 
     this.formData.append('customer_name', this.quoteForm.controls['customer_name'].value);
     this.formData.append('customer_phone', this.quoteForm.controls['customer_phone'].value);
@@ -140,7 +204,7 @@ export class AddEstimateQuoteComponent implements OnInit {
     this.formData.append('title', this.quoteForm.controls['title'].value);
     this.formData.append('description', this.quoteForm.controls['description'].value);
     this.formData.append('notes', this.quoteForm.controls['notes'].value);
-    this.formData.append('paymentDate', this.quoteForm.controls['paymentDate'].value);
+    this.formData.append('paymentDate', paymentDate);
     this.formData.append('customer_e_signature', this.quoteForm.controls['customer_e_signature'].value);
     this.formData.append('subTotal', this.quoteForm.controls['subTotal'].value);
     this.formData.append('discountCharge', this.quoteForm.controls['discountCharge'].value);
@@ -150,15 +214,16 @@ export class AddEstimateQuoteComponent implements OnInit {
     this.formData.append('payment_method', this.quoteForm.controls['payment_method'].value);
     this.formData.append('amount', this.quoteForm.controls['amount'].value);
     this.formData.append('trx_id', this.quoteForm.controls['trx_id'].value);
-    this.formData.append('items', this.quoteForm.controls['items'].value);
-    this.formData.append('termsconditions', this.quoteForm.controls['termsconditions'].value);
+    this.formData.append('items', items);
+    this.formData.append('termsconditions', termsCondition);
+    if(this.fileToUpload) this.formData.append('customer_e_signature', this.fileToUpload);
 
     if (this.isEditMode) {
       this.userService.editQuote(this.formData, this.quoteID).subscribe(
         (data) => {
           if(data.status){
             this.appService.swalFire('Quote was updated successfully', 'success');
-            this.router.navigate(['/user/quotes/new-estimate']);
+            this.router.navigate(['/user/quotes/estimate-settings']);
             this.formSubmit = false;
             this.quoteForm.reset();
           }else{
@@ -179,7 +244,7 @@ export class AddEstimateQuoteComponent implements OnInit {
             this.formProcessed = false;
             this.formSubmit = false;
             this.quoteForm.reset();
-            this.router.navigate(['/user/quotes/new-estimate']);
+            this.router.navigate(['/user/quotes/estimate-settings']);
           }else{
             this.appService.swalFire(data.message, 'error');
           }
@@ -195,7 +260,11 @@ export class AddEstimateQuoteComponent implements OnInit {
     // Clear the form after successful submission
   }
 
-  handleFileInput(event: any){
 
+  handleFileInput(event: Event) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      this.fileToUpload = fileInput.files[0];
+    }
   }
 }
