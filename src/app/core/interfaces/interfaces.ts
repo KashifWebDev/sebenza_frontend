@@ -399,4 +399,14 @@ export interface termsConditionCategory{
   created_at: string,
   id: number
 }
-
+export  interface product{
+  id: number,
+  user_id: number,
+  membership_code: string,
+  ProductName: string,
+  ProductImage: string,
+  BrandName: string,
+  status: number,
+  created_at: string,
+  updated_at: string
+}

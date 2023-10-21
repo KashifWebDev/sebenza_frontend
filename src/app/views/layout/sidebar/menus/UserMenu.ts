@@ -157,14 +157,23 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
-    label: 'Estimate Settings',
+    label: 'Add new Quote',
+    icon: 'plus-square',
+    link: 'quotes/new-estimate'
+  },
+  {
+    label: 'My Quotes',
     icon: 'settings',
     link: 'quotes/estimate-settings'
   },
   {
-    label: 'Add new Quote',
-    icon: 'plus-square',
-    link: 'quotes/new-estimate'
+    label: 'Stock & Inventory',
+    isTitle: true
+  },
+  {
+    label: 'Products',
+    icon: 'package',
+    link: 'stock/products'
   },
   {
     label: 'Help & Support',

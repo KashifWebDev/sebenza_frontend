@@ -20,7 +20,7 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat, bank, termsConditionCategory, termsCondition
+  vat, bank, termsConditionCategory, termsCondition, product
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -447,6 +447,26 @@ export class UserService {
   getQuoteDetails(id: number): Observable<ApiResponse<{ estimatequotes: any }>>{
     return this.http.get<ApiResponse<{estimatequotes: any}>>(
       environment.backendURI+`/user/estimatequotes/${id}/edit`
+    );
+  }
+
+  getProducts(): Observable<ApiResponse<{ products: product[] }>>{
+    return this.http.get<ApiResponse<{products: product[]}>>(
+      environment.backendURI+`/user/products`
+    );
+  }
+
+  updateProducts(id: number, formData: FormData): Observable<ApiResponse<{ products: product[] }>>{
+    return this.http.post<ApiResponse<{products: product[]}>>(
+      environment.backendURI+`/user/product/update/${id}`,
+      formData
+    );
+  }
+
+  addProduct(formData: FormData): Observable<ApiResponse<{ products: product }>>{
+    return this.http.post<ApiResponse<{products: product}>>(
+      environment.backendURI+`/user/products`,
+      formData
     );
   }
 
