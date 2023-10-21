@@ -20,7 +20,7 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat, bank, termsConditionCategory, termsCondition, product
+  vat, bank, termsConditionCategory, termsCondition, product, asset
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -467,6 +467,25 @@ export class UserService {
     return this.http.post<ApiResponse<{products: product}>>(
       environment.backendURI+`/user/products`,
       formData
+    );
+  }
+
+  updateAsset(id: number, formData: FormData): Observable<ApiResponse<{ assets: asset[] }>>{
+    return this.http.post<ApiResponse<{assets: asset[]}>>(
+      environment.backendURI+`/user/asset/update/${id}`,
+      formData
+    );
+  }
+
+  addAsset(formData: FormData): Observable<ApiResponse<{ assets: asset }>>{
+    return this.http.post<ApiResponse<{assets: asset}>>(
+      environment.backendURI+`/user/assets`,
+      formData
+    );
+  }
+  getAssets(): Observable<ApiResponse<{ assets: asset[] }>>{
+    return this.http.get<ApiResponse<{assets: asset[]}>>(
+      environment.backendURI+`/user/assets`
     );
   }
 

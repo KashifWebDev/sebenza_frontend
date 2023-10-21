@@ -176,6 +176,11 @@ export const UserMenu: MenuItem[] = [
     link: 'stock/products'
   },
   {
+    label: 'Assets',
+    icon: 'database',
+    link: 'stock/assets'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },

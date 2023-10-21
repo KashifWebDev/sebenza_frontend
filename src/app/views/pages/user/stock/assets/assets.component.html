@@ -1,0 +1,216 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">My Assets</h4>
+  </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="saveModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add new Assets
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="!assets.length && loading"></app-css-loader>
+        <ng-container *ngIf="!assets.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No assets found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="assets && assets.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Asset Name" prop="asset_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Quantity" prop="quantity"></ngx-datatable-column>
+            <ngx-datatable-column name="Purchase Date" prop="purchese_date"></ngx-datatable-column>
+            <ngx-datatable-column name="Purchase Date" prop="purchese_date"></ngx-datatable-column>
+            <ngx-datatable-column name="Currency" prop="currency">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <img [src]="row.attachment" [alt]="row.asset_name">
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <button type="button"  (click)="openDelModal(row)" class="btn btn-icon">
+                  <i class="feather icon-edit text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editAssetForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="asset_name" class="form-label">Asset Name</label>
+        <input type="text" class="form-control" id="asset_name"
+               autocomplete="off" placeholder="asset_name" formControlName="asset_name"
+               [ngClass]="{'is-invalid': formProcessed && form.asset_name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.asset_name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="asset_description" class="form-label">Asset Description</label>
+        <input type="text" class="form-control" id="asset_description"
+               autocomplete="off" placeholder="Description" formControlName="asset_description"
+               [ngClass]="{'is-invalid': formProcessed && form.asset_description.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.asset_description.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity"
+               autocomplete="off" placeholder="Description" formControlName="quantity"
+               [ngClass]="{'is-invalid': formProcessed && form.quantity.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.quantity.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="purchese_date" class="form-label">Purchase Date</label>
+        <input type="date" class="form-control" id="purchese_date"
+               autocomplete="off" placeholder="Description" formControlName="purchese_date"
+               [ngClass]="{'is-invalid': formProcessed && form.purchese_date.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.purchese_date.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="purchese_value" class="form-label">Purchase Value</label>
+        <input type="text" class="form-control" id="purchese_value"
+               autocomplete="off" placeholder="Description" formControlName="purchese_value"
+               [ngClass]="{'is-invalid': formProcessed && form.purchese_value.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.purchese_value.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="currency" class="form-label">Currency</label>
+        <input type="text" class="form-control" id="currency"
+               autocomplete="off" placeholder="Description" formControlName="currency"
+               [ngClass]="{'is-invalid': formProcessed && form.currency.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.currency.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="attachment" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
+        <input type="file" class="form-control" id="attachment"
+               autocomplete="off" placeholder="Name" formControlName="attachment" (change)="handleFileInput($event)">
+        <img *ngIf="editAsset && editAsset.attachment" [src]="editAsset.attachment" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Asset...' : 'Save Asset'"
+        [loadingText]="'Saving Asset...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #saveModalHtml let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel1">Add Product</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editAssetForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="asset_name1" class="form-label">Asset Name</label>
+        <input type="text" class="form-control" id="asset_name1"
+               autocomplete="off" placeholder="asset_name" formControlName="asset_name"
+               [ngClass]="{'is-invalid': formProcessed && form.asset_name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.asset_name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="asset_description1" class="form-label">Asset Description</label>
+        <input type="text" class="form-control" id="asset_description1"
+               autocomplete="off" placeholder="Description" formControlName="asset_description"
+               [ngClass]="{'is-invalid': formProcessed && form.asset_description.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.asset_description.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="quantity1" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity1"
+               autocomplete="off" placeholder="Description" formControlName="quantity"
+               [ngClass]="{'is-invalid': formProcessed && form.quantity.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.quantity.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="purchese_date1" class="form-label">Purchase Date</label>
+        <input type="date" class="form-control" id="purchese_date1"
+               autocomplete="off" placeholder="Description" formControlName="purchese_date"
+               [ngClass]="{'is-invalid': formProcessed && form.purchese_date.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.purchese_date.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="purchese_value1" class="form-label">Purchase Value</label>
+        <input type="text" class="form-control" id="purchese_value1"
+               autocomplete="off" placeholder="Description" formControlName="purchese_value"
+               [ngClass]="{'is-invalid': formProcessed && form.purchese_value.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.purchese_value.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="currency1" class="form-label">Currency</label>
+        <input type="text" class="form-control" id="currency1"
+               autocomplete="off" placeholder="Description" formControlName="currency"
+               [ngClass]="{'is-invalid': formProcessed && form.currency.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.currency.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="attachment1" class="form-label">Attachment <span class="fst-italic text-muted">*(Optional)</span></label>
+        <input type="file" class="form-control" id="attachment1"
+               autocomplete="off" placeholder="Name" formControlName="attachment" (change)="handleFileInput($event)">
+        <img *ngIf="editAsset && editAsset.attachment" [src]="editAsset.attachment" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Asset...' : 'Save Asset'"
+        [loadingText]="'Saving Asset...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>

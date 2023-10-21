@@ -410,3 +410,19 @@ export  interface product{
   created_at: string,
   updated_at: string
 }
+export  interface asset{
+  id: number,
+  user_id: number,
+  membership_code: string,
+  asset_name: string,
+  asset_description: string,
+  quantity: number,
+  purchese_date: string,
+  purchese_value: number,
+  currency: string,
+  capture_date: string,
+  capture_name: string,
+  attachment: string,
+  created_at: string,
+  updated_at: string
+}
