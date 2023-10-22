@@ -1,0 +1,230 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">Warehouses</h4>
+  </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="saveModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add a Warehouse
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="!warehouses.length && loading"></app-css-loader>
+        <ng-container *ngIf="!warehouses.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No Warehouses found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="warehouses && warehouses.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto">
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Title" prop="title"></ngx-datatable-column>
+            <ngx-datatable-column name="City" prop="city"></ngx-datatable-column>
+            <ngx-datatable-column name="Total Qty" prop="total_qty"></ngx-datatable-column>
+            <ngx-datatable-column name="Available Qty" prop="available_qty"></ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 0,'bg-success': row.status == 1}">
+                  {{ row.status ? 'Active' : 'Disabled' }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <button type="button"  (click)="openDelModal(row)" class="btn btn-icon">
+                  <i class="feather icon-edit text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Warehouse</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editWarehouseForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title"
+               autocomplete="off" placeholder="Warehouse title" formControlName="title"
+               [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" id="country"
+               autocomplete="off" placeholder="Brand" formControlName="country"
+               [ngClass]="{'is-invalid': formProcessed && form.country.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.country.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city"
+               autocomplete="off" placeholder="Brand" formControlName="city"
+               [ngClass]="{'is-invalid': formProcessed && form.city.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.city.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="total_qty" class="form-label">Total Qty</label>
+        <input type="number" class="form-control" id="total_qty"
+               autocomplete="off" placeholder="Brand" formControlName="total_qty"
+               [ngClass]="{'is-invalid': formProcessed && form.total_qty.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.total_qty.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="total_transfer" class="form-label">Total Transfer</label>
+        <input type="number" class="form-control" id="total_transfer"
+               autocomplete="off" placeholder="Brand" formControlName="total_transfer"
+               [ngClass]="{'is-invalid': formProcessed && form.total_transfer.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.total_transfer.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="available_qty" class="form-label">Available Qty</label>
+        <input type="number" class="form-control" id="available_qty"
+               autocomplete="off" placeholder="Brand" formControlName="available_qty"
+               [ngClass]="{'is-invalid': formProcessed && form.available_qty.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.available_qty.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername3" class="form-label">Status</label>
+        <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+          <option value selected>Select Status</option>
+          <option value="1" [selected]="form.status.value == '1'">Active</option>
+          <option value="0" [selected]="form.status.value == '0'">Disable</option>
+        </select>
+        <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Warehouse...' : 'Save Warehouse'"
+        [loadingText]="'Saving Warehouse...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #saveModalHtml let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel1">Add Product</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editWarehouseForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title"
+               autocomplete="off" placeholder="Warehouse title" formControlName="title"
+               [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="country" class="form-label">Country</label>
+        <input type="text" class="form-control" id="country"
+               autocomplete="off" placeholder="Brand" formControlName="country"
+               [ngClass]="{'is-invalid': formProcessed && form.country.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.country.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city"
+               autocomplete="off" placeholder="Brand" formControlName="city"
+               [ngClass]="{'is-invalid': formProcessed && form.city.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.city.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="total_qty" class="form-label">Total Qty</label>
+        <input type="number" class="form-control" id="total_qty"
+               autocomplete="off" placeholder="Brand" formControlName="total_qty"
+               [ngClass]="{'is-invalid': formProcessed && form.total_qty.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.total_qty.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="total_transfer" class="form-label">Total Transfer</label>
+        <input type="number" class="form-control" id="total_transfer"
+               autocomplete="off" placeholder="Brand" formControlName="total_transfer"
+               [ngClass]="{'is-invalid': formProcessed && form.total_transfer.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.total_transfer.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="available_qty" class="form-label">Available Qty</label>
+        <input type="number" class="form-control" id="available_qty"
+               autocomplete="off" placeholder="Brand" formControlName="available_qty"
+               [ngClass]="{'is-invalid': formProcessed && form.available_qty.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.available_qty.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername3" class="form-label">Status</label>
+        <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+          <option value selected>Select Status</option>
+          <option value="1" [selected]="form.status.value == '1'">Active</option>
+          <option value="0" [selected]="form.status.value == '0'">Disable</option>
+        </select>
+        <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Warehouse...' : 'Save Warehouse'"
+        [loadingText]="'Saving Warehouse...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>

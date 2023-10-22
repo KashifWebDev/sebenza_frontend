@@ -426,3 +426,18 @@ export  interface asset{
   created_at: string,
   updated_at: string
 }
+export interface warehouse {
+  id: number,
+  user_id: number,
+  membership_code: string,
+  title: string,
+  country: string,
+  city: string,
+  location: string,
+  total_qty: number,
+  total_transfer: number,
+  available_qty: number,
+  status: number,
+  created_at: string,
+  updated_at: string
+}
