@@ -1,0 +1,298 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">{{isEditMode ? 'Edit' : 'Add'}} Stock</h4>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <app-css-loader *ngIf="isEditMode && loading"></app-css-loader>
+    <div class="col-md-12" *ngIf="!loading">
+
+      <form [formGroup]="stocksForm" (ngSubmit)="onSubmit()">
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title">Customer Details</h5>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="sender_name" class="form-label">Customer Name</label>
+                      <input type="text" class="form-control" id="sender_name" name="sender_name" formControlName="sender_name"
+                             [ngClass]="{'is-invalid': formProcessed && form.sender_name.errors}">
+                      <div *ngIf="formProcessed && form.sender_name.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="exampleInputUsername4" class="form-label">Invoice <span class="fst-italic text-muted">*(Optional)</span></label>
+                      <input type="file" class="form-control" id="exampleInputUsername4"
+                             autocomplete="off" placeholder="Name" formControlName="invoice_image" (change)="handleFileInput($event)">
+                      <a *ngIf="isEditMode" [href]="stocksForm.controls['invoice_image'].value"
+                         class="h-50 img-fluid mt-4 w-50"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title">Sender Details</h5>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="sender_cell_number" class="form-label">Sender Cell #</label>
+                      <input type="text" class="form-control" id="sender_cell_number" name="sender_cell_number" formControlName="sender_cell_number"
+                             [ngClass]="{'is-invalid': formProcessed && form.sender_cell_number.errors}">
+                      <div *ngIf="formProcessed && form.sender_cell_number.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="sender_email" class="form-label">Sender Email</label>
+                      <input type="email" class="form-control" id="sender_email" name="sender_email" formControlName="sender_email"
+                             [ngClass]="{'is-invalid': formProcessed && form.sender_email.errors}">
+                      <div *ngIf="formProcessed && form.sender_email.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="sender_address" class="form-label">Sender Address</label>
+                      <input type="text" class="form-control" id="sender_address" name="sender_address" formControlName="sender_address"
+                             [ngClass]="{'is-invalid': formProcessed && form.sender_address.errors}">
+                      <div *ngIf="formProcessed && form.sender_address.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-body">
+                <h5 class="card-title">Receiver Details</h5>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="receiver_name" class="form-label">Receiver Name</label>
+                      <input type="text" class="form-control" id="receiver_name" name="receiver_name" formControlName="receiver_name"
+                             [ngClass]="{'is-invalid': formProcessed && form.receiver_name.errors}">
+                      <div *ngIf="formProcessed && form.receiver_name.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="receiver_cell_number" class="form-label">Receiver Cell #</label>
+                      <input type="text" class="form-control" id="receiver_cell_number" name="receiver_cell_number" formControlName="receiver_cell_number"
+                             [ngClass]="{'is-invalid': formProcessed && form.receiver_cell_number.errors}">
+                      <div *ngIf="formProcessed && form.receiver_cell_number.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="receiver_email" class="form-label">Receiver Email</label>
+                      <input type="text" class="form-control" id="receiver_email" name="receiver_email" formControlName="receiver_email"
+                             [ngClass]="{'is-invalid': formProcessed && form.receiver_email.errors}">
+                      <div *ngIf="formProcessed && form.receiver_email.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="receiver_address" class="form-label">Receiver Address</label>
+                      <input type="text" class="form-control" id="receiver_address" name="receiver_address" formControlName="receiver_address"
+                             [ngClass]="{'is-invalid': formProcessed && form.receiver_address.errors}">
+                      <div *ngIf="formProcessed && form.receiver_address.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="reference" class="form-label">Reference</label>
+                      <input type="text" class="form-control" id="reference" name="reference" formControlName="reference"
+                             [ngClass]="{'is-invalid': formProcessed && form.reference.errors}">
+                      <div *ngIf="formProcessed && form.reference.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="code" class="form-label">Code</label>
+                      <input type="text" class="form-control" id="code" name="code" formControlName="code"
+                             [ngClass]="{'is-invalid': formProcessed && form.code.errors}">
+                      <div *ngIf="formProcessed && form.code.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="mb-3">
+                      <label for="item_value" class="form-label">Item Value</label>
+                      <input type="text" class="form-control" id="item_value" name="item_value" formControlName="item_value"
+                             [ngClass]="{'is-invalid': formProcessed && form.code.errors}">
+                      <div *ngIf="formProcessed && form.item_value.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Payment Details</h5>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="discount" class="form-label">Discount</label>
+                      <input type="text" class="form-control" id="discount" name="discount" formControlName="discount"
+                             [ngClass]="{'is-invalid': formProcessed && form.discount.errors}">
+                      <div *ngIf="formProcessed && form.discount.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="total_amount" class="form-label">Total Amount</label>
+                      <input type="number" class="form-control" id="total_amount" name="total_amount" formControlName="total_amount"
+                             [ngClass]="{'is-invalid': formProcessed && form.total_amount.errors}">
+                      <div *ngIf="formProcessed && form.total_amount.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="paid_amount" class="form-label">Paid Amount</label>
+                      <input type="text" class="form-control" id="paid_amount" name="paid_amount" formControlName="paid_amount"
+                             [ngClass]="{'is-invalid': formProcessed && form.paid_amount.errors}">
+                      <div *ngIf="formProcessed && form.paid_amount.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="due_amount" class="form-label">Due Amount</label>
+                      <input type="text" class="form-control" id="due_amount" name="due_amount" formControlName="due_amount"
+                             [ngClass]="{'is-invalid': formProcessed && form.due_amount.errors}">
+                      <div *ngIf="formProcessed && form.due_amount.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="card">
+
+              <div class="card-body" formArrayName="items">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h5 class="card-title">Items</h5>
+                  <button type="button" class="btn btn-primary btn-icon-text" (click)="addItemToFormArray()">
+                    <i class="feather icon-check-square btn-plus-circle me-2"></i>
+                    Add Items
+                  </button>
+                </div>
+
+                <div class="row" *ngFor="let item of formControls.controls; let i = index" [formGroupName]="i">
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="stockitem_id" class="form-label">Stock Item #</label>
+                      <input type="text" class="form-control" id="stockitem_id" name="stockitem_id" formControlName="stockitem_id">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="quantity" class="form-label">Quantity</label>
+                      <input type="text" class="form-control" id="quantity" name="quantity" formControlName="quantity">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="description" class="form-label">Description</label>
+                      <input type="text" class="form-control" id="description" name="description" formControlName="description">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="size" class="form-label">Item Size</label>
+                      <input type="text" class="form-control" id="size" name="size" formControlName="size">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="weight" class="form-label">Item Weight</label>
+                      <input type="text" class="form-control" id="weight" name="weight" formControlName="weight">
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="mb-3">
+                      <label for="color" class="form-label">Item Color</label>
+                      <input class="form-control wd-150" id="color" formControlName="color"
+                             [(colorPicker)]="formControls.value[i].color"
+                             [style.background]="formControls.value[i].color"/>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="text-center">
+          <app-loading-button
+            [btnIcon]="isEditMode ? 'edit-3' : 'trending-up'"
+            [btnText]="isEditMode ? 'Update Quote' : 'Create New Quote'"
+            [loadingText]="isEditMode ? 'Updating Quote...' : 'Creating Quote...'"
+            [isLoading]="formSubmit"></app-loading-button>
+          <a routerLink="../" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

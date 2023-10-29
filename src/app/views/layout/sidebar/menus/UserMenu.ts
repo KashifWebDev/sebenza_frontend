@@ -171,6 +171,11 @@ export const UserMenu: MenuItem[] = [
     isTitle: true
   },
   {
+    label: 'Stocks',
+    icon: 'folder',
+    link: 'stock'
+  },
+  {
     label: 'Products',
     icon: 'package',
     link: 'stock/products'

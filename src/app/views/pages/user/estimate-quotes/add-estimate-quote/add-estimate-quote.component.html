@@ -157,11 +157,7 @@
                           <label for="exampleInputUsername4" class="form-label">Customer's E-Signature <span class="fst-italic text-muted">*(Optional)</span></label>
                           <input type="file" class="form-control" id="exampleInputUsername4"
                                  autocomplete="off" placeholder="Name" formControlName="customer_e_signature" (change)="handleFileInput($event)">
-<<<<<<< HEAD
-                          <img *ngIf="isEditMode"  alt="Old Image" class="h-50 img-fluid mt-4 w-50">
-=======
                           <img *ngIf="isEditMode" [src]="quoteForm.controls['customer_e_signature'].value" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
->>>>>>> user/estimateSetting
                         </div>
                       </div>
                     </div>

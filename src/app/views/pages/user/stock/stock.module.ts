@@ -7,9 +7,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../../shared/shared.module";
 import { AssetsComponent } from './assets/assets.component';
 import { WarehouseComponent } from './warehouse/warehouse.component';
+import { StockComponent } from './stock/stock.component';
+import {NgSelectModule} from "@ng-select/ng-select";
+import {NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
+import {QuillModule} from "ngx-quill";
+import {ColorPickerModule} from "ngx-color-picker";
 
 const routes: Routes = [
-  {path: '', redirectTo: 'products', pathMatch: 'full'},
+  {path: '', component: StockComponent},
   {path: 'products', component: ProductsComponent},
   {path: 'assets', component: AssetsComponent},
   {path: 'warehouse', component: WarehouseComponent},
@@ -19,15 +24,20 @@ const routes: Routes = [
   declarations: [
     ProductsComponent,
     AssetsComponent,
-    WarehouseComponent
+    WarehouseComponent,
+    StockComponent
   ],
-  imports: [
-    RouterModule.forChild(routes),
-    CommonModule,
-    NgxDatatableModule,
-    ReactiveFormsModule,
-    SharedModule,
-    FormsModule
-  ]
+    imports: [
+        RouterModule.forChild(routes),
+        CommonModule,
+        NgxDatatableModule,
+        ReactiveFormsModule,
+        SharedModule,
+        FormsModule,
+        NgSelectModule,
+        NgbDatepickerModule,
+        QuillModule,
+        ColorPickerModule
+    ]
 })
 export class StockModule { }

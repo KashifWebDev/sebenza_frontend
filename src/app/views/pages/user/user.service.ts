@@ -508,4 +508,29 @@ export class UserService {
     );
   }
 
+  getStock(): Observable<ApiResponse<{ stocks: any[] }>>{
+    return this.http.get<ApiResponse<{stocks: any[]}>>(
+      environment.backendURI+`/user/stocks`
+    );
+  }
+
+  updateStock(id: number, formData: FormData): Observable<ApiResponse<{ stocks: any[] }>>{
+    return this.http.post<ApiResponse<{stocks: any[]}>>(
+      environment.backendURI+`/user/stocks/update/${id}`,
+      formData
+    );
+  }
+
+  addStock(formData: FormData): Observable<ApiResponse<{ stocks: any }>>{
+    return this.http.post<ApiResponse<{stocks: any}>>(
+      environment.backendURI+`/user/stocks`,
+      formData
+    );
+  }
+
+  getSingleStock(id: number): Observable<ApiResponse<{ stocks: any }>>{
+    return this.http.get<ApiResponse<{stocks: any}>>(
+      environment.backendURI+`/user/stocks/${id}/edit`
+    );
+  }
 }
