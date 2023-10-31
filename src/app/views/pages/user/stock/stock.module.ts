@@ -12,9 +12,11 @@ import {NgSelectModule} from "@ng-select/ng-select";
 import {NgbDatepickerModule} from "@ng-bootstrap/ng-bootstrap";
 import {QuillModule} from "ngx-quill";
 import {ColorPickerModule} from "ngx-color-picker";
+import { StockListComponent } from './stock-list/stock-list.component';
 
 const routes: Routes = [
-  {path: '', component: StockComponent},
+  {path: '', component: StockListComponent},
+  {path: 'new', component: StockComponent},
   {path: 'products', component: ProductsComponent},
   {path: 'assets', component: AssetsComponent},
   {path: 'warehouse', component: WarehouseComponent},
@@ -25,7 +27,8 @@ const routes: Routes = [
     ProductsComponent,
     AssetsComponent,
     WarehouseComponent,
-    StockComponent
+    StockComponent,
+    StockListComponent
   ],
     imports: [
         RouterModule.forChild(routes),

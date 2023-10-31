@@ -238,8 +238,14 @@
                 <div class="row" *ngFor="let item of formControls.controls; let i = index" [formGroupName]="i">
                   <div class="col-lg-4">
                     <div class="mb-3">
-                      <label for="stockitem_id" class="form-label">Stock Item #</label>
-                      <input type="text" class="form-control" id="stockitem_id" name="stockitem_id" formControlName="stockitem_id">
+                      <label for="type" class="form-label">Product</label>
+                      <select class="form-select" id="type" formControlName="stockitem_id"
+                              [ngClass]="{'is-invalid': formProcessed && form.stockitem_id?.errors}">
+                        <option class="form-select" *ngFor="let product of products" [value]="product.id" [selected]="">{{product.ProductName}}</option>
+                      </select>
+                      <div *ngIf="formProcessed && form.stockitem_id?.errors?.required" class="invalid-feedback">
+                        Required
+                      </div>
                     </div>
                   </div>
                   <div class="col-lg-4">
@@ -286,8 +292,8 @@
         <div class="text-center">
           <app-loading-button
             [btnIcon]="isEditMode ? 'edit-3' : 'trending-up'"
-            [btnText]="isEditMode ? 'Update Quote' : 'Create New Quote'"
-            [loadingText]="isEditMode ? 'Updating Quote...' : 'Creating Quote...'"
+            [btnText]="isEditMode ? 'Update Stock' : 'Add New Stock'"
+            [loadingText]="isEditMode ? 'Updating Stock...' : 'Adding Stock...'"
             [isLoading]="formSubmit"></app-loading-button>
           <a routerLink="../" class="btn btn-secondary">Cancel</a>
         </div>

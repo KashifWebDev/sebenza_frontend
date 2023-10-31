@@ -516,7 +516,7 @@ export class UserService {
 
   updateStock(id: number, formData: FormData): Observable<ApiResponse<{ stocks: any[] }>>{
     return this.http.post<ApiResponse<{stocks: any[]}>>(
-      environment.backendURI+`/user/stocks/update/${id}`,
+      environment.backendURI+`/user/stock/update/${id}`,
       formData
     );
   }

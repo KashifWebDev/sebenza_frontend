@@ -173,7 +173,16 @@ export const UserMenu: MenuItem[] = [
   {
     label: 'Stocks',
     icon: 'folder',
-    link: 'stock'
+    subItems: [
+      {
+        label: 'Add Stock',
+        link: 'stock/new'
+      },
+      {
+        label: 'View Stocks',
+        link: 'stock'
+      }
+    ]
   },
   {
     label: 'Products',

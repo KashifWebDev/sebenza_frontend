@@ -3,6 +3,7 @@ import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {product} from "../../../../../core/interfaces/interfaces";
 
 @Component({
   selector: 'app-stock',
@@ -19,6 +20,7 @@ export class StockComponent implements OnInit {
   formData: FormData = new FormData();
   loading: boolean = false;
   fileToUpload: File;
+  products: product[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,6 +54,17 @@ export class StockComponent implements OnInit {
         );
       }
     });
+    this.userService.getProducts().subscribe(
+      res => {
+        if(res.status && res.data?.products.length){
+          this.products = res.data.products;
+        }
+        this.loading = false;
+      },
+      error => {
+        this.appService.swalFire('Error occurred while listing products', 'error');
+        this.loading = false;
+      });
   }
 
   get form() {
@@ -135,6 +148,7 @@ export class StockComponent implements OnInit {
     this.formSubmit = true;
     if (this.stocksForm.invalid) {
       this.formSubmit = false;
+      console.log(this.stocksForm.value);
       return;
     }
 
@@ -156,8 +170,8 @@ export class StockComponent implements OnInit {
       this.userService.updateStock(this.stockID, this.formData).subscribe(
         (data) => {
           if(data.status){
-            this.appService.swalFire('Quote was updated successfully', 'success');
-            this.router.navigate(['/user/quotes/estimate-settings']);
+            this.appService.swalFire('Stock was updated successfully', 'success');
+            this.router.navigate(['/user/stock']);
             this.formSubmit = false;
             this.stocksForm.reset();
           }else{
@@ -167,18 +181,18 @@ export class StockComponent implements OnInit {
         },
         (error) => {
           this.formSubmit = false;
-          this.appService.swalFire('An error was occurred while updating quote', 'error');
+          this.appService.swalFire('An error was occurred while updating stock', 'error');
         }
       );
     } else {
       this.userService.addStock(this.formData).subscribe(
         (data) => {
           if(data.status){
-            this.appService.swalFire('Quote was added successfully', 'success');
+            this.appService.swalFire('Stock was added successfully', 'success');
             this.formProcessed = false;
             this.formSubmit = false;
             this.stocksForm.reset();
-            this.router.navigate(['/user/quotes/estimate-settings']);
+            this.router.navigate(['/user/stock']);
           }else{
             this.appService.swalFire(data.message, 'error');
           }
@@ -186,12 +200,10 @@ export class StockComponent implements OnInit {
         },
         (error) => {
           this.formSubmit = false;
-          this.appService.swalFire('An error was occurred while creating quote', 'error');
+          this.appService.swalFire('An error was occurred while adding stock', 'error');
         }
       );
     }
-
-    // Clear the form after successful submission
   }
 
 

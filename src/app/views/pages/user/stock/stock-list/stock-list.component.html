@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">My Stock</h4>
+  </div>
+  <a routerLink="new" class="btn btn-primary btn-icon-text">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add Stock
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="!stocks.length && loading"></app-css-loader>
+        <ng-container *ngIf="!stocks.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No Stock found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="stocks && stocks.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="Sender Name" prop="sender_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Sender Cell #" prop="sender_cell_number"></ngx-datatable-column>
+            <ngx-datatable-column name="Sender Email" prop="sender_email"></ngx-datatable-column>
+            <ngx-datatable-column name="Receiver Name" prop="receiver_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Receiver Cell #" prop="receiver_cell_number"></ngx-datatable-column>
+            <ngx-datatable-column name="Receiver Cell #" prop="receiver_cell_number"></ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <a [routerLink]="['new']" [queryParams]="{edit: row.id}" class="btn btn-icon">
+                  <i class="feather icon-edit text-primary"></i>
+                </a>
+                <button type="button" class="btn btn-icon">
+                  <i class="feather icon-eye text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
