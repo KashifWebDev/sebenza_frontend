@@ -441,3 +441,15 @@ export interface warehouse {
   created_at: string,
   updated_at: string
 }
+export interface customer {
+  id: number,
+  user_id: number,
+  membership_code: string,
+  name: string,
+  email: string,
+  password: string,
+  company_name: string,
+  status: number,
+  created_at: string,
+  updated_at: string
+}

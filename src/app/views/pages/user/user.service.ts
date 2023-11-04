@@ -20,7 +20,7 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat, bank, termsConditionCategory, termsCondition, product, asset, warehouse
+  vat, bank, termsConditionCategory, termsCondition, product, asset, warehouse, customer
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -531,6 +531,46 @@ export class UserService {
   getSingleStock(id: number): Observable<ApiResponse<{ stocks: any }>>{
     return this.http.get<ApiResponse<{stocks: any}>>(
       environment.backendURI+`/user/stocks/${id}/edit`
+    );
+  }
+
+  getCustomers(): Observable<ApiResponse<{ customers: customer[] }>>{
+    return this.http.get<ApiResponse<{customers: customer[]}>>(
+      environment.backendURI+`/user/customers`
+    );
+  }
+
+  updateCustomer(id: number, formData: FormData): Observable<ApiResponse<{ stocks: customer }>>{
+    return this.http.post<ApiResponse<{stocks: customer}>>(
+      environment.backendURI+`/user/customer/update/${id}`,
+      formData
+    );
+  }
+
+  addCustomer(formData: FormData): Observable<ApiResponse<{ customers: customer }>>{
+    return this.http.post<ApiResponse<{customers: customer}>>(
+      environment.backendURI+`/user/customers`,
+      formData
+    );
+  }
+
+  getProjects(): Observable<ApiResponse<{ projects: any[] }>>{
+    return this.http.get<ApiResponse<{projects: any[]}>>(
+      environment.backendURI+`/user/projects`
+    );
+  }
+
+  updateProject(id: number, formData: FormData): Observable<ApiResponse<{ projects: any }>>{
+    return this.http.post<ApiResponse<{projects: any}>>(
+      environment.backendURI+`/user/project/update/${id}`,
+      formData
+    );
+  }
+
+  addProject(formData: FormData): Observable<ApiResponse<{ projects: any }>>{
+    return this.http.post<ApiResponse<{projects: any}>>(
+      environment.backendURI+`/user/projects`,
+      formData
     );
   }
 }

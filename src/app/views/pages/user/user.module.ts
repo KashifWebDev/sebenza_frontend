@@ -25,6 +25,7 @@ const routes: Routes = [
   {path: 'banks',loadChildren: () => import('./banks/banks.module').then(m => m.BanksModule)},
   {path: 'quotes',loadChildren: () => import('./estimate-quotes/estimate-quotes.module').then(m => m.EstimateQuotesModule)},
   {path: 'stock',loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
+  {path: 'projects',loadChildren: () => import('./user-projects/user-projects.module').then(m => m.UserProjectsModule)},
 ]
 
 @NgModule({

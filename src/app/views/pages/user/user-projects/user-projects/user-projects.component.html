@@ -1,0 +1,193 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">My Customers</h4>
+  </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="saveModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add new Customer
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="!projects.length && loading"></app-css-loader>
+        <ng-container *ngIf="!projects.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No Customers found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="projects && projects.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto">
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Name" prop="name"></ngx-datatable-column>
+            <ngx-datatable-column name="Email" prop="email"></ngx-datatable-column>
+            <ngx-datatable-column name="Company" prop="company_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Status">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 0,'bg-success': row.status == 1}">
+                  {{ row.status ? 'Active' : 'Disabled' }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <button type="button"  (click)="openDelModal(row)" class="btn btn-icon">
+                  <i class="feather icon-edit text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Customer</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editProjectForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name"
+               autocomplete="off" placeholder="Customer name" formControlName="name"
+               [ngClass]="{'is-invalid': formProcessed && form.name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email"
+               autocomplete="off" placeholder="Brand" formControlName="email"
+               [ngClass]="{'is-invalid': formProcessed && form.email.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.email.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="company_name" class="form-label">Company</label>
+        <input type="text" class="form-control" id="company_name"
+               autocomplete="off" placeholder="Brand" formControlName="company_name"
+               [ngClass]="{'is-invalid': formProcessed && form.company_name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.company_name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password"
+               autocomplete="off" placeholder="Brand" formControlName="password"
+               [ngClass]="{'is-invalid': formProcessed && form.password.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.password.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername3" class="form-label">Status</label>
+        <select class="form-select" id="exampleInputUsername3" formControlName="status"
+                [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+          <option value selected>Select Status</option>
+          <option value="1" [selected]="form.status.value == '1'">Active</option>
+          <option value="0" [selected]="form.status.value == '0'">Disable</option>
+        </select>
+        <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Customer...' : 'Save Customer'"
+        [loadingText]="'Saving Customer...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #saveModalHtml let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel1">Add Customer</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editProjectForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name"
+               autocomplete="off" placeholder="Customer name" formControlName="name"
+               [ngClass]="{'is-invalid': formProcessed && form.name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email123"
+               autocomplete="off" placeholder="Brand" formControlName="email"
+               [ngClass]="{'is-invalid': formProcessed && form.email.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.email.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="company_name" class="form-label">Company</label>
+        <input type="text" class="form-control" id="company_name123"
+               autocomplete="off" placeholder="Brand" formControlName="company_name"
+               [ngClass]="{'is-invalid': formProcessed && form.company_name.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.company_name.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password123"
+               autocomplete="off" placeholder="Brand" formControlName="password"
+               [ngClass]="{'is-invalid': formProcessed && form.password.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.password.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputUsername3" class="form-label">Status</label>
+        <select class="form-select" id="exampleInputUsername32" formControlName="status"
+                [ngClass]="{'is-invalid': formProcessed && form.status.errors && formProcessed}">
+          <option value selected>Select Status</option>
+          <option value="1" [selected]="form.status.value == '1'">Active</option>
+          <option value="0" [selected]="form.status.value == '0'">Disable</option>
+        </select>
+        <div *ngIf="formProcessed && form.status.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Customer...' : 'Save Customer'"
+        [loadingText]="'Saving Customer...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>

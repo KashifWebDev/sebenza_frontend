@@ -200,6 +200,20 @@ export const UserMenu: MenuItem[] = [
     link: 'stock/warehouse'
   },
   {
+    label: 'Projects & Customers',
+    isTitle: true
+  },
+  {
+    label: 'Customers',
+    icon: 'user',
+    link: 'projects/customers'
+  },
+  {
+    label: 'Projects',
+    icon: 'book',
+    link: 'projects'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },
