@@ -1,5 +1,4 @@
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {customer} from "../../../../../core/interfaces/interfaces";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../user.service";
@@ -12,33 +11,52 @@ import { ColumnMode } from '@swimlane/ngx-datatable';
   styleUrls: ['./user-projects.component.scss']
 })
 export class UserProjectsComponent implements OnInit {
-  projects: customer[] = [];
+  projects: any[] = [];
   loading: boolean = true;
 
   ColumnMode = ColumnMode;
   deleteLoading: boolean = false;
-  filteredData: customer[] = [...this.projects];
+  filteredData: any[] = [...this.projects];
   searchText = '';
   modalReference: NgbModalRef;
   @ViewChild('basicModal', { static: true }) editModal: TemplateRef<any> | NgbModalRef;
   @ViewChild('saveModalHtml', { static: true }) saveModalHtml: TemplateRef<any> | NgbModalRef;
-  editProject: customer | null = null;
+  editProject: any | null = null;
   loadingBtn: boolean = false;
   editProjectForm: FormGroup;
   formProcessed: boolean = false;
+  customers: any[] = []
 
   constructor(private userService: UserService, private appService: AppService,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.fetchCustomers();
+    this.fetchProjects();
     this.editProjectForm = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      company_name: ['', Validators.required],
+      customer_id: ['', Validators.required],
+      project_title: ['', Validators.required],
+      description: ['', Validators.required],
+      phases: ['', Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      progress: ['', Validators.required],
+      assign_to: ['', Validators.required],
+      customer_can_view: ['', Validators.required],
+      customer_can_comment: ['', Validators.required],
+      priority: ['', Validators.required],
       status: ['', Validators.required],
+      title: ['', Validators.required],
+      amount: ['', Validators.required],
+      spent_by: ['', Validators.required],
+      budget: ['', Validators.required],
     });
+
+    this.userService.getCustomers().subscribe(data => {
+      if(data.data?.customers && data.data.customers.length){
+        this.customers = data.data.customers;
+      }
+    });
+
   }
 
   filterData() {
@@ -59,11 +77,11 @@ export class UserProjectsComponent implements OnInit {
     }
   }
 
-  fetchCustomers(){
-    this.userService.getCustomers().subscribe(
+  fetchProjects(){
+    this.userService.getProjects().subscribe(
       res => {
-        if(res.status && res.data?.customers.length){
-          this.projects = res.data.customers;
+        if(res.status && res.data?.projects.length){
+          this.projects = res.data.projects;
           this.filterData();
         }
         this.loading = false;
@@ -79,35 +97,54 @@ export class UserProjectsComponent implements OnInit {
     return this.editProjectForm.controls;
   }
 
-  openDelModal(warehouse: customer){
-    this.editProject = warehouse;
+  openDelModal(project: any){
+    this.editProject = project;
     this.editProjectForm.patchValue({
-      name: warehouse.name,
-      email: warehouse.email,
-      password: warehouse.password,
-      company_name: warehouse.company_name,
-      status: warehouse.status
+      customer_id: project.customer_id,
+      project_title: project.project_title,
+      description: project.description,
+      phases: project.phases,
+      startDate: project.startDate,
+      endDate: project.endDate,
+      progress: project.progress,
+      assign_to: project.assign_to,
+      customer_can_view: project.customer_can_view,
+      customer_can_comment: project.customer_can_comment,
+      priority: project.priority,
+      status: project.status,
+      title: project.title,
+      amount: project.amount,
+      spent_by: project.spent_by,
+      budget: project.budget
     });
-    this.modalReference = this.modalService.open(this.editModal, {});
+    this.modalReference = this.modalService.open(this.editModal, {size: 'lg'});
   }
 
   confirmSaveModal(){
-    this.loadingBtn = true;
+
+    this.formProcessed = true;
+    this.formProcessed = true;
+    if (this.editProjectForm.invalid) {
+      this.formProcessed = false;
+      console.log(this.editProjectForm.value);
+      return;
+    }
 
     let formData: FormData = new FormData();
-    formData.append('name', this.editProjectForm.controls['name'].value);
-    formData.append('email', this.editProjectForm.controls['email'].value);
-    formData.append('password', this.editProjectForm.controls['password'].value);
-    formData.append('company_name', this.editProjectForm.controls['company_name'].value);
-    formData.append('status', this.editProjectForm.controls['status'].value);
+    Object.keys(this.editProjectForm.controls).forEach(key => {
+      const control = this.editProjectForm.get(key);
+      if (control) {
+        formData.append(key, control.value);
+      }
+    });
 
     if(this.editProject){
-      this.userService.updateCustomer(this.editProject.id, formData).subscribe(
+      this.userService.updateProject(this.editProject.id, formData).subscribe(
         data => {
           if(data.status){
             this.editProjectForm.reset();
-            this.appService.swalFire('Customer update successfully', 'success');
-            this.fetchCustomers();
+            this.appService.swalFire('Project update successfully', 'success');
+            this.fetchProjects();
             this.modalReference.close();
           }else{
             this.appService.swalFire(data.message, 'error');
@@ -120,12 +157,12 @@ export class UserProjectsComponent implements OnInit {
         }
       );
     }else{
-      this.userService.addCustomer(formData).subscribe(
+      this.userService.addProject(formData).subscribe(
         data => {
           if(data.status){
             this.editProjectForm.reset();
-            this.appService.swalFire('Customer was added successfully', 'success');
-            this.fetchCustomers();
+            this.appService.swalFire('Project was added successfully', 'success');
+            this.fetchProjects();
             this.modalReference.close();
           }else{
             this.appService.swalFire(data.message, 'error');
@@ -143,6 +180,6 @@ export class UserProjectsComponent implements OnInit {
   saveModal(){
     this.editProjectForm.reset();
     this.editProject = null;
-    this.modalReference = this.modalService.open(this.saveModalHtml, {});
+    this.modalReference = this.modalService.open(this.saveModalHtml, {size: 'lg'});
   }
 }
