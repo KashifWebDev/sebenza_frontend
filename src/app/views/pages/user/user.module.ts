@@ -26,6 +26,7 @@ const routes: Routes = [
   {path: 'quotes',loadChildren: () => import('./estimate-quotes/estimate-quotes.module').then(m => m.EstimateQuotesModule)},
   {path: 'stock',loadChildren: () => import('./stock/stock.module').then(m => m.StockModule)},
   {path: 'projects',loadChildren: () => import('./user-projects/user-projects.module').then(m => m.UserProjectsModule)},
+  // {path: 'pos',loadChildren: () => import('./pos/pos.module').then(m => m.PosModule)},
 ]
 
 @NgModule({

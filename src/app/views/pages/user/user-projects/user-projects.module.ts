@@ -6,16 +6,19 @@ import {RouterModule, Routes} from "@angular/router";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {SharedModule} from "../../../shared/shared.module";
+import {FileManagementComponent} from "./file-management/file-management.component";
 
 const routes: Routes = [
   {path: '', component: UserProjectsComponent},
   {path: 'customers', component: UserCustomersComponent},
+  {path: 'file-management', component: FileManagementComponent},
 ]
 
 @NgModule({
   declarations: [
     UserCustomersComponent,
-    UserProjectsComponent
+    UserProjectsComponent,
+    FileManagementComponent
   ],
   imports: [
     RouterModule.forChild(routes),

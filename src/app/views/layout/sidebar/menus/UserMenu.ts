@@ -214,6 +214,25 @@ export const UserMenu: MenuItem[] = [
     link: 'projects'
   },
   {
+    label: 'File Management',
+    icon: 'file',
+    link: 'projects/file-management'
+  },
+  {
+    label: 'PoS',
+    isTitle: true
+  },
+  {
+    label: 'List PoS',
+    icon: 'list',
+    link: 'pos'
+  },
+  {
+    label: 'Add New',
+    icon: 'plus-circle',
+    link: 'pos/add'
+  },
+  {
     label: 'Help & Support',
     isTitle: true
   },

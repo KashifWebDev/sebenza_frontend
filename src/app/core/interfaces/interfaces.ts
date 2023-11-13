@@ -453,3 +453,13 @@ export interface customer {
   created_at: string,
   updated_at: string
 }
+export interface file {
+  id: number,
+  user_id: number,
+  membership_code: string,
+  title: string,
+  text: string,
+  file: string,
+  created_at: string,
+  updated_at: string
+}

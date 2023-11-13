@@ -20,7 +20,7 @@ import {
   payFrequency,
   salary,
   withdraw,
-  vat, bank, termsConditionCategory, termsCondition, product, asset, warehouse, customer
+  vat, bank, termsConditionCategory, termsCondition, product, asset, warehouse, customer, file
 } from "../../../core/interfaces/interfaces";
 import {environment} from "../../../../environments/environment";
 
@@ -570,6 +570,26 @@ export class UserService {
   addProject(formData: FormData): Observable<ApiResponse<{ projects: any }>>{
     return this.http.post<ApiResponse<{projects: any}>>(
       environment.backendURI+`/user/projects`,
+      formData
+    );
+  }
+
+  getFiles(): Observable<ApiResponse<{ files: file[] }>>{
+    return this.http.get<ApiResponse<{files: file[]}>>(
+      environment.backendURI+`/user/files`
+    );
+  }
+
+  updateFile(id: number, formData: FormData): Observable<ApiResponse<{ files: file }>>{
+    return this.http.post<ApiResponse<{files: file}>>(
+      environment.backendURI+`/user/file/update/${id}`,
+      formData
+    );
+  }
+
+  addFile(formData: FormData): Observable<ApiResponse<{ files: file }>>{
+    return this.http.post<ApiResponse<{files: file}>>(
+      environment.backendURI+`/user/files`,
       formData
     );
   }

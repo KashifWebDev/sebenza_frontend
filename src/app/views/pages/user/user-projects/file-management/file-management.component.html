@@ -1,0 +1,142 @@
+<div class="d-flex justify-content-between align-items-center flex-wrap grid-margin">
+  <div>
+    <h4 class="mb-3 mb-md-0">My Files</h4>
+  </div>
+  <button type="button" class="btn btn-primary btn-icon-text" (click)="saveModal()">
+    <i class="feather icon-plus btn-icon-prepend"></i>
+    Add a Document
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <app-css-loader *ngIf="!files.length && loading"></app-css-loader>
+        <ng-container *ngIf="!files.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No assets found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="files && files.length">
+
+          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="#" prop="id"></ngx-datatable-column>
+            <ngx-datatable-column name="Title" prop="title"></ngx-datatable-column>
+            <ngx-datatable-column name="Text" prop="text"></ngx-datatable-column>
+            <ngx-datatable-column name="Currency" prop="currency">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                <a [href]="row.file" target="_blank">View File</a>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Action">
+              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                <button type="button"  (click)="openDelModal(row)" class="btn btn-icon">
+                  <i class="feather icon-edit text-primary"></i>
+                </button>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit File</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editFileForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title"
+               autocomplete="off" placeholder="title" formControlName="title"
+               [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="text" class="form-label">Text</label>
+        <input type="text" class="form-control" id="text"
+               autocomplete="off" placeholder="Description" formControlName="text"
+               [ngClass]="{'is-invalid': formProcessed && form.text.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.text.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="attachment" class="form-label">File</label>
+        <input type="file" class="form-control" id="attachment"
+               autocomplete="off" placeholder="Name" formControlName="attachment" (change)="handleFileInput($event)">
+        <img *ngIf="editAsset && editAsset.file" [src]="editAsset.file" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving File...' : 'Save File'"
+        [loadingText]="'Saving File...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #saveModalHtml let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel1">Add File</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="editFileForm" (ngSubmit)="confirmSaveModal()" *ngIf="!loading">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title"
+               autocomplete="off" placeholder="title" formControlName="title"
+               [ngClass]="{'is-invalid': formProcessed && form.title.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.title.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="text" class="form-label">Text</label>
+        <input type="text" class="form-control" id="text"
+               autocomplete="off" placeholder="Description" formControlName="text"
+               [ngClass]="{'is-invalid': formProcessed && form.text.errors && formProcessed}">
+        <div *ngIf="formProcessed && form.text.errors?.required" class="invalid-feedback">
+          Required
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="attachment1" class="form-label">File</label>
+        <input type="file" class="form-control" id="attachment1"
+               autocomplete="off" placeholder="Name" formControlName="attachment" (change)="handleFileInput($event)">
+        <img *ngIf="editAsset && editAsset.file" [src]="editAsset.file" alt="Old Image" class="h-50 img-fluid mt-4 w-50">
+      </div>
+      <app-loading-button
+        [isLoading]="loadingBtn"
+        [btnText]="loadingBtn ? 'Saving Asset...' : 'Save Asset'"
+        [loadingText]="'Saving Asset...'"
+        [btnIcon]="'check-square'">
+      </app-loading-button>
+      <a (click)="modal.close('by: close icon')" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</ng-template>
