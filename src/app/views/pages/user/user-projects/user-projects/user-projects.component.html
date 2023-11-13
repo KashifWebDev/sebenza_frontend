@@ -41,8 +41,8 @@
             <ngx-datatable-column name="Priority" prop="priority"></ngx-datatable-column>
             <ngx-datatable-column name="Status">
               <ng-template ngx-datatable-cell-template let-row="row">
-                <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 0,'bg-success': row.status == 1}">
-                  {{ row.status ? 'Active' : 'Disabled' }}
+                <span class="custom-cell fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == '0','bg-success': row.status == '1'}">
+                  {{ row.status == '1' ? 'Active' : 'Disabled' }}
                 </span>
               </ng-template>
             </ngx-datatable-column>
@@ -386,6 +386,15 @@
                    autocomplete="off" placeholder="" formControlName="amount"
                    [ngClass]="{'is-invalid': formProcessed && form.amount.errors && formProcessed}">
             <div *ngIf="formProcessed && form.amount.errors?.required" class="invalid-feedback">
+              Required
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="budget" class="form-label">Budget</label>
+            <input type="text" class="form-control" id="budget"
+                   autocomplete="off" placeholder="" formControlName="budget"
+                   [ngClass]="{'is-invalid': formProcessed && form.budget.errors && formProcessed}">
+            <div *ngIf="formProcessed && form.budget.errors?.required" class="invalid-feedback">
               Required
             </div>
           </div>
