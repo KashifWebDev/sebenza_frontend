@@ -219,16 +219,16 @@ export const UserMenu: MenuItem[] = [
     link: 'projects/file-management'
   },
   {
-    label: 'PoS',
+    label: 'PoS & Sales',
     isTitle: true
   },
   {
-    label: 'List PoS',
+    label: 'All Sales',
     icon: 'list',
     link: 'pos'
   },
   {
-    label: 'Add New',
+    label: 'New Sales Entry',
     icon: 'plus-circle',
     link: 'pos/add'
   },

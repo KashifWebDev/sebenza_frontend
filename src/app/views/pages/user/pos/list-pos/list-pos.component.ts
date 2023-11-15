@@ -1,15 +1,15 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import {NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-stock-list',
-  templateUrl: './stock-list.component.html',
-  styleUrls: ['./stock-list.component.scss']
+  selector: 'app-list-pos',
+  templateUrl: './list-pos.component.html',
+  styleUrls: ['./list-pos.component.scss']
 })
-export class StockListComponent implements OnInit {
+export class ListPosComponent implements OnInit {
   stocks: any[] = [];
   loading: boolean = true;
 
@@ -24,7 +24,7 @@ export class StockListComponent implements OnInit {
   constructor(private userService: UserService, private appService: AppService) { }
 
   ngOnInit(): void {
-    this.getStocks();
+    this.getSalesPOS();
   }
 
   filterData() {
@@ -45,17 +45,17 @@ export class StockListComponent implements OnInit {
     }
   }
 
-  getStocks(){
-    this.userService.getStock().subscribe(
+  getSalesPOS(){
+    this.userService.getPOS().subscribe(
       res => {
-        if(res.status && res.data?.stocks.length){
-          this.stocks = res.data.stocks;
+        if(res.status && res.data?.sales.length){
+          this.stocks = res.data.sales;
           this.filterData();
         }
         this.loading = false;
       },
       error => {
-        this.appService.swalFire('Error occurred while listing stock', 'error');
+        this.appService.swalFire('Error occurred while listing sales', 'error');
         this.loading = false;
       }
     );

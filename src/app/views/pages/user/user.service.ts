@@ -593,4 +593,25 @@ export class UserService {
       formData
     );
   }
+
+
+  getPOS(): Observable<ApiResponse<{ sales: any[] }>>{
+    return this.http.get<ApiResponse<{sales: any[]}>>(
+      environment.backendURI+`/user/sales`
+    );
+  }
+
+  updatePOS(id: number, formData: FormData): Observable<ApiResponse<{ sale: any[] }>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/stock/update/${id}`,
+      formData
+    );
+  }
+
+  addPOS(formData: FormData): Observable<ApiResponse<{ stocks: any }>>{
+    return this.http.post<ApiResponse<{stocks: any}>>(
+      environment.backendURI+`/user/sales`,
+      formData
+    );
+  }
 }
