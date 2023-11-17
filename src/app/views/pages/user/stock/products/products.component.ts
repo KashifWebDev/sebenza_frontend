@@ -27,6 +27,15 @@ export class ProductsComponent implements OnInit {
   editProductForm: FormGroup;
   formProcessed: boolean = false;
   fileToUpload: File;
+  excelLoading: boolean = false;
+
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('products').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
 
   constructor(private userService: UserService, private appService: AppService,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }

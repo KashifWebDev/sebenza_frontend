@@ -26,8 +26,17 @@ export class WarehouseComponent implements OnInit {
   loadingBtn: boolean = false;
   editWarehouseForm: FormGroup;
   formProcessed: boolean = false;
+  excelLoading: boolean = false;
 
-  constructor(private userService: UserService, private appService: AppService,
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('warehouses').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
+
+  constructor(public userService: UserService, private appService: AppService,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {

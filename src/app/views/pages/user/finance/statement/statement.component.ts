@@ -24,6 +24,15 @@ export class StatementComponent implements OnInit {
   modalReference: NgbModalRef;
   basicModalCloseResult: string = '';
   @ViewChild('basicModal', { static: true }) deleteModal: TemplateRef<any> | NgbModalRef;
+  excelLoading: boolean = false;
+
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('expenses').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
 
   constructor(private userService: UserService, private appService: AppService,
               private modalService: NgbModal,) { }

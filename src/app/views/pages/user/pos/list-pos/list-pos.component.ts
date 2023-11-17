@@ -20,6 +20,15 @@ export class ListPosComponent implements OnInit {
   modalReference: NgbModalRef;
   loadingBtn: boolean = false;
   formProcessed: boolean = false;
+  excelLoading: boolean = false;
+
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('sales').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
 
   constructor(private userService: UserService, private appService: AppService) { }
 

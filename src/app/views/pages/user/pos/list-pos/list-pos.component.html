@@ -23,7 +23,16 @@
         </ng-container>
         <div class="table-responsive" *ngIf="stocks && stocks.length">
 
-          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+          <div class="d-flex justify-content-between">
+            <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+            <button type="button" class="btn btn-icon-text btn-success" *ngIf="!excelLoading" (click)="processExcel()">
+              <i class="mdi mdi-microsoft-excel"></i>
+            </button>
+            <button class="btn  btn-success" type="button" disabled *ngIf="excelLoading">
+              <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+              Generating Excel File...
+            </button>
+          </div>
 
           <ngx-datatable
             class="bootstrap"

@@ -25,7 +25,16 @@ export class UserProjectsComponent implements OnInit {
   loadingBtn: boolean = false;
   editProjectForm: FormGroup;
   formProcessed: boolean = false;
-  customers: any[] = []
+  customers: any[] = [];
+  excelLoading: boolean = false;
+
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('projects').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
 
   constructor(private userService: UserService, private appService: AppService,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }

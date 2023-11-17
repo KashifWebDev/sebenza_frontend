@@ -614,4 +614,14 @@ export class UserService {
       formData
     );
   }
+
+  exportExcel(type: string): Observable<ApiResponse<any>>{
+    const formData = new FormData();
+    formData.set('data_for', type);
+    return this.http.post<ApiResponse<any>>(
+      environment.backendURI+`/user/excel/export`,
+      formData
+    );
+  }
+
 }

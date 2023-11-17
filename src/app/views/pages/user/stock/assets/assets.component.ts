@@ -27,6 +27,15 @@ export class AssetsComponent implements OnInit {
   editAssetForm: FormGroup;
   formProcessed: boolean = false;
   fileToUpload: File;
+  excelLoading: boolean = false;
+
+  processExcel(){
+    this.excelLoading = true;
+    this.userService.exportExcel('assets').subscribe(res => {
+      window.location.href=res.data.excel.data_file;
+      this.excelLoading = false;
+    })
+  }
 
   constructor(private userService: UserService, private appService: AppService,
               private modalService: NgbModal, private formBuilder: FormBuilder) { }
