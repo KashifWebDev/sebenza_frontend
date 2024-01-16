@@ -624,4 +624,67 @@ export class UserService {
     );
   }
 
+  accountingMeeting(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/metting-data`,
+      dateRange
+    );
+  }
+
+  accountingTasks(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/task-data`,
+      dateRange
+    );
+  }
+
+  accountingWithdraws(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/withdraw-data`,
+      dateRange
+    );
+  }
+  accountingExpenses(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/expense-data`,
+      dateRange
+    );
+  }
+  accountingQuotes(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/quotes-data`,
+      dateRange
+    );
+  }
+  accountingProducts(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/products-data`,
+      dateRange
+    );
+  }
+  accountingStocks(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/stocks-data`,
+      dateRange
+    );
+  }
+  accountingCustomers(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/customer-data`,
+      dateRange
+    );
+  }
+  accountingProjects(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/project-data`,
+      dateRange
+    );
+  }
+  accountingSales(dateRange: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<{sale: any[]}>>(
+      environment.backendURI+`/user/get/sales-data`,
+      dateRange
+    );
+  }
+
 }

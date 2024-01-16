@@ -10,6 +10,7 @@ import {MenuItem} from './menus/menu.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";
+import {AccountingMenu} from "./menus/AccountingMenu";
 
 @Component({
   selector: 'app-sidebar',
@@ -53,8 +54,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
       case UserRole.HR:
         this.menuItems = [...UserMenu, ...HrMenu];
         break;
-      case UserRole.User:
       case UserRole.superUser:
+        this.menuItems = [...UserMenu, ...HrMenu, ...AccountingMenu];
+        break;
+      case UserRole.User:
       default:
         this.menuItems = UserMenu;
     }

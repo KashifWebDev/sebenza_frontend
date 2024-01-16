@@ -1,0 +1,90 @@
+<div class="row mb-3">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Sales Records | <span class="text-muted">Select Date Range</span></h6>
+        <div class="row align-items-center justify-content-center">
+          <div class="col-md-6">
+            <form class="d-flex" [formGroup]="searchForm" (ngSubmit)="getData()">
+              <div class="input-group me-3">
+                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="startDate"
+                       name="dp" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-text" type="button" (click)="d.toggle()">
+                  <i class="feather icon-calendar icon-md text-muted"></i>
+                </button>
+              </div>
+              <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="endDate"
+                       name="dp" ngbDatepicker #e="ngbDatepicker">
+                <button class="input-group-text" type="button" (click)="e.toggle()">
+                  <i class="feather icon-calendar icon-md text-muted"></i>
+                </button>
+              </div>
+              <button type="submit" class="ms-3 btn btn-primary btn-icon-text">
+                <i class="feather icon-search btn-icon-prepend"></i>
+                Search
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-css-loader *ngIf="showData && loading"></app-css-loader>
+<div class="row" *ngIf="showData && !loading">
+  <div class="col-md-12 stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-title">Date Wise Sales List</h6>
+        <ng-container *ngIf="!stocks.length && !loading">
+          <div class="h-100 w-100 d-flex align-items-center justify-content-center">
+            <h3 class="mb-3 mb-md-0 text-muted">
+              <i class="feather icon-tag me-1"></i>
+              No sales history found!
+            </h3>
+          </div>
+        </ng-container>
+        <div class="table-responsive" *ngIf="stocks && stocks.length">
+
+          <ngx-datatable
+            class="bootstrap"
+            [rows]="filteredData"
+            [columnMode]="ColumnMode.force"
+            [footerHeight]="50"
+            [limit]="10"
+            rowHeight="auto"
+          >
+            <ngx-datatable-column name="Customer Name" prop="customer_name"></ngx-datatable-column>
+            <ngx-datatable-column name="Customer Contact #" prop="customer_phone"></ngx-datatable-column>
+            <ngx-datatable-column name="Customer Address" prop="customer_address"></ngx-datatable-column>
+            <ngx-datatable-column name="Total Amount">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.amount_total | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Discount">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.discount | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Payable Amount">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.payable_amount | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Due Amount">
+              <ng-template ngx-datatable-cell-template let-row="row">
+                {{ row.due | currency }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Payment Type" prop="payment_type"></ngx-datatable-column>
+            <ngx-datatable-column name="Transaction ID" prop="trx_id"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
