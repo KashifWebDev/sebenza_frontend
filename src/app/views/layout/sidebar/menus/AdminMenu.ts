@@ -31,10 +31,6 @@ export const AdminMenu: MenuItem[] = [
       {
         label: 'All Roles',
         link: 'roles-management'
-      },
-      {
-        label: 'Add Role',
-        link: 'roles-management/add-role',
       }
     ]
   },

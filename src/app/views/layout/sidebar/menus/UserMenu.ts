@@ -25,6 +25,34 @@ export const UserMenu: MenuItem[] = [
     ]
   },
   {
+    label: 'Users & Roles',
+    isTitle: true
+  },
+  {
+    label: 'Users Management',
+    icon: 'users',
+    subItems: [
+      {
+        label: 'Users Directory',
+        link: 'users-management'
+      },
+      {
+        label: 'Add New User',
+        link: 'users-management/add-user',
+      }
+    ]
+  },
+  {
+    label: 'Roles Management',
+    icon: 'user-plus',
+    subItems: [
+      {
+        label: 'All Roles',
+        link: 'roles-management'
+      }
+    ]
+  },
+  {
     label: 'Quick Links',
     isTitle: true
   },

@@ -11,6 +11,8 @@ const routes: Routes = [
   {path: '',redirectTo: 'home',pathMatch: 'full'},
   {path: 'home',component: DashboardComponent},
   {path: 'profile',component: ProfileComponent},
+  {path: 'users-management',loadChildren: () => import('./users-management/users-management.module').then(m => m.UsersManagementModule)},
+  {path: 'roles-management',loadChildren: () => import('./roles-management/roles-management.module').then(m => m.RolesManagementModule)},
   {path: 'news',loadChildren: () => import('./news/userNews.module').then(m => m.UserNewsModule)},
   {path: 'support',loadChildren: () => import('./support/support.module').then(m => m.SupportModule)},
   {path: 'meeting',loadChildren: () => import('./meeting/meeting.module').then(m => m.MeetingModule)},
