@@ -11,6 +11,8 @@ import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";
 import {AccountingMenu} from "./menus/AccountingMenu";
+import {superUserMenu} from "./menus/superUserMenu";
+import {managerMenu} from "./menus/managerMenu";
 
 @Component({
   selector: 'app-sidebar',
@@ -52,12 +54,17 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.menuItems = AdminMenu;
         break;
       case UserRole.HR:
-        this.menuItems = [...UserMenu, ...HrMenu];
+        this.menuItems = [...HrMenu];
         break;
       case UserRole.superUser:
-        this.menuItems = [...UserMenu, ...HrMenu, ...AccountingMenu];
+        this.menuItems = [...superUserMenu];
         break;
       case UserRole.User:
+        this.menuItems = [...UserMenu];
+        break;
+      case UserRole.manager:
+        this.menuItems = [...managerMenu];
+        break;
       default:
         this.menuItems = UserMenu;
     }

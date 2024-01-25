@@ -1,6 +1,6 @@
 import { MenuItem } from './menu.model';
 
-export const UserMenu: MenuItem[] = [
+export const managerMenu: MenuItem[] = [
   {
     label: 'Main',
     isTitle: true
@@ -11,8 +11,18 @@ export const UserMenu: MenuItem[] = [
     link: 'home'
   },
   {
-    label: 'Quick Links',
-    isTitle: true
+    label: 'My Calendar',
+    icon: 'calendar',
+    subItems: [
+      {
+        label: 'Visit Calendar',
+        link: 'calendar'
+      },
+      {
+        label: 'Add an Event',
+        link: 'calendar/new'
+      }
+    ]
   },
   {
     label: 'Finance Management',
@@ -64,6 +74,24 @@ export const UserMenu: MenuItem[] = [
     isTitle: true
   },
   {
+    label: 'Terms & Conditions',
+    icon: 'check',
+    subItems: [
+      {
+        label: 'Add New Term',
+        link: 'quotes/add-new-term'
+      },
+      {
+        label: 'All Terms',
+        link: 'quotes/term-conditions'
+      },
+      {
+        label: 'Set Categories',
+        link: 'quotes/terms-categories'
+      },
+    ]
+  },
+  {
     label: 'Add new Quote',
     icon: 'plus-square',
     link: 'quotes/new-estimate'
@@ -72,6 +100,39 @@ export const UserMenu: MenuItem[] = [
     label: 'My Quotes',
     icon: 'settings',
     link: 'quotes/estimate-settings'
+  },
+  {
+    label: 'Stock & Inventory',
+    isTitle: true
+  },
+  {
+    label: 'Stocks',
+    icon: 'folder',
+    subItems: [
+      {
+        label: 'Add Stock',
+        link: 'stock/new'
+      },
+      {
+        label: 'View Stocks',
+        link: 'stock'
+      }
+    ]
+  },
+  {
+    label: 'Products',
+    icon: 'package',
+    link: 'stock/products'
+  },
+  {
+    label: 'Assets',
+    icon: 'database',
+    link: 'stock/assets'
+  },
+  {
+    label: 'Warehouse',
+    icon: 'home',
+    link: 'stock/warehouse'
   },
   {
     label: 'Projects & Customers',

@@ -84,7 +84,6 @@ export class DashboardComponent implements OnInit {
       data => {
 
         Object.entries(data.data).forEach(([key, value], index) => {
-          console.log(`${key}: ${value}}`);
           this.topBoxes[index].numbers = value
           // You can perform any other logic here based on key and value
         });

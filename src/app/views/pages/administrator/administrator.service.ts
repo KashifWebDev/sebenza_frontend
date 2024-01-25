@@ -1,24 +1,32 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
   accountType,
   ApiResponse,
-  basicSettings, invoice,
-  News, order,
-  Package, promoCode,
-  role, Ticket, ticketReplies,
-  User, userProfile, WhatsApp
+  basicSettings,
+  invoice,
+  News,
+  order,
+  Package,
+  promoCode,
+  role,
+  Ticket,
+  ticketReplies,
+  User,
+  userProfile,
+  WhatsApp
 } from "../../../core/interfaces/interfaces";
 import {Observable} from "rxjs";
 import {environment} from "../../../../environments/environment";
-import {Tick} from "chart.js";
+import {AuthService} from "../auth/auth.service";
+import {UserRole} from "../../../core/roles/UserRole";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdministratorService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
 
   getProfileDetails(): Observable<ApiResponse<{user: userProfile}>>{
     return this.http.get<ApiResponse<{user: userProfile}>>(
@@ -326,8 +334,11 @@ export class AdministratorService {
   }
 
   dashboardStats(): Observable<ApiResponse<any>>{
+    var role = this.authService.getUserRole();
+    var qry = role == UserRole.superUser ? '?isAdmin=1' : ''
+
     return this.http.get<ApiResponse<any>>(
-      environment.backendURI+`/user/my/history`
+      environment.backendURI+`/user/my/history${qry}`
     )
   }
 }
