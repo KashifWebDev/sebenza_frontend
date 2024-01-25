@@ -118,6 +118,12 @@ export class AuthService {
     );
   }
 
+  invite(formBody: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<any>(environment.backendURI+'/update/new-member',
+      formBody
+    );
+  }
+
   getAccTypes(): Observable<ApiResponse<{accounttypes: accountType[]}>>{
     return this.http.get<any>(environment.backendURI+'/gettypes');
   }

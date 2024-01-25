@@ -10,6 +10,7 @@ import {ArchwizardModule} from "angular-archwizard";
 import {NgbAlertModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {FeatherIconModule} from "../../../core/feather-icon/feather-icon.module";
 import {SharedModule} from "../../shared/shared.module";
+import { InviteComponent } from './invite/invite.component';
 
 const routes: Routes = [
   {
@@ -32,13 +33,17 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
+      },
+      {
+        path: 'invite/:email',
+        component: InviteComponent
       }
     ]
   },
 ]
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, AuthComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthComponent, InviteComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),

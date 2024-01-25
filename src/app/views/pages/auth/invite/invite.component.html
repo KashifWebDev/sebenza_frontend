@@ -1,0 +1,101 @@
+<div class="row w-100 mx-0 auth-page h-100">
+  <div class="col-md-8 col-xl-6 mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <a routerLink="." class="nobleui-logo logo-light  d-block mb-2 d-flex align-items-center justify-content-center">
+          <img src="assets/images/logo.png" style="height: 60px" class="img-fluid mb-2">
+        </a>
+        <h4 class="card-title text-muted text-center">Try SEBENZA SYSTEMS free.</h4>
+
+        <form (ngSubmit)="submitForm()" [formGroup]="registrationForm">
+
+          <div class="row mb-3">
+            <label for="firstName" class="col-sm-3 col-form-label">First name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="firstName" formControlName="first_name" placeholder="First name">
+              <div *ngIf="registrationForm.get('first_name')?.invalid && registrationForm.get('first_name')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="lastName" formControlName="last_name" placeholder="Last name">
+              <div *ngIf="registrationForm.get('last_name')?.invalid && registrationForm.get('last_name')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="phone" class="col-sm-3 col-form-label">Phone</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Phone">
+              <div *ngIf="registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="email" class="col-sm-3 col-form-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
+              <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="password" class="col-sm-3 col-form-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
+              <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="country" class="col-sm-3 col-form-label">Country</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="country" formControlName="country" placeholder="Country">
+              <div *ngIf="registrationForm.get('country')?.invalid && registrationForm.get('country')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="city" class="col-sm-3 col-form-label">City</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="city" formControlName="city" placeholder="City">
+              <div *ngIf="registrationForm.get('city')?.invalid && registrationForm.get('city')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="address" class="col-sm-3 col-form-label">Address</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="address" formControlName="address" placeholder="Address">
+              <div *ngIf="registrationForm.get('address')?.invalid && registrationForm.get('address')?.touched" class="invalid-feedback">
+                Required
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-center mt-2">
+            <button class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+</div>

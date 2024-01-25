@@ -324,4 +324,10 @@ export class AdministratorService {
       environment.backendURI+`/admin/orders/${id}/edit`
     )
   }
+
+  dashboardStats(): Observable<ApiResponse<any>>{
+    return this.http.get<ApiResponse<any>>(
+      environment.backendURI+`/user/my/history`
+    )
+  }
 }
