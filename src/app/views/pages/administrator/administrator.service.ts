@@ -335,7 +335,7 @@ export class AdministratorService {
 
   dashboardStats(): Observable<ApiResponse<any>>{
     var role = this.authService.getUserRole();
-    var qry = role == UserRole.superUser ? '?isAdmin=1' : ''
+    var qry = role == UserRole.superAdmin ? '?isAdmin=1' : ''
 
     return this.http.get<ApiResponse<any>>(
       environment.backendURI+`/user/my/history${qry}`

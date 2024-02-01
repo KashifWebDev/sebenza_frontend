@@ -10,7 +10,6 @@ import {MenuItem} from './menus/menu.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";
-import {AccountingMenu} from "./menus/AccountingMenu";
 import {superUserMenu} from "./menus/superUserMenu";
 import {managerMenu} from "./menus/managerMenu";
 
