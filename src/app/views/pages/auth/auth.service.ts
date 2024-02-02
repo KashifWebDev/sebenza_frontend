@@ -150,11 +150,12 @@ export class AuthService {
       case UserRole.User:
       case UserRole.superUser:
       case UserRole.HR:
+      default:
         path = '/user';
         break;
-      default:
-        console.error("No roles were found to redirect the user to dashboard!");
-        path = '/error/500';
+      // default:
+      //   console.error("No roles were found to redirect the user to dashboard!");
+      //   path = '/error/500';
     }
     this.router.navigate([path]);
   }

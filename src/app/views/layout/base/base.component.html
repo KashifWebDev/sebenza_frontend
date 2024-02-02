@@ -10,7 +10,8 @@
     <app-navbar></app-navbar>
     <!-- partial -->
 
-    <div class="page-content">
+    <div class="page-content" style="background-repeat: no-repeat;background-size: 100% 100%;"
+         [ngStyle]="{'background-image': isDashboard ? 'url(' + bgImage + ')' : 'none'}">
 
       <!-- Spinner for lazyload modules -->
       <div *ngIf="isLoading" class="spinner-wrapper">

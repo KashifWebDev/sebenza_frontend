@@ -2,6 +2,15 @@ import { MenuItem } from './menu.model';
 
 export const HrMenu: MenuItem[] = [
   {
+    label: 'Main',
+    isTitle: true
+  },
+  {
+    label: 'Dashboard',
+    icon: 'home',
+    link: 'home'
+  },
+  {
     label: 'HR & Payroll',
     isTitle: true
   },

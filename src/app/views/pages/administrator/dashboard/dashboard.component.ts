@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbCalendar, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {AdministratorService} from "../administrator.service";
+import {AuthService} from "../../auth/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -42,8 +43,10 @@ export class DashboardComponent implements OnInit {
    * NgbDatepicker
    */
   currentDate: NgbDateStruct;
+  userType: string | undefined;
 
-  constructor(private calendar: NgbCalendar, private adminService: AdministratorService) {}
+  constructor(private calendar: NgbCalendar, private adminService: AdministratorService,
+              private authService: AuthService) {}
 
   ngOnInit(): void {
     this.currentDate = this.calendar.getToday();
@@ -90,6 +93,8 @@ export class DashboardComponent implements OnInit {
 
       }
     );
+
+    this.userType = ' '+this.authService.getLoggedInUser()?.account_type;
 
   }
 
