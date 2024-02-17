@@ -4,11 +4,11 @@ import {AppService} from "../../../../../app.service";
 import { ColumnMode } from '@swimlane/ngx-datatable';
 
 @Component({
-  selector: 'app-estimate-settings',
-  templateUrl: './estimate-settings.component.html',
-  styleUrls: ['./estimate-settings.component.scss']
+  selector: 'app-list-cases',
+  templateUrl: './list-cases.component.html',
+  styleUrls: ['./list-cases.component.scss']
 })
-export class EstimateSettingsComponent implements OnInit {
+export class ListCasesComponent implements OnInit {
   quotes: any = [];
   loading: boolean = true;
 

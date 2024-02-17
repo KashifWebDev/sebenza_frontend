@@ -30,12 +30,13 @@ const routes: Routes = [
   {path: 'projects',loadChildren: () => import('./user-projects/user-projects.module').then(m => m.UserProjectsModule)},
   {path: 'pos',loadChildren: () => import('./pos/pos.module').then(m => m.PosModule)},
   {path: 'accounting',loadChildren: () => import('./accounting/accounting.module').then(m => m.AccountingModule)},
+  {path: 'law-firm',loadChildren: () => import('./law-firm/law-firm.module').then(m => m.LawFirmModule)},
 ]
 
 @NgModule({
   declarations: [
     UserDashboardComponent,
-    ProfileComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

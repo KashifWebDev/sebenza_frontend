@@ -12,6 +12,7 @@ import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";
 import {superUserMenu} from "./menus/superUserMenu";
 import {managerMenu} from "./menus/managerMenu";
+import {lawFirmSuperUser} from "./menus/accTypes/law-firm/LawFirmSuperUser";
 
 @Component({
   selector: 'app-sidebar',
@@ -48,6 +49,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     let userRole: UserRole | null = this.authService.getUserRole();
+    var userType: string | null | undefined = '';
+    if(this.authService.getLoggedInUser()?.account_type != undefined || this.authService.getLoggedInUser()?.account_type != null){
+      userType = this.authService.getLoggedInUser()?.account_type;
+    }
     switch (userRole) {
       case UserRole.superAdmin:
         this.menuItems = AdminMenu;
@@ -56,7 +61,11 @@ export class SidebarComponent implements OnInit, AfterViewInit {
         this.menuItems = [...HrMenu];
         break;
       case UserRole.superUser:
-        this.menuItems = [...superUserMenu];
+        if(userType == 'Law Firm'){
+          this.menuItems = lawFirmSuperUser
+        }else{
+          this.menuItems = superUserMenu;
+        }
         break;
       case UserRole.User:
         this.menuItems = [...UserMenu];
@@ -265,34 +274,35 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   };
 
   getTitle(title: string | undefined): string{
-    var userType = this.authService.getLoggedInUser()?.account_type;
-    switch (userType) {
-      case 'Construction':
-        if(title == 'Invite Users') title = 'Add Staff';
-        if(title == 'Users Management') title = 'Staff Management';
-        if(title == 'Users Directory') title = 'Staff Directory';
-        if(title == 'Add new Quote') title = 'Create a Budget';
-        if(title == 'My Quotes') title = 'Budget List';
-        if(title == 'Projects') title = 'Events';
-        if(title == 'File Management') title = 'Documents';
-        break;
-      case 'Law Firm':
-        if(title == 'Invite Users') title = 'Invite Assistant';
-        if(title == 'Users Management') title = 'Assistant Management';
-        if(title == 'Users Directory') title = 'Assistant Directory';
-        if(title == 'Estimates & Quotes') title = 'Cases & Quotes';
-        if(title == 'Add new Quote') title = 'Add new Case';
-        if(title == 'My Quotes') title = 'My Cases';
-        break;
-      case 'Logistics Company':
-        //
-        break;
-      case 'Event Planner':
-        //
-        break;
-    }
-
-    return title ? title : '';
+    return title!;
+    // var userType = this.authService.getLoggedInUser()?.account_type;
+    // switch (userType) {
+    //   case 'Construction':
+    //     if(title == 'Invite Users') title = 'Add Staff';
+    //     if(title == 'Users Management') title = 'Staff Management';
+    //     if(title == 'Users Directory') title = 'Staff Directory';
+    //     if(title == 'Add new Quote') title = 'Create a Budget';
+    //     if(title == 'My Quotes') title = 'Budget List';
+    //     if(title == 'Projects') title = 'Events';
+    //     if(title == 'File Management') title = 'Documents';
+    //     break;
+    //   case 'Law Firm':
+    //     if(title == 'Invite Users') title = 'Invite Assistant';
+    //     if(title == 'Users Management') title = 'Assistant Management';
+    //     if(title == 'Users Directory') title = 'Assistant Directory';
+    //     if(title == 'Estimates & Quotes') title = 'Cases & Quotes';
+    //     if(title == 'Add new Quote') title = 'Add new Case';
+    //     if(title == 'My Quotes') title = 'My Cases';
+    //     break;
+    //   case 'Logistics Company':
+    //     //
+    //     break;
+    //   case 'Event Planner':
+    //     //
+    //     break;
+    // }
+    //
+    // return title ? title : '';
   }
 
 }
