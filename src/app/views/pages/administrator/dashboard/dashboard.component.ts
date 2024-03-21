@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgbCalendar, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {AdministratorService} from "../administrator.service";
 import {AuthService} from "../../auth/auth.service";
+import {AppService} from "../../../../app.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -46,7 +47,7 @@ export class DashboardComponent implements OnInit {
   userType: string | undefined;
 
   constructor(private calendar: NgbCalendar, private adminService: AdministratorService,
-              private authService: AuthService) {}
+              private authService: AuthService, private appService: AppService) {}
 
   ngOnInit(): void {
     this.currentDate = this.calendar.getToday();
@@ -98,6 +99,9 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  translate(text:string): string{
+    return this.appService.translate(text);
+  }
 
   /**
    * Only for RTL (feel free to remove if you are using LTR)

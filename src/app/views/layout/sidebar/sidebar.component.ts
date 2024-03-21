@@ -13,6 +13,7 @@ import {UserRole} from "../../../core/roles/UserRole";
 import {superUserMenu} from "./menus/superUserMenu";
 import {managerMenu} from "./menus/managerMenu";
 import {lawFirmSuperUser} from "./menus/accTypes/law-firm/LawFirmSuperUser";
+import {AppService} from "../../../app.service";
 
 @Component({
   selector: 'app-sidebar',
@@ -27,7 +28,7 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('sidebarMenu') sidebarMenu: ElementRef;
 
   constructor(@Inject(DOCUMENT) private document: Document, private renderer: Renderer2, router: Router,
-              private authService: AuthService) {
+              private authService: AuthService, private appService: AppService) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
 
@@ -274,7 +275,10 @@ export class SidebarComponent implements OnInit, AfterViewInit {
   };
 
   getTitle(title: string | undefined): string{
-    return title!;
+    // return title!;
+    return this.appService.translate(title!);
+    //return this.translate(title!);
+
     // var userType = this.authService.getLoggedInUser()?.account_type;
     // switch (userType) {
     //   case 'Construction':
@@ -304,5 +308,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     //
     // return title ? title : '';
   }
+
 
 }

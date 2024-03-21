@@ -1,0 +1,439 @@
+{
+  "Main": {
+    "en": "Main",
+    "es": "Principal",
+    "pt": "Principal",
+    "fr": "Principal"
+  },
+  "Dashboard": {
+    "en": "Dashboard",
+    "es": "Tablero",
+    "pt": "Painel de Controle",
+    "fr": "Tableau de bord"
+  },
+  "Invite Users": {
+    "en": "Invite Users",
+    "es": "Invitar Usuarios",
+    "pt": "Convidar Usuários",
+    "fr": "Inviter des utilisateurs"
+  },
+  "Email Invitation": {
+    "en": "Email Invitation",
+    "es": "Invitación por Correo Electrónico",
+    "pt": "Convite por E-mail",
+    "fr": "Invitation par e-mail"
+  },
+  "Import Excel File": {
+    "en": "Import Excel File",
+    "es": "Importar Archivo de Excel",
+    "pt": "Importar Arquivo Excel",
+    "fr": "Importer un fichier Excel"
+  },
+  "Users & Roles": {
+    "en": "Users & Roles",
+    "es": "Usuarios y Roles",
+    "pt": "Usuários e Funções",
+    "fr": "Utilisateurs et rôles"
+  },
+  "Users Management": {
+    "en": "Users Management",
+    "es": "Gestión de Usuarios",
+    "pt": "Gestão de Usuários",
+    "fr": "Gestion des utilisateurs"
+  },
+  "Add New User": {
+    "en": "Add New User",
+    "es": "Agregar Nuevo Usuario",
+    "pt": "Adicionar Novo Usuário",
+    "fr": "Ajouter un nouvel utilisateur"
+  },
+  "Roles Management": {
+    "en": "Roles Management",
+    "es": "Gestión de Roles",
+    "pt": "Gestão de Funções",
+    "fr": "Gestion des rôles"
+  },
+  "All Roles": {
+    "en": "All Roles",
+    "es": "Todos los Roles",
+    "pt": "Todos os Cargos",
+    "fr": "Tous les rôles"
+  },
+  "Quick Links": {
+    "en": "Quick Links",
+    "es": "Enlaces Rápidos",
+    "pt": "Links Rápidos",
+    "fr": "Liens rapides"
+  },
+  "Meetings Schedules": {
+    "en": "Meetings Schedules",
+    "es": "Horarios de Reuniones",
+    "pt": "Agenda de Reuniões",
+    "fr": "Calendrier des réunions"
+  },
+  "My Meetings": {
+    "en": "My Meetings",
+    "es": "Mis Reuniones",
+    "pt": "Minhas Reuniões",
+    "fr": "Mes réunions"
+  },
+  "Add a Meeting": {
+    "en": "Add a Meeting",
+    "es": "Agregar una Reunión",
+    "pt": "Adicionar uma Reunião",
+    "fr": "Ajouter une réunion"
+  },
+  "My Tasks": {
+    "en": "My Tasks",
+    "es": "Mis Tareas",
+    "pt": "Minhas Tarefas",
+    "fr": "Mes tâches"
+  },
+  "Tasks list": {
+    "en": "Tasks list",
+    "es": "Lista de Tareas",
+    "pt": "Lista de Tarefas",
+    "fr": "Liste des tâches"
+  },
+  "Add a Task": {
+    "en": "Add a Task",
+    "es": "Agregar una Tarea",
+    "pt": "Adicionar uma Tarefa",
+    "fr": "Ajouter une tâche"
+  },
+  "My Calendar": {
+    "en": "My Calendar",
+    "es": "Mi Calendario",
+    "pt": "Meu Calendário",
+    "fr": "Mon calendrier"
+  },
+  "Visit Calendar": {
+    "en": "Visit Calendar",
+    "es": "Calendario de Visitas",
+    "pt": "Calendário de Visitas",
+    "fr": "Calendrier de visite"
+  },
+  "Add an Event": {
+    "en": "Add an Event",
+    "es": "Agregar un Evento",
+    "pt": "Adicionar um Evento",
+    "fr": "Ajouter un événement"
+  },
+  "Finance Management": {
+    "en": "Finance Management",
+    "es": "Gestión Financiera",
+    "pt": "Gestão Financeira",
+    "fr": "Gestion financière"
+  },
+  "My Orders": {
+    "en": "My Orders",
+    "es": "Mis Pedidos",
+    "pt": "Meus Pedidos",
+    "fr": "Mes commandes"
+  },
+  "Orders History": {
+    "en": "Orders History",
+    "es": "Historial de Pedidos",
+    "pt": "Histórico de Pedidos",
+    "fr": "Historique des commandes"
+  },
+  "New Order": {
+    "en": "New Order",
+    "es": "Nuevo Pedido",
+    "pt": "Novo Pedido",
+    "fr": "Nouvelle commande"
+  },
+  "Invoices": {
+    "en": "Invoices",
+    "es": "Facturas",
+    "pt": "Faturas",
+    "fr": "Factures"
+  },
+  "My Banks": {
+    "en": "My Banks",
+    "es": "Mis Bancos",
+    "pt": "Meus Bancos",
+    "fr": "Mes banques"
+  },
+  "Salary & Withdraws": {
+    "en": "Salary & Withdraws",
+    "es": "Salario y Retiros",
+    "pt": "Salário e Saques",
+    "fr": "Salaire et retraits"
+  },
+  "My Salary": {
+    "en": "My Salary",
+    "es": "Mi Salario",
+    "pt": "Meu Salário",
+    "fr": "Mon salaire"
+  },
+  "Withdraw Requests": {
+    "en": "Withdraw Requests",
+    "es": "Solicitudes de Retiro",
+    "pt": "Solicitações de Saque",
+    "fr": "Demandes de retrait"
+  },
+  "Make a Withdraw": {
+    "en": "Make a Withdraw",
+    "es": "Hacer un Retiro",
+    "pt": "Fazer um Saque",
+    "fr": "Faire un retrait"
+  },
+  "My Finances": {
+    "en": "My Finances",
+    "es": "Mis Finanzas",
+    "pt": "Minhas Finanças",
+    "fr": "Mes finances"
+  },
+  "All Expenses": {
+    "en": "All Expenses",
+    "es": "Todos los Gastos",
+    "pt": "Todas as Despesas",
+    "fr": "Toutes les dépenses"
+  },
+  "Add Expense/Income": {
+    "en": "Add Expense/Income",
+    "es": "Agregar Gasto/Ingreso",
+    "pt": "Adicionar Despesa/Receita",
+    "fr": "Ajouter une dépense/Revenu"
+  },
+  "Expense Type": {
+    "en": "Expense Type",
+    "es": "Tipo de Gasto",
+    "pt": "Tipo de Despesa",
+    "fr": "Type de dépense"
+  },
+  "Estimates & Quotes": {
+    "en": "Estimates & Quotes",
+    "es": "Estimaciones y Cotizaciones",
+    "pt": "Orçamentos e Cotações",
+    "fr": "Devis et citations"
+  },
+  "Terms & Conditions": {
+    "en": "Terms & Conditions",
+    "es": "Términos y Condiciones",
+    "pt": "Termos e Condições",
+    "fr": "Termes et conditions"
+  },
+  "Add New Term": {
+    "en": "Add New Term",
+    "es": "Agregar Nuevo Término",
+    "pt": "Adicionar Novo Termo",
+    "fr": "Ajouter un nouveau terme"
+  },
+  "All Terms": {
+    "en": "All Terms",
+    "es": "Todos los Términos",
+    "pt": "Todos os Termos",
+    "fr": "Tous les termes"
+  },
+  "Set Categories": {
+    "en": "Set Categories",
+    "es": "Establecer Categorías",
+    "pt": "Definir Categorias",
+    "fr": "Définir les catégories"
+  },
+  "Add new Quote": {
+    "en": "Add new Quote",
+    "es": "Agregar una Cotización",
+    "pt": "Adicionar uma Cotação",
+    "fr": "Ajouter une nouvelle citation"
+  },
+  "My Quotes": {
+    "en": "My Quotes",
+    "es": "Mis Cotizaciones",
+    "pt": "Minhas Cotações",
+    "fr": "Mes devis"
+  },
+  "Stock & Inventory": {
+    "en": "Stock & Inventory",
+    "es": "Existencias e Inventario",
+    "pt": "Estoque e Inventário",
+    "fr": "Stock et inventaire"
+  },
+  "Stocks": {
+    "en": "Stocks",
+    "es": "Existencias",
+    "pt": "Estoques",
+    "fr": "Actions"
+  },
+  "Add Stock": {
+    "en": "Add Stock",
+    "es": "Agregar Existencia",
+    "pt": "Adicionar Estoque",
+    "fr": "Ajouter un stock"
+  },
+  "View Stocks": {
+    "en": "View Stocks",
+    "es": "Ver Existencias",
+    "pt": "Visualizar Estoque",
+    "fr": "Voir les stocks"
+  },
+  "Products": {
+    "en": "Products",
+    "es": "Productos",
+    "pt": "Produtos",
+    "fr": "Des produits"
+  },
+  "Assets": {
+    "en": "Assets",
+    "es": "Activos",
+    "pt": "Ativos",
+    "fr": "Biens"
+  },
+  "Warehouse": {
+    "en": "Warehouse",
+    "es": "Almacén",
+    "pt": "Armazém",
+    "fr": "Entrepôt"
+  },
+  "Projects & Customers": {
+    "en": "Projects & Customers",
+    "es": "Proyectos y Clientes",
+    "pt": "Projetos e Clientes",
+    "fr": "Projets et clients"
+  },
+  "Customers": {
+    "en": "Customers",
+    "es": "Clientes",
+    "pt": "Clientes",
+    "fr": "Clients"
+  },
+  "Projects": {
+    "en": "Projects",
+    "es": "Proyectos",
+    "pt": "Projetos",
+    "fr": "Projets"
+  },
+  "File Management": {
+    "en": "File Management",
+    "es": "Gestión de Archivos",
+    "pt": "Gerenciamento de Arquivos",
+    "fr": "Gestion des fichiers"
+  },
+  "PoS & Sales": {
+    "en": "PoS & Sales",
+    "es": "PdV y Ventas",
+    "pt": "PdV e Vendas",
+    "fr": "Point de vente et ventes"
+  },
+  "All Sales": {
+  "es": "Todas las Ventas",
+  "pt": "Todas as Vendas",
+  "fr": "Toutes les ventes"
+},
+"New Sales Entry": {
+"en": "New Sales Entry",
+"es": "Nueva Entrada de Venta",
+"pt": "Nova Entrada de Vendas",
+"fr": "Nouvelle entrée de ventes"
+},
+"Help & Support": {
+"en": "Help & Support",
+"es": "Ayuda y Soporte",
+"pt": "Ajuda e Suporte",
+"fr": "Aide et support"
+},
+"Tickets System": {
+"en": "Tickets System",
+"es": "Sistema de Tickets",
+"pt": "Sistema de Tickets",
+"fr": "Système de billetterie"
+},
+"My Tickets": {
+"en": "My Tickets",
+"es": "Mis Tickets",
+"pt": "Meus Tickets",
+"fr": "Mes billets"
+},
+"Generate New Ticket": {
+"en": "Generate New Ticket",
+"es": "Generar Nuevo Ticket",
+"pt": "Gerar Novo Ticket",
+"fr": "Générer un nouveau billet"
+},
+"Announcements": {
+"en": "Announcements",
+"es": "Anuncios",
+"pt": "Anúncios",
+"fr": "Annonces"
+},
+"Language1": {
+"en": "Language",
+"es": "Idioma",
+"pt": "Linguagem",
+"fr": "Langue"
+},
+"Welcome to": {
+"en": "Welcome to",
+"es": "Bienvenida a",
+"pt": "Bem-vindo ao",
+"fr": "Bienvenue à"
+},
+"Total Users": {
+"en": "Total Users",
+"es": "Usuarios Totales",
+"pt": "Total de Usuários",
+"fr": "Utilisateurs totaux"
+},
+"orders": {
+"en": "orders",
+"es": "órdenes",
+"pt": "pedidos",
+"fr": "commandes"
+},
+"Quotes": {
+"en": "Quotes",
+"es": "Citas",
+"pt": "Cotações",
+"fr": "Citations"
+},
+"Stocks": {
+"en": "Stocks",
+"es": "Existencias",
+"pt": "Estoques",
+"fr": "Stocks"
+},
+"Assets": {
+"en": "Assets",
+"es": "Activos",
+"pt": "Ativos",
+"fr": "Actifs"
+},
+"Warehouses": {
+"en": "Warehouses",
+"es": "Almacenes",
+"pt": "Armazéns",
+"fr": "Entrepôts"
+},
+"Customers": {
+"en": "Customers",
+"es": "Clientes",
+"pt": "Clientes",
+"fr": "Clients"
+},
+"Projects": {
+"en": "Projects",
+"es": "Proyectos",
+"pt": "Projetos",
+"fr": "Projets"
+},
+"Files": {
+"en": "Files",
+"es": "Archivos",
+"pt": "Arquivos",
+"fr": "Fichiers"
+},
+"Sales": {
+"en": "Sales",
+"es": "Ventas",
+"pt": "Vendas",
+"fr": "Ventes"
+},
+"Tickets": {
+"en": "Tickets",
+"es": "Tickets",
+"pt": "Tickets",
+"fr": "Billets"
+}
+}

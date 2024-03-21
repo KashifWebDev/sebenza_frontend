@@ -16,7 +16,7 @@ export class UserAllInvoicesComponent implements OnInit {
   deleteLoading: boolean = false;
   filteredData: invoice[] = [...this.invoices];
   searchText = '';
-
+  switch: number = 1;
 
   constructor(private userService: UserService) { }
 
@@ -29,6 +29,18 @@ export class UserAllInvoicesComponent implements OnInit {
       }
     });
   }
+
+  selectPill(section: number) {
+    this.switch = section;
+    const pillSections = document.querySelectorAll('.pill-section');
+    pillSections.forEach(section => {
+      section.classList.remove('selected');
+    });
+
+    const selectedPill = document.querySelector(`.pill-section:nth-child(${section})`);
+    selectedPill?.classList.add('selected'); // Added optional chaining here
+  }
+
 
   filterData() {
     if (this.searchText.trim() !== '') {

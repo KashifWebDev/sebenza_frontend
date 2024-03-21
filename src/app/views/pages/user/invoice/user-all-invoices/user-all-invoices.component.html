@@ -1,43 +1,60 @@
 <div class="row">
+
   <div class="col-md-12 stretch-card">
-    <div class="card">
+    <div class="card mt-3">
       <div class="card-body">
-        <h6 class="card-title">My Invoices</h6>
-        <app-css-loader *ngIf="!invoices.length"></app-css-loader>
-        <div class="table-responsive" *ngIf="invoices && invoices.length">
+        <div class="w-100 d-flex justify-content-around w-100" style="margin-top: -43px; margin-bottom: 16px;">
+          <div class="pill-container">
+            <div class="pill-section selected" (click)="selectPill(1)">From Me</div>
+            <div class="pill-section" (click)="selectPill(2)">To Me</div>
+          </div>
+        </div>
+        <ng-container *ngIf="switch == 1">
+          <h6 class="card-title">My Invoices</h6>
+          <app-css-loader *ngIf="!invoices.length"></app-css-loader>
+          <div class="table-responsive" *ngIf="invoices && invoices.length">
 
-          <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+            <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
 
-          <ngx-datatable
-            class="bootstrap"
-            [rows]="filteredData"
-            [columnMode]="ColumnMode.force"
-            [footerHeight]="50"
-            [limit]="10"
-            rowHeight="auto"
-          >
-            <ngx-datatable-column name="#" prop="invoiceID"></ngx-datatable-column>
-            <ngx-datatable-column name="Total Users" prop="account_total_user"></ngx-datatable-column>
-            <ngx-datatable-column name="Total Amount" prop="amount_total"></ngx-datatable-column>
-            <ngx-datatable-column name="Discount" prop="discount"></ngx-datatable-column>
-            <ngx-datatable-column name="Invoice Date" prop="invoiceDate"></ngx-datatable-column>
-            <ngx-datatable-column name="Status">
-              <ng-template ngx-datatable-cell-template let-row="row">
+            <ngx-datatable
+              class="bootstrap"
+              [rows]="filteredData"
+              [columnMode]="ColumnMode.force"
+              [footerHeight]="50"
+              [limit]="10"
+              rowHeight="auto"
+            >
+              <ngx-datatable-column name="#" prop="invoiceID"></ngx-datatable-column>
+              <ngx-datatable-column name="Total Users" prop="account_total_user"></ngx-datatable-column>
+              <ngx-datatable-column name="Total Amount" prop="amount_total"></ngx-datatable-column>
+              <ngx-datatable-column name="Discount" prop="discount"></ngx-datatable-column>
+              <ngx-datatable-column name="Invoice Date" prop="invoiceDate"></ngx-datatable-column>
+              <ngx-datatable-column name="Status">
+                <ng-template ngx-datatable-cell-template let-row="row">
                 <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 'Unpaid','bg-success': row.status == 'Paid'}">
                   {{ row.status}}
                 </span>
-              </ng-template>
-            </ngx-datatable-column>
-            <ngx-datatable-column name="Action">
-              <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                <a [routerLink]="[row.id]" class="btn btn-outline-primary">
-                  <i class="feather icon-dollar-sign"></i>
-                  Invoice
-                </a>
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-        </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="Action">
+                <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                  <a [routerLink]="[row.id]" class="btn btn-outline-primary">
+                    <i class="feather icon-dollar-sign"></i>
+                    Invoice
+                  </a>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="switch == 2">
+
+          <div class="d-flex flex-column justify-content-center align-items-center" style="border: 2px dashed; width: 168px; height: 231px;">
+            <i class="feather icon-plus fs-3"></i>
+            <p style="font-size: larger; font-weight: 500;">New Invoice</p>
+          </div>
+          
+        </ng-container>
       </div>
     </div>
   </div>

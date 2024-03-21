@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {User} from "../../../core/interfaces/interfaces";
 import {AuthService} from "../../pages/auth/auth.service";
 import {UserRole} from "../../../core/roles/UserRole";
+import {AppService} from "../../../app.service";
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,7 @@ export class NavbarComponent implements OnInit {
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
     private router: Router,
+    private appService: AppService,
     private authService: AuthService
   ) { }
 
@@ -52,6 +54,14 @@ export class NavbarComponent implements OnInit {
     if(this.authService.logout()){
       this.router.navigate(['/']);
     }
+  }
+
+  translatedText(text: string): string{
+    return this.appService.translate(text);
+  }
+
+  changeLang(lang: string){
+    this.appService.setLang(lang);
   }
 
 }

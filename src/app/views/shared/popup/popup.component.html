@@ -1,0 +1,13 @@
+<div *ngIf="show" class="mb-4 bg-gray-800 d-flex justify-content-center align-items-center py-3 text-muted">
+  <h4 class="me-2">You are currently using the <b>{{txt}}</b> version of our site.elect your regional site here:</h4>
+
+  <div ngbDropdown>
+    <button class="btn" id="dropdownBasic1" ngbDropdownToggle>{{ translatedText('Language') }}</button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem (click)="changeLang('en')">English</button>
+      <button ngbDropdownItem (click)="changeLang('es')">Spanish</button>
+      <button ngbDropdownItem (click)="changeLang('pt')">Portuguese</button>
+      <button ngbDropdownItem (click)="changeLang('fr')">French</button>
+    </div>
+  </div>
+</div>
