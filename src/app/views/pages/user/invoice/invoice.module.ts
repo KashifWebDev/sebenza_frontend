@@ -8,16 +8,19 @@ import {SharedModule} from "../../../shared/shared.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FeatherIconModule} from "../../../../core/feather-icon/feather-icon.module";
 import {NgbAccordionModule} from "@ng-bootstrap/ng-bootstrap";
+import { UserNewInvoiceComponent } from './user-new-invoice/user-new-invoice.component';
 
 const routes: Routes = [
   {path: '', component: UserAllInvoicesComponent},
-  {path: ':id', component: UserSingleInvoiceComponent},
+  {path: 'id/:id', component: UserSingleInvoiceComponent},
+  {path: 'new', component: UserNewInvoiceComponent},
 ]
 
 @NgModule({
   declarations: [
     UserAllInvoicesComponent,
-    UserSingleInvoiceComponent
+    UserSingleInvoiceComponent,
+    UserNewInvoiceComponent
   ],
   imports: [
     RouterModule.forChild(routes),

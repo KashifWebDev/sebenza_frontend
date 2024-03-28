@@ -10,52 +10,144 @@
           </div>
         </div>
         <ng-container *ngIf="switch == 1">
-          <h6 class="card-title">My Invoices</h6>
           <app-css-loader *ngIf="!invoices.length"></app-css-loader>
-          <div class="table-responsive" *ngIf="invoices && invoices.length">
+          <div *ngIf="invoices && invoices.length">
+            <div class="row justify-content-center">
+                <div class="col-md-2 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="align-items-center d-flex flex-column justify-content-center">
+                        <h3 class="mt-2">{{overDue | currency}}</h3>
+                        <h6 class="card-title mb-2 mt-3">Over due</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="align-items-center d-flex flex-column justify-content-center">
+                        <h3 class="mt-2">{{outstanding | currency}}</h3>
+                        <h6 class="card-title mb-2 mt-3">Total Outstanding</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 grid-margin stretch-card">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="align-items-center d-flex flex-column justify-content-center">
+                        <h3 class="mt-2">{{draft | currency}}</h3>
+                        <h6 class="card-title mb-2 mt-3">In Draft</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div> <!-- row -->
+            <h6 class="card-title">My Invoices</h6>
+            <div class="table-responsive">
 
-            <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
+              <input type="text" [(ngModel)]="searchText" (input)="filterData()" placeholder="Search" class="searchBox" />
 
-            <ngx-datatable
-              class="bootstrap"
-              [rows]="filteredData"
-              [columnMode]="ColumnMode.force"
-              [footerHeight]="50"
-              [limit]="10"
-              rowHeight="auto"
-            >
-              <ngx-datatable-column name="#" prop="invoiceID"></ngx-datatable-column>
-              <ngx-datatable-column name="Total Users" prop="account_total_user"></ngx-datatable-column>
-              <ngx-datatable-column name="Total Amount" prop="amount_total"></ngx-datatable-column>
-              <ngx-datatable-column name="Discount" prop="discount"></ngx-datatable-column>
-              <ngx-datatable-column name="Invoice Date" prop="invoiceDate"></ngx-datatable-column>
-              <ngx-datatable-column name="Status">
-                <ng-template ngx-datatable-cell-template let-row="row">
+              <ngx-datatable
+                class="bootstrap"
+                [rows]="filteredData"
+                [columnMode]="ColumnMode.force"
+                [footerHeight]="50"
+                [limit]="10"
+                rowHeight="auto"
+              >
+                <ngx-datatable-column name="#" prop="invoiceID"></ngx-datatable-column>
+                <ngx-datatable-column name="Total Users" prop="account_total_user"></ngx-datatable-column>
+                <ngx-datatable-column name="Total Amount" prop="amount_total"></ngx-datatable-column>
+                <ngx-datatable-column name="Discount" prop="discount"></ngx-datatable-column>
+                <ngx-datatable-column name="Invoice Date" prop="invoiceDate"></ngx-datatable-column>
+                <ngx-datatable-column name="Status">
+                  <ng-template ngx-datatable-cell-template let-row="row">
                 <span class="custom-cell bg-primary fs-6 px-2 py-1 rounded" [ngClass]="{'bg-danger': row.status == 'Unpaid','bg-success': row.status == 'Paid'}">
                   {{ row.status}}
                 </span>
-                </ng-template>
-              </ngx-datatable-column>
-              <ngx-datatable-column name="Action">
-                <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
-                  <a [routerLink]="[row.id]" class="btn btn-outline-primary">
-                    <i class="feather icon-dollar-sign"></i>
-                    Invoice
-                  </a>
-                </ng-template>
-              </ngx-datatable-column>
-            </ngx-datatable>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Action">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-row="row">
+                    <a [routerLink]="['id', row.id]" class="btn btn-outline-primary">
+                      <i class="feather icon-dollar-sign"></i>
+                      Invoice
+                    </a>
+                    <button class="btn btn-outline-warning ms-2" (click)="openBasicModal(basicModal, row.id)">
+                      <i class="feather icon-at-sign"></i>
+                      Email
+                    </button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
           </div>
         </ng-container>
         <ng-container *ngIf="switch == 2">
 
+
+          <div class="row justify-content-center">
+            <div class="col-md-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="align-items-center d-flex flex-column justify-content-center">
+                    <h3 class="mt-2">{{0 | currency}}</h3>
+                    <h6 class="card-title mb-2 mt-3">Over due</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="align-items-center d-flex flex-column justify-content-center">
+                    <h3 class="mt-2">{{0 | currency}}</h3>
+                    <h6 class="card-title mb-2 mt-3">Total Outstanding</h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- row -->
+
           <div class="d-flex flex-column justify-content-center align-items-center" style="border: 2px dashed; width: 168px; height: 231px;">
             <i class="feather icon-plus fs-3"></i>
-            <p style="font-size: larger; font-weight: 500;">New Invoice</p>
+            <a style="font-size: larger; font-weight: 500;" routerLink="/user/orders/new">New Invoice</a>
           </div>
-          
+
         </ng-container>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #basicModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Send by Email</h5>
+    <button type="button" class="btn-close" (click)="modal.close('by: close icon')" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form class="forms-sample" [formGroup]="sendEmailForm" (ngSubmit)="confirmSaveModal()">
+      <div class="mb-3">
+        <label for="exampleInputUsername1" class="form-label">To</label>
+        <input disabled="" type="email" class="form-control" id="exampleInputUsername1" autocomplete="off" placeholder="Email of client">
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Subject</label>
+        <input disabled type="text" class="form-control" id="exampleInputEmail1" value="{{username}} sent to and invoice ({{currentInvoice.invoiceID}})">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Body</label>
+        <textarea disabled class="form-control" id="exampleFormControlTextarea1" rows="5">{{username}} sent you an invoice ({{currentInvoice.invoiceID}}) for {{currentInvoice.payable_amount | currency}} from sebenza.</textarea>
+      </div>
+      <app-loading-button
+        (click)="confirmSaveModal()"
+        [btnIcon]="'icon-send'"
+        [btnText]="'Send Invoice'"
+        [loadingText]="'Sending Email...'"
+        [isLoading]="btnLoading"></app-loading-button>
+      <button type="button" class="btn btn-secondary" (click)="modal.close('by: close button')">Close</button>
+    </form>
+  </div>
+</ng-template>

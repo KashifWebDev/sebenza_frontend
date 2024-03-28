@@ -687,4 +687,11 @@ export class UserService {
     );
   }
 
+  sendInvoiceEmail(formData: FormData): Observable<ApiResponse<any>>{
+    return this.http.post<ApiResponse<any>>(
+      environment.backendURI+'/user/paymentfrequencys',
+      formData
+    );
+  }
+
 }

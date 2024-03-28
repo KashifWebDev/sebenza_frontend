@@ -299,7 +299,9 @@ export interface invoice {
   status: string,
   created_at: string,
   updated_at: string,
-  orders: order
+  orders: order,
+  email_sent : boolean,
+  invoice_type: string
 }
 
 export interface userProfile {

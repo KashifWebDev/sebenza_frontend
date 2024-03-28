@@ -1,19 +1,19 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {AuthService} from "../../../auth/auth.service";
-import { invoice, User} from "../../../../../core/interfaces/interfaces";
+import {invoice, User} from "../../../../../core/interfaces/interfaces";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../../user.service";
 import {AppService} from "../../../../../app.service";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {render } from 'creditcardpayments/creditCardPayments'
+import {AuthService} from "../../../auth/auth.service";
+import {render} from "creditcardpayments/creditCardPayments";
 
 @Component({
-  selector: 'app-user-single-invoice',
-  templateUrl: './user-single-invoice.component.html',
-  styleUrls: ['./user-single-invoice.component.scss']
+  selector: 'app-user-new-invoice',
+  templateUrl: './user-new-invoice.component.html',
+  styleUrls: ['./user-new-invoice.component.scss']
 })
-export class UserSingleInvoiceComponent implements OnInit {
+export class UserNewInvoiceComponent implements OnInit {
 
   user: User;
   invoice: invoice;
@@ -24,13 +24,16 @@ export class UserSingleInvoiceComponent implements OnInit {
   modalReference: NgbModalRef;
   @ViewChild('basicModal', { static: true }) deleteModal: TemplateRef<any> | NgbModalRef;
   btnLoading: boolean = false;
-  addNewOrderForm: FormGroup;
+  newInvoice: FormGroup;
   formSubmit: boolean = false;
   formProcessed: boolean = false;
   loadingBtn: boolean = false;
 
   @ViewChild('fileInput') fileInputRef: ElementRef;
   selectedImage: any; // Variable to store the selected image
+  currentDate = new Date();
+  totalPrice: number = 0;
+
   triggerUpload() {
     // Click the file input element
     this.fileInputRef.nativeElement.click();
@@ -57,6 +60,52 @@ export class UserSingleInvoiceComponent implements OnInit {
     }
   }
 
+  confirmSaveModal(){
+    this.btnLoading = true;
+    setTimeout( () => {
+      this.btnLoading = false;
+      this.appService.swalFire('Invoice was sent to the user', 'success');
+    }, 2000 );
+
+
+
+    // let formData: FormData = new FormData();
+    // formData.append('frequecy_name', this.sendEmailForm.controls['freqName'].value);
+    //
+    // this.userService.addNewFrequency(formData).subscribe(
+    //   data => {
+    //     if(data.status){
+    //       this.sendEmailForm.reset();
+    //       this.appService.swalFire('Pay frequency added Successfully', 'success');
+    //       this.modalReference.close();
+    //     }else{
+    //       this.appService.swalFire(data.message, 'error');
+    //     }
+    //     this.btnLoading = false;
+    //   },
+    //   (error) => {
+    //     this.btnLoading = false;
+    //     this.appService.swalFire('An error occurred while performing action', 'error');
+    //   }
+    // );
+  }
+
+  openBasicModal(content: TemplateRef<any>) {
+    this.modalReference = this.modalService.open(content, {});
+  }
+  calculateTotalPrice(): void {
+    let totalPrice = 0;
+    const items = this.newInvoice.get('items') as FormArray;
+    items.controls.forEach(control => {
+      const item = control.value;
+      totalPrice += item.rate * item.qty;
+    });
+    // Update total price in the form
+    this.totalPrice = totalPrice;
+  }
+
+
+
   constructor(private route: ActivatedRoute,
               private userService: UserService,
               private modalService: NgbModal,
@@ -66,14 +115,21 @@ export class UserSingleInvoiceComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.addNewOrderForm = this.formBuilder.group({
-      voucher: ['', Validators.required]
+    this.newInvoice = this.formBuilder.group({
+      fullname: ['', Validators.required],
+      address: ['', Validators.required],
+      items: this.formBuilder.array([])
+    });
+
+    // Subscribe to changes in items to recalculate total price
+    this.newInvoice.get('items')?.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
     });
 
     this.user = this.authService.currentUser;
     this.loading = true;
     this.route.params.subscribe(params => {
-      this.invoiceID = parseInt(params['id']);
+      this.invoiceID = 10;
       this.getInvoice();
     });
 
@@ -101,6 +157,22 @@ export class UserSingleInvoiceComponent implements OnInit {
 
   }
 
+  get items() {
+    return this.newInvoice.get('items') as FormArray;
+  }
+  addItem() {
+    this.items.push(this.formBuilder.group({
+      company: ['', Validators.required],
+      name: ['', Validators.required],
+      rate: ['', Validators.required],
+      qty: ['', Validators.required]
+    }));
+  }
+  // Method to remove an item from the form array by index
+  removeItem(index: number) {
+    this.items.removeAt(index);
+  }
+
   getInvoice(){
     this.userService.getInvoiceByID(this.invoiceID).subscribe(
       (res) => {
@@ -126,19 +198,19 @@ export class UserSingleInvoiceComponent implements OnInit {
   }
 
   get form() {
-    return this.addNewOrderForm.controls;
+    return this.newInvoice.controls;
   }
 
   confirmModal(){
     this.btnLoading = true;
     this.formProcessed = true;
-    if(this.addNewOrderForm.invalid){
+    if(this.newInvoice.invalid){
       this.btnLoading = false;
       return;
     }
     const formData = new FormData();
     formData.append(`invoiceID`, this.invoice.invoiceID.toString());
-    formData.append(`promocode`, this.addNewOrderForm.value['voucher']);
+    formData.append(`promocode`, this.newInvoice.value['voucher']);
     this.userService.applyVoucher(formData).subscribe(
       data => {
         if(data.status){
@@ -156,5 +228,4 @@ export class UserSingleInvoiceComponent implements OnInit {
       }
     );
   }
-
 }

@@ -12,12 +12,17 @@
       <div class="card-body">
         <div class="container-fluid d-flex justify-content-between">
           <div class="col-lg-3 ps-0">
-            <a routerLink="." class="nobleui-logo d-block mt-3 logo-light">
-              <img src="assets/images/logo.png" height="50px">
-            </a>
             <p class="mt-1 mb-1"><b>Sebenza Systems</b></p>
             <p>108,<br> Great Russell St,<br>London, WC1B 3NA.</p>
             <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
+            <div *ngIf="!selectedImage" class="d-flex flex-column justify-content-center align-items-center" style="border: 2px dashed; width: 168px; height: 74px;cursor: pointer" (click)="triggerUpload()">
+              <i class="feather icon-upload fs-3"></i>
+              <a style="font-size: larger; font-weight: 500;" routerLink="/user/orders/new">Upload Logo</a>
+            </div>
+            <!-- Hidden file input element -->
+            <input type="file" #fileInput style="display: none;" (change)="handleFileInput($event)">
+
+            <img *ngIf="selectedImage" [src]="selectedImage" height="50px">
             <p class="mt-1 mb-1"><b>{{user.company_name}}</b></p>
             <p>{{user.first_name+' '+user.last_name}},<br> {{user.address}},<br> {{user.city+", "+user.country}}.</p>
           </div>
